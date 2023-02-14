@@ -1,0 +1,42 @@
+% 次の警告メッセージ対策
+% Package hyperref Warning: The anchor of a bookmark and its parent's must not (hyperref) be the same.
+% ハイパーリンクが同じところに張られてしまう現象を解消させる
+%
+% https://tex.stackexchange.com/questions/364010/hyperref-and-titlesec-conflict-and-warning
+% 回答11 を採用（ \subsection の直前で \phantomsection を発行する）→  sty/myMacros.sty へ組み込む
+% 回答1 は実験したところ効果なしで不採用
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\usepackage{hyperref}
+
+
+\hypersetup{
+  allcolors           = blue     , % すべてのリンクの色を設定する
+  bookmarks           = true     , % PDFのしおりを作成したい
+  bookmarksnumbered   = true     , %
+  bookmarksopen       = true     , %
+  colorlinks          = true     , %
+  linkcolor           = blue     , %
+  setpagesize         = false    , %
+  unicode                        , %
+  % bookmarksdepth    = tocdepth , %
+  % bookmarksnumbered = true     , % しおりのタイトルに章番号を表示する
+  % citecolor         = green    , % 参照文献のリンクの色設定
+  % colorlinks        = true     , % リンクの文字に色を追加する
+  % filecolor         = cyan     , % 参照文献のリンクの色設定
+  % hidelinks         = false    , % リンクに色をつけない
+  % linkcolor         = red      , % 内部リンクの色設定
+  % pdfauthor         = {}       , % PDFの著者
+  % pdfcreator        =          , % LaTeX with hyperref
+  % pdfduplex         = ""       , % Simplex|DuplexFlipShortEdge|DuplexFlipLongEdge
+  % pdfkeywords       = ""       , %  キーワード1 ,キーワード2,...
+  % pdfkeywords       = {}       , %
+  % pdfsubject        = {}       , % PDFのサブジェクト
+  % pdftitle          =          , % PDFのタイトル
+  % setpagesize       = false    , % ページサイズ対策
+  % urlcolor          = magenta  , % URLのリンクの色設定
+}
+
+\usepackage{pxjahyper} % (u)pLaTeXのときのみかく % しおりの文字化け対策
+% \pxjahypersetup{キー=値, ...}

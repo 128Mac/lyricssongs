@@ -1,0 +1,31 @@
+# すべてをignore
+*
+# 全ディレクトリホワイトリストに追加
+!*/
+# 個別ホワイトリスト対象ファイル登録
+!.gitignore
+!*.fish
+!*.htm
+!*.htm.orig
+!*.ist
+!*.lock
+!*.pm
+!*.rb
+!*.sty
+!*.tex
+!*.toml
+!Gemfile
+*-hyper-link.tex
+Brahms.tex
+Brahms/
+COMP/
+Schubert.tex
+Schubert/
+Schumann.tex
+Schumann/
+Strauss.tex
+Strauss/
+TEXT/
+Wolf.tex
+Wolf/
+op/
