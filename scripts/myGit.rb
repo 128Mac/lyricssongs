@@ -4,8 +4,6 @@ require 'git' # https://github.com/ruby-git/ruby-git
 
 $LOAD_PATH.push( File.expand_path( __FILE__ ) )
 
-#require_relative 'WADA'
-
 def main
   myGit( ARGV[0], ARGV[1..] )
 end
