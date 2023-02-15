@@ -2,7 +2,6 @@
 
 require "date"
 require 'fileutils'
-require 'jumanpp_ruby'
 require 'nkf'
 require 'nokogiri'
 require 'open-uri'
