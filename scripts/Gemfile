@@ -1,4 +1,5 @@
 source "https://rubygems.org"
-gem 'tomlrb'
-gem 'nokogiri'
 gem 'git'
+gem 'nokogiri'
+gem 'systemu'
+gem 'tomlrb'

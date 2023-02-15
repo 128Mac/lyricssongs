@@ -1,7 +1,8 @@
 #!/usr/bin/env ruby
 
-def main
-end
+$LOAD_PATH.push( File.expand_path( __FILE__ ) )
+require_relative 'myYomiJuman'
+# require_relative 'myYomiJumanpp'
 
 def read_toml_file( ftoml )
 
@@ -28,22 +29,20 @@ def read_toml_file( ftoml )
   end
 end
 
-def myYomi(str)
+def myYomi( str )
 
   # TODO toml ファイルをキャッシュに使えるようにする
   # TODO 返す最初の文字の濁点や半濁点などの処理
 
   arr = []
-  arr.push( yomi_sub_hash(str).to_s )
+  arr.push( yomi_sub_hash( str ) )
 
   if arr[0].nil?
+    arr = []
     if str =~ /^\p{hira}+$/
       arr.push( str )
     else
-      jumanpp = JumanppRuby::Juman.new( force_single_path: :true )
-      jumanpp.parse(NKF.nkf("--hiragana -w", yomi_sub(str)) ) do |word|
-        arr.push(word[1])
-      end
+      arr.push( myYomiJuman( str ) )
     end
   end
 
@@ -58,10 +57,8 @@ def myYomi(str)
     "っ" => "つ", "ゐ" => "い", "ゑ" => "え", "ゔ" => "う",
   }
   # 先頭の１文字だけ濁点・半濁点を変換
-  re = dakuten_handakuten_HASH.keys.join('|') # ぁ|ぃ|...|ゔ
 
-  m = arr[0].match(/^([#{re}])/)
-  arr[0].sub(/^#{m[0]}/, dakuten_handakuten_HASH[m[0]]) if m
+  arr[0].sub!( /^#{dakuten_handakuten_HASH.keys.join( '|' )}/,  dakuten_handakuten_HASH )
 
   arr.join
     .gsub( /ゔぁ/, 'ば' )
@@ -606,9 +603,10 @@ def yomi_sub_hash(k)
     "ヴィルヘルム・マイスター修業時代" => "ういるへるむ・まいすたしゅぎょうじだい",
     "ヴィルヘルム・マイスターよりの歌" => "ういるへるむ・まいすたよりのうた",
     "ヴィルヘルム・マイスターよりの歌曲と歌" => "ういるへるむ・まいすたよりのかきょくとうた",
-
   }
   yomi_db[k]
 end
 
-if __FILE__ == $0 then main end
+if __FILE__ == $0 then
+   ARGV.each do | argv | puts myYomi( argv ) end
+end
