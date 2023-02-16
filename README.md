@@ -1,29 +1,29 @@
 
 # Table of Contents
 
-1.  [lyricssongs](#org2ac988b)
-    1.  [概要](#org8f2e41f)
-    2.  [必要なもの](#orga604d8b)
-        1.  [git 環境](#orgc569a4c)
-        2.  [ruby 環境](#org25b95fd)
-        3.  [JUMAN](#org6e4b527)
-    3.  [利用方法](#orgccf1afb)
-    4.  [TODO](#org9212ff5)
+1.  [lyricssongs](#orgc4285bf)
+    1.  [概要](#org81da841)
+    2.  [必要なもの](#orgfe96458)
+        1.  [git 環境](#org1c34dd0)
+        2.  [ruby 環境](#org9ef51b3)
+        3.  [JUMAN](#org6bcd654)
+    3.  [利用方法](#orga5591ab)
+    4.  [TODO](#orgda39717)
 
 
-<a id="org2ac988b"></a>
+<a id="orgc4285bf"></a>
 
 # lyricssongs
 
 
-<a id="org8f2e41f"></a>
+<a id="org81da841"></a>
 
 ## 概要
 
 [　梅丘歌曲会館 　詩と音楽　](http://www7b.biglobe.ne.jp/~lyricssongs/index.htm)の作曲家別の作品集を latex 化するための　ruby スクリプト
 
 
-<a id="orga604d8b"></a>
+<a id="orgfe96458"></a>
 
 ## 必要なもの
 
@@ -32,7 +32,7 @@
 -   JUMAN
 
 
-<a id="orgc569a4c"></a>
+<a id="org1c34dd0"></a>
 
 ### git 環境
 
@@ -45,7 +45,7 @@
         git config --global user.name "Your Name"
 
 
-<a id="org25b95fd"></a>
+<a id="org9ef51b3"></a>
 
 ### ruby 環境
 
@@ -55,7 +55,7 @@
         -   利用する gem パッケージは scripts/Gemfile 参照
 
 
-<a id="org6e4b527"></a>
+<a id="org6bcd654"></a>
 
 ### JUMAN
 
@@ -77,15 +77,15 @@
         (京都大学学術情報メディアセンター, メディア情報処理専修コース「自然言語処理技術」, 2009/09/30)
 -   PATH に「 C:\Program Files (x86)\juman 」を追記しリブート
     
-        C:\Program Files (x86)\juman\COPYING
-        C:\Program Files (x86)\juman\dic
-        C:\Program Files (x86)\juman\juman.exe
-        C:\Program Files (x86)\juman\manual.pdf
-        C:\Program Files (x86)\juman\unins000.dat
-        C:\Program Files (x86)\juman\unins000.exe
+        C:\Program Files\juman\COPYING
+        C:\Program Files\juman\dic
+        C:\Program Files\juman\juman.exe
+        C:\Program Files\juman\manual.pdf
+        C:\Program Files\juman\unins000.dat
+        C:\Program Files\juman\unins000.exe
 
 
-<a id="orgccf1afb"></a>
+<a id="orga5591ab"></a>
 
 ## 利用方法
 
@@ -96,7 +96,7 @@
 
 -   TOML ファイルを利用して htm ファイルをダウンロード
     
-        ruby scripts/00-lyricssongs-tex-gen.rb TOML/Brahms.toml ...
+        ruby scripts/00-lyricssongs-download.rb TOML/Brahms.toml ...
     
     -   初回ダウンロード時は一件あたり 5 秒間隔でダウンロード
     
@@ -105,25 +105,34 @@
 -   htm ファイルの tex 化と latex によるテスト＆対策
     -   ダウンロードした htm ファイルを tex 化
         
-            ruby scripts/10-lyricssongs-tex-gen.rb COMP/*.htm TEXT/*.htm
+            ruby scripts/20-lyricssongs-tex-gen.rb  TOML/Brahms.toml ...
         
-        -   上記の処理で、各作品は op に、それらを tex で纏めるためのるもの
-            が Brahms dディレクトリに格納される
-        -   同時に Brahms.tex や Brahms-hyper-link.tex も作成される
-    
-    -   latex などでビルドしデバッグ
+        -   scripts/10-lyricssongs-tex-gen.rb は廃止の予定です
         
-            llmk Brahms
+        -   上記の処理で、 作曲家毎に各ディレクトリに LaTeX に必要なものが書き込まれます。
+        -   Brams を例にとれば以下のようなものが作成されます。
+            -   Brahms.tex
+            -   Brahms-hyper-link.tex
+            -   Bramas-V-001.tex &#x2026;.
+            -   Sxxxx.tex &#x2026;  ( 今まで op に置いていたもの )
+
+-   latex などでビルド
     
-    -   対策
+        mkdir out
+        llmk Brahms/Brahms
+
+-   現在判明していること
 
 
-<a id="org9212ff5"></a>
+<a id="orgda39717"></a>
 
 ## TODO
 
--   [ ] juman 対応
+-   [X] juman 対応
 -   [ ] style macro の見直し
     -   Op 番号なしなどがたくさんあるので
+    -   他の作者では Op 番号や WoO 番号が無い、あるいはそのほかの記号があるので、対応検討中（アイデア募集）
 -   [ ] 予想外のデータ対策（これは当分は終結はしないだろう）
+    -   [ ] 下線（アンダースコア）のデータあり、暫定で &ensp;で対応
+-   [ ] Brahms の 299 ページ目で、現代のタイトルが行溢れしています
 

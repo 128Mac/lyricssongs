@@ -52,12 +52,12 @@
 - PATH に「 C:\Program Files (x86)\juman 」を追記しリブート
 
    #+BEGIN_SRC
-   C:\Program Files (x86)\juman\COPYING
-   C:\Program Files (x86)\juman\dic
-   C:\Program Files (x86)\juman\juman.exe
-   C:\Program Files (x86)\juman\manual.pdf
-   C:\Program Files (x86)\juman\unins000.dat
-   C:\Program Files (x86)\juman\unins000.exe
+   C:\Program Files\juman\COPYING
+   C:\Program Files\juman\dic
+   C:\Program Files\juman\juman.exe
+   C:\Program Files\juman\manual.pdf
+   C:\Program Files\juman\unins000.dat
+   C:\Program Files\juman\unins000.exe
    #+END_SRC
 
 ** 利用方法
@@ -70,7 +70,7 @@
 - TOML ファイルを利用して htm ファイルをダウンロード
 
   #+BEGIN_SRC
-  ruby scripts/00-lyricssongs-tex-gen.rb TOML/Brahms.toml ...
+  ruby scripts/00-lyricssongs-download.rb TOML/Brahms.toml ...
   #+END_SRC
 
   - 初回ダウンロード時は一件あたり 5 秒間隔でダウンロード
@@ -81,24 +81,34 @@
   - ダウンロードした htm ファイルを tex 化
 
     #+BEGIN_SRC
-    ruby scripts/10-lyricssongs-tex-gen.rb COMP/*.htm TEXT/*.htm
+    ruby scripts/20-lyricssongs-tex-gen.rb  TOML/Brahms.toml ...
     #+END_SRC
 
-    - 上記の処理で、各作品は op に、それらを tex で纏めるためのるもの
-      が Brahms dディレクトリに格納される
-    - 同時に Brahms.tex や Brahms-hyper-link.tex も作成される
+    - scripts/10-lyricssongs-tex-gen.rb は廃止の予定です
 
-  - latex などでビルドしデバッグ
+    - 上記の処理で、 作曲家毎に各ディレクトリに LaTeX に必要なものが書き込まれます。
+    - Brams を例にとれば以下のようなものが作成されます。
+      - Brahms.tex
+      - Brahms-hyper-link.tex
+      - Bramas-V-001.tex ....
+      - Sxxxx.tex ...  ( 今まで op に置いていたもの )
+
+- latex などでビルド
 
     #+BEGIN_SRC
-    llmk Brahms
+    mkdir out
+    llmk Brahms/Brahms
     #+END_SRC
 
-  - 対策
+- 現在判明していること
+
 
 ** TODO
 
-- [ ] juman 対応
+- [X] juman 対応
 - [ ] style macro の見直し
   - Op 番号なしなどがたくさんあるので
+  - 他の作者では Op 番号や WoO 番号が無い、あるいはそのほかの記号があるので、対応検討中（アイデア募集）
 - [ ] 予想外のデータ対策（これは当分は終結はしないだろう）
+  - [ ] 下線（アンダースコア）のデータあり、暫定で \_ で対応
+- [ ] Brahms の 299 ページ目で、現代のタイトルが行溢れしています
