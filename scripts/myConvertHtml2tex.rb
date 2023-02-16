@@ -7,6 +7,7 @@ def myConvertHtml2tex(str)
     '[[:blank:]]*”[[:blank:]]*' => '{\grqq} ' ,
     '([^{])[[:blank:]]+([IV][IV]*[()]*)[[:space:]]*' => '\1 \textrm{\2}\3 ',
     '([^{])[[:blank:]]+([IV][IV]*)[[:space:]]*([（])' => '\1 \textrm{\2} \3',
+    '_' => '\\_',
   }
 
   convert_pattern_HASH.each do | ee, vv |
