@@ -78,9 +78,7 @@
   %\if #2\empty \def\mySUBSECTIONNumberInfo{#1}%
   %\else         \def\mySUBSECTIONNumberInfo{#1-#2}%
   %\fi%
-  \ifx\hfuzz#2\hfuzz\relax\message{WADA #1 XX empty EMPTY}%
-  \else                   \message{WADA #1-#2}%
-  \fi%
+  \ifx\hfuzz#2\hfuzz\relax\fi% % WILL BE REMOVE TODO
   \phantomsection%
   \subsection*{%
     \begin{tblr}[t]{ X @{ ~ ~ ~ ~ ~ ~ } X }%
@@ -90,7 +88,7 @@
       {#4\small\glueA \mbox{\myOpTitleTRAN \mySUBSECTIONNumberInfo}\glueB#6\glueC#8} \\%
     \end{tblr}%
   }%
-  \label{myindex:subsection:\myOpTitleORIG\mySUBSECTIONNumberInfo}%
+  %% \label{myindex:subsection:\myOpTitleORIG\mySUBSECTIONNumberInfo}%%% TODO 暫定でオフ
   \index{#3(#9)@#3(#4)}%
   \index{#9(#3)@#4(#3)}%
   \addcontentsline{toc}{subsection}%
