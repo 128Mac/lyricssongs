@@ -16,6 +16,11 @@ require_relative 'myConvertHtml2tex'
 
 def main
 
+  STDERR.puts "この処理は 20-lyricssongs-tex-gen.rb で書き換えましたので"
+  STDERR.puts "  ruby 20-lyricssongs-tex-gen.rb TOML/xxxx.toml"
+  STDERR.puts "を利用してください"
+  exit
+
   [ "op", "COMP", "TEXT" ].each do | ee |
     myGit( ee, "!*.tex" )
   end
