@@ -1,29 +1,29 @@
 
 # Table of Contents
 
-1.  [lyricssongs](#orgc4285bf)
-    1.  [概要](#org81da841)
-    2.  [必要なもの](#orgfe96458)
-        1.  [git 環境](#org1c34dd0)
-        2.  [ruby 環境](#org9ef51b3)
-        3.  [JUMAN](#org6bcd654)
-    3.  [利用方法](#orga5591ab)
-    4.  [TODO](#orgda39717)
+1.  [lyricssongs](#orgb4797e2)
+    1.  [概要](#org4b98311)
+    2.  [必要なもの](#orgb150dc6)
+        1.  [git 環境](#org3123c54)
+        2.  [ruby 環境](#org398b395)
+        3.  [JUMAN](#org53e84e0)
+    3.  [利用方法](#org056a642)
+    4.  [TODO](#orgbf0a578)
 
 
-<a id="orgc4285bf"></a>
+<a id="orgb4797e2"></a>
 
 # lyricssongs
 
 
-<a id="org81da841"></a>
+<a id="org4b98311"></a>
 
 ## 概要
 
 [　梅丘歌曲会館 　詩と音楽　](http://www7b.biglobe.ne.jp/~lyricssongs/index.htm)の作曲家別の作品集を latex 化するための　ruby スクリプト
 
 
-<a id="orgfe96458"></a>
+<a id="orgb150dc6"></a>
 
 ## 必要なもの
 
@@ -32,7 +32,7 @@
 -   JUMAN
 
 
-<a id="org1c34dd0"></a>
+<a id="org3123c54"></a>
 
 ### git 環境
 
@@ -45,7 +45,7 @@
         git config --global user.name "Your Name"
 
 
-<a id="org9ef51b3"></a>
+<a id="org398b395"></a>
 
 ### ruby 環境
 
@@ -55,7 +55,7 @@
         -   利用する gem パッケージは scripts/Gemfile 参照
 
 
-<a id="org6bcd654"></a>
+<a id="org53e84e0"></a>
 
 ### JUMAN
 
@@ -85,7 +85,7 @@
         C:\Program Files\juman\unins000.exe
 
 
-<a id="orga5591ab"></a>
+<a id="org056a642"></a>
 
 ## 利用方法
 
@@ -124,15 +124,30 @@
 -   現在判明していること
 
 
-<a id="orgda39717"></a>
+<a id="orgbf0a578"></a>
 
 ## TODO
 
 -   [X] juman 対応
 -   [ ] style macro の見直し
+-   [ ] Op 番号、作品番号の表示が　 Op.Op などとなるなど　とおかしい
     -   Op 番号なしなどがたくさんあるので
     -   他の作者では Op 番号や WoO 番号が無い、あるいはそのほかの記号があるので、対応検討中（アイデア募集）
 -   [ ] 予想外のデータ対策（これは当分は終結はしないだろう）
     -   [ ] 下線（アンダースコア）のデータあり、暫定で &ensp;で対応
 -   [ ] Brahms の 299 ページ目で、現代のタイトルが行溢れしています
+-   [ ] Windows 環境で「警告？(guessed encoding: UTF-8 = utf8) 」
+    -   [uplatex guess encoding wrong #1137](https://github.com/MiKTeX/miktex/issues/1137)
+        [edocevoli commented on Jul 28, 2022](https://github.com/MiKTeX/miktex/issues/1137#issuecomment-1197987983)
+        
+        This "input encoding" guessing was only implemented on Windows. In
+        June, the Windows implementation was ported and is now available
+        in the latest pTeX binaries which TeX Live 2022 not yet
+        provides. MiKTeX provides the new implementation. Maybe the
+        implementation is wrong in some way. I cannot tell. This must be
+        fixed upstream.
+        
+        → 次期バージョンで解消できるといいな
+    
+    -   [ ] Wolf で「>>」&#x2026;「<<」が html encoding された &lt; &gt; になっているので LaTeX エラーが生じている
 
