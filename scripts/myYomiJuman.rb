@@ -11,9 +11,10 @@ require 'systemu'
 def myYomiJuman( text )
      yomi = []
      status, stdout, stderr = systemu [
-                       "nkf -w --hiragana", 
-                       "echo #{text}",
-                       "juman -b", # -b 複数読みがあった場合の処置
+                       "nkf -w --hiragana" , # カタカナは変換しておく
+                       "echo #{text}"      ,
+                       "juman -b"          , # -b 複数読みがあった場合の処置
+                       "nkf -w"            , # systemu からの出力強制変換
                      ].join( ' | ')
      if status == 0
        stdout
