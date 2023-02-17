@@ -387,9 +387,10 @@ def proc_033_composer_B_file( items, composer_dir, composer_B_filename )
       # DONE 3-3-1-1-1) タイトルのよみ
       idx[8] = myYomi( idx[3] )
       # DONE 3-3-1-1-2) SECTION 情報を composer_linder_input_file 出力用配列に追加
+
       composer_linder_input_file.push(
         '\mySECTION' +
-        "{ #{idx[4]} }" + '%' ,
+        "{ #{idx[4].gsub(/^[^\d]+/, '').gsub(/-.*/, '')} }" + "%#{idx[4]}" ,
         "{ #{idx[2]} }" + '%' ,
         "{ #{idx[3]} }" + '%書名・詩集名' ,
         "{ #{idx[6]} }" +
