@@ -153,7 +153,7 @@ def def_booklet( composerdir, html )
 
   output.push(
     [
-      "\\mySUBSECTION{#{sec}}{#{sub}}",
+      "\\mySUBSECTION{#{sec.gsub(/^[^\d]+/, '')}}{#{sub}}%#{sec}",
       "{ #{data[0][1]} }"  , # { Liebestreu }
       "{ #{data[1][1]} }"  , # { 愛の誠 }
       "{ #{lyricist[5]} }" , # { Robert Runic, (1805-1852) }
