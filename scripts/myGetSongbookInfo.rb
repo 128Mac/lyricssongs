@@ -18,7 +18,9 @@ class MyGetSongbookInfo
     @songbookinfotitle = Nokogiri::HTML( File.read( html ) )
                            .xpath( '/html/head/title' )
                            .to_s
-                           .gsub( /<[^<>]+>[[:space:]]*/, '' )
+                           .gsub( /<[^<>]+>[[:space:]]*/ , '' )
+                           .sub(  /^[[:space:]]+/        , '' )
+                           .sub(  /[[:space:]]+$/        , '' )
 
     Nokogiri::HTML( File.read( html ) )
       .xpath( '/html/body/dir' )
