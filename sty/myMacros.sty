@@ -73,7 +73,10 @@
   \def\glueC{} \settowidth{\len}{#7#8} \ifdim \len > 0pt \def\glueC{\par\hfill} \fi%
   %
   \ifx\hfuzz#2\hfuzz\relax\def\mySUBSECTIONNumberInfo{#1}%
-  \else                   \def\mySUBSECTIONNumberInfo{#1-#2}%
+  \else%
+    \ifx\hfuzz#1\hfuzz\relax\def\mySUBSECTIONNumberInfo{#1#2}%
+    \else                   \def\mySUBSECTIONNumberInfo{#1-#2}%
+    \fi%
   \fi%
   %\if #2\empty \def\mySUBSECTIONNumberInfo{#1}%
   %\else         \def\mySUBSECTIONNumberInfo{#1-#2}%
