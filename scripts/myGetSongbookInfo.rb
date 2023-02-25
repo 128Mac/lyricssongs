@@ -14,10 +14,15 @@ class MyGetSongbookInfo
     return nil unless File.exist?( html )
 
     @songbookinfo = []
+
+    @songbookinfotitle = Nokogiri::HTML( File.read( html ) )
+                           .xpath( '/html/head/title' )
+                           .to_s
+                           .gsub( /<[^<>]+>[[:space:]]*/, '' )
+
     Nokogiri::HTML( File.read( html ) )
       .xpath( '/html/body/dir' )
       .each_with_index do | ee, ii |
-
       blocks = []
       block = []
 
@@ -267,6 +272,10 @@ class MyGetSongbookInfo
   def songbookinfo
     @songbookinfo
   end
+
+  def songbookinfotitle
+    @songbookinfotitle
+  end
 end
 
 if __FILE__ == $0 then
@@ -275,6 +284,7 @@ if __FILE__ == $0 then
 
     songbookinfo = MyGetSongbookInfo.new( html )
 
+    puts "\ntitle=>#{songbookinfo.songbookinfotitle}"
     songbookinfo.songbookinfo.each do | ee |
       ee.each do | eee |
 
@@ -288,5 +298,6 @@ if __FILE__ == $0 then
         ].join ( " | " )
       end
     end
+
   end
 end
