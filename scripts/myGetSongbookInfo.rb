@@ -13,7 +13,7 @@ class MyGetSongbookInfo
 
     return nil unless File.exist?( html )
 
-    @songbookinfo = []
+    @songbookinfolist = []
 
     @songbookinfotitle = Nokogiri::HTML( File.read( html ) )
                            .xpath( '/html/head/title' )
@@ -109,7 +109,7 @@ class MyGetSongbookInfo
             list.push( { :name => name, :href => href3, :text => text3 } )
           end # i3
         end # i2
-        @songbookinfo.push( list )
+        @songbookinfolist.push( list )
       end # i1
     end # Nokogiri::HTML( File.read( html )
   end # initializ
@@ -167,8 +167,10 @@ class MyGetSongbookInfo
   end # myGetHtml_BR( ee )
 
   def myGetHtml_P( ee )
+
     href = []
     text = []
+
     ee.children.each do | eee |
 
       tmpH = nil
@@ -201,20 +203,22 @@ class MyGetSongbookInfo
     ee.children.each_with_index do | eee, iii |
 
       STDERR.puts "DEBUG myGetHtml_DIR #{iii} #{eee.name} #{eee}" if 1 == 0
+
       tmpH = nil
       tmpT = nil
+
       case eee.name
       when 'a'    then tmpH, tmpT = myGetHtml_A(    eee )
       when 'br'   then tmpH, tmpT = myGetHtml_BR(   eee )
       when 'text' then tmpH, tmpT = myGetHtml_text( eee )
       when 'p'    then
+
         tmpH = nil
         tmpT = eee.to_s
                  .gsub( /<[^<>]+>/      , '' )
                  .sub(  /^[[:space:]]+/ , '' )
                  .sub(  /[[:space:]]+$/ , '' )
         tmpT = nil if tmpT == ''
-
       else
         raise "ERROR unknown name myGetHtml_DIR #{eee.name}"
       end
@@ -227,6 +231,7 @@ class MyGetSongbookInfo
 
       case eee.name
       when 'br'    then
+
         text2.push( text )
         text = []
       end
@@ -271,8 +276,8 @@ class MyGetSongbookInfo
     ee
   end # myStripSpaces( ee )
 
-  def songbookinfo
-    @songbookinfo
+  def songbookinfolist
+    @songbookinfolist
   end
 
   def songbookinfotitle
@@ -284,10 +289,10 @@ if __FILE__ == $0 then
   ARGV.grep( /.htm$/ ).each do | html |
     next nil unless File.exist?( html )
 
-    songbookinfo = MyGetSongbookInfo.new( html )
+    sbi = MyGetSongbookInfo.new( html )
 
-    puts "\ntitle=>#{songbookinfo.songbookinfotitle}"
-    songbookinfo.songbookinfo.each do | ee |
+    puts "\ntitle=>#{sbi.songbookinfotitle}"
+    sbi.songbookinfolist.each do | ee |
       ee.each do | eee |
 
         case eee[:name]
