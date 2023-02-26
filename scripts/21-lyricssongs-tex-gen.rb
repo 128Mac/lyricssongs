@@ -78,7 +78,7 @@ def main
           # text[0] ..... <a><p>に先行する文字
           # text[1] ..... タイトル
           # text[2..] ... その他情報
-          text.unshift( "" ) unless text[0] =~ /^\d+/
+          text.unshift( "" ) unless text[0] =~ /^\d+\w*$/
 
           case e2[:name]
           when 'a', 'p' then sectionsize += 1
@@ -120,9 +120,9 @@ def main
 
           if text[1].match(
                [ "^",
-                 "(.*)",
+                 "([^#{$WAJI}]+)",
                  "[[:space:]]+",
-                 "([^$WAJI].*)",
+                 "([^#{$WAJI}]*[#{$WAJI}].*)",
                  "$"
                ].join
              )
@@ -157,6 +157,8 @@ def main
             reference = tmp if reference.nil?
           end
           reference = "" if reference.nil?
+
+          puts "" if 1 == 1
           pp text, info_title, info_lyric, reference if 1 == 1 # DEBUG
 
           #xxx (
