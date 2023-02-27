@@ -159,7 +159,7 @@ def main
           reference = "" if reference.nil?
 
           puts "" if 1 == 1
-          pp text, info_title, info_lyric, reference if 1 == 1 # DEBUG
+          pp name, href, text, info_title, info_lyric, reference if 1 == 1 # DEBUG
 
           #xxx (
           #  {
