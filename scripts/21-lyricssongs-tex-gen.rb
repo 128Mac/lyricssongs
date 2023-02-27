@@ -147,10 +147,11 @@ def main
               .gsub( /[[:space:]]+$/, ''  ) ,
           ]
           # DONE text から 整理番号情報を取り出す
-          if info_lyric[0].match( /(Op[.]|WoW|D )/ )
+          if info_lyric[0].match( /(Op[.]|WoO|TrV|D )/ )
             tmp =
               info_lyric[0]
                 .sub( /[[:space:]]*[(].*/, '')
+
             info_lyric[0] =
               info_lyric[0]
                 .sub( /#{tmp}[[:space:]]*/, '' )
