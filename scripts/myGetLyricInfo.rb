@@ -133,6 +133,7 @@ if __FILE__ == $0 then
       ":Reference=>[#{lyricinfo.lyricinfo[:Reference]}]",
       ":Lyricist=>#{lyricinfo.lyricinfo[:Lyricist]}",
       ":Composer=>#{lyricinfo.lyricinfo[:Composer]}",
+      ":Lyric=>#{lyricinfo.lyricinfo[:Lyric]}",
     ].join( "\n    " )
     #puts lyricinfo.lyricinfo[:Lyric]
   end
