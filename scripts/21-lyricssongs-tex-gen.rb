@@ -72,7 +72,8 @@ def main
           href = e2[:href]
           text = e2[:text]
 
-          href = href.to_s if href.kind_of?( Array )
+          href = href.join( '/' ) if href.kind_of?( Array )
+
           # <a> や <p> の場合、先行する文字がないのでから文字追加
           # してデータ構造を単純化
           # text[0] ..... <a><p>に先行する文字
