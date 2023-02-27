@@ -44,9 +44,9 @@ def main
       sectionsize = 0
       sbi.songbookinfolist.each do | e1 |
         e1.each do | e2 |
-            case e2[:name]
-            when 'a', 'p' then sectionsize += 1
-            end
+          case e2[:name]
+          when 'a', 'p' then sectionsize += 1
+          end
         end # e1.each do | e2 |
       end # sbi.songbookinfolist.each do | e1 |
 
@@ -65,6 +65,7 @@ def main
       # TODO toc list A
       # TODO toc list B
       # TODO Sxxx.tex
+
       sbi.songbookinfolist.each do | e1 |
         e1.each do | e2 |
 
@@ -85,11 +86,13 @@ def main
           when 'a', 'p' then sectionsize += 1
           end
 
-          STDOUT.puts ["#{composer_name}",
-                       "#{name}"             ,
-                       "#{href}"             ,
-                       "#{text}"             ,
-                      ].join( "<>" ) if 1 == 0
+          if 1 == 0 # DEBUG
+            STDOUT.puts ["#{composer_name}" ,
+                         "#{name}"          ,
+                         "#{href}"          ,
+                         "#{text}"          ,
+                        ].join( "<>" )
+          end # DEBUG
           # TODO href のファイルの有無
 
           reference = nil
@@ -99,22 +102,24 @@ def main
 
             if File.exist?( href )
 
-             lyricinfo = MyGetLyricInfo.new( href )
-             if 1 == 0
-               puts ""
-               puts [
-                 # "#{lyricinfo.lyricinfo[:File]}",
-                 # ":Title=>#{lyricinfo.lyricinfo[:Title]}",
-                 ":Reference=>[#{lyricinfo.lyricinfo[:Reference]}]",
-                 # ":Lyricist=>#{lyricinfo.lyricinfo[:Lyricist]}",
-                 # ":Composer=>#{lyricinfo.lyricinfo[:Composer]}",
-               ].join( "\n    " )
-             end
-             unless lyricinfo.lyricinfo[:Reference] == []
-               reference = lyricinfo.lyricinfo[:Reference]
-             end
-            end
-          end
+              lyricinfo = MyGetLyricInfo.new( href )
+
+              if 1 == 0 # DEBUG
+                puts ""
+                puts [
+                  # "#{lyricinfo.lyricinfo[:File]}",
+                  # ":Title=>#{lyricinfo.lyricinfo[:Title]}",
+                  ":Reference=>[#{lyricinfo.lyricinfo[:Reference]}]",
+                  # ":Lyricist=>#{lyricinfo.lyricinfo[:Lyricist]}",
+                  # ":Composer=>#{lyricinfo.lyricinfo[:Composer]}",
+                ].join( "\n    " )
+              end #DEBUG
+
+              unless lyricinfo.lyricinfo[:Reference] == []
+                reference = lyricinfo.lyricinfo[:Reference]
+              end
+            end # if File.exist?( href )
+          end # unless href.nil?
 
           # DONE    あれば そのファイルから 整理番号情報を取り出す
           # DONE text を 原文 と 訳文 に分離
@@ -130,9 +135,9 @@ def main
             info_title = [ $1, $2 ]
             info_title[0] =
               info_title[0].sub( /^■/, '' )
-          else
+          else # if text[1].match
             info_title = [ "", "" ]
-          end
+          end # if text[1].match
 
           info_lyric = [
             [ text[ 2 .. ] ].join
@@ -157,11 +162,34 @@ def main
                 .sub( /#{tmp}[[:space:]]*/, '' )
 
             reference = tmp if reference.nil?
-          end
+          end # if info_lyric[0].match( /(Op[.]|WoO|TrV|D )/ )
           reference = "" if reference.nil?
 
-          puts "" if 1 == 1
-          pp name, href, text, info_title, info_lyric, reference if 1 == 1 # DEBUG
+          if 1 == 0 # DEBUG DEBUG DEBUG DEBUG
+            msg = []
+            msg.push(
+              [ '',
+                ":name=>[#{name}]",
+                ":href=>[#{href}]",
+                ":title=>[#{text}]",
+                ":info_title=>[#{info_title}]",
+                ":info_lyric=>[#{info_lyric}]",
+                ":reference=>[#{reference}]",
+              ].join( "\n#{File.basename( html )}::" )
+            )
+            unless lyricinfo.nil?
+              msg.push(
+                [ '',
+                  ":Title=>[#{lyricinfo.lyricinfo[:Title]}]",
+                  ":Reference=>[#{lyricinfo.lyricinfo[:Reference]}]",
+                  ":Lyricist=>[#{lyricinfo.lyricinfo[:Lyricist]}]",
+                  ":Composer=>[#{lyricinfo.lyricinfo[:Composer]}]",
+                ].join ( "\n#{composer}:#{href}:" )
+              )
+            end
+
+            STDERR.puts msg.join
+          end # if 1 == 0 DEBUG
 
           #xxx (
           #  {
@@ -180,225 +208,223 @@ def main
 end
 
 def xxx( ee )
-  pp ee
+    pp ee
 end
 
 def def_booklet( composerdir, html ) # TODO CHECK
 
-  return nil unless File.exist?( html )
+      return nil unless File.exist?( html )
 
-  doc = Nokogiri::HTML( File.read( html ) )
+      doc = Nokogiri::HTML( File.read( html ) )
 
-  title = doc.xpath( '/html/head/title' )
+      title = doc.xpath( '/html/head/title' )
 
-  return if doc.xpath( '//font' ).size < 1
-  return if doc.xpath( '//td'   ).size < 1
+      return if doc.xpath( '//font' ).size < 1
+      return if doc.xpath( '//td'   ).size < 1
 
-  output = []
-  info = []
-  data = []
+      output = []
+      info = []
+      data = []
 
-  doc.xpath( '//font' ).each_with_index do | ee, i |
-    info[i] =
-      ee.to_s
-        .gsub( /[[:blank:]]*<\/*font[^<>]*>[[:blank:]]*/, '' )
-        .gsub( /\n/ , ' ' )
-        .gsub( /([[:space:]]|<br>)+/ , ' ' )
-  end
-
-  doc.xpath( '//td' ).each_with_index do | ee, i |
-    data[i] =
-      ee.to_s
-        .sub( /^<[^<>]+>[[:space:]]*/, '' )
-        .split( /[[:space:]]*<[^<>]+>[[:space:]]*/ )
-
-  end
-
-  data.each do | ee |   # 最後の要素が空だったら削除
-    while ee.last.size == 0 do ee.pop end
-  end
-
-  if data[0].size == 2
-    data[0][3] = nil
-  end
-
-  if data[0][3].nil?
-    sec = sub = ""
-  else
-    sec = data[0][3].gsub( /([\w.]+\d+).*/, '\1' )
-    sub = data[0][3].gsub( /.*(\d+)$/     , '\1' )
-  end
-
-  lyricist = []
-  composer = []
-  [ 5, 7 ].each do |i|
-    if info[i].nil?
-      lyricist[i] = ''
-      composer[i] = ''
-      next
-    end
-
-    lyricist[i] =
-      info[i]
-        .gsub( /[#{NIHONGO}]+/            , ' '      )
-        .gsub( /[(][[[:space:]]]+[)]/     , ' '      )
-        .gsub( /[(]([^()]+)[)]/           , '\1'     )
-        .gsub( /,*([\d]{4})(-[\d]{4})*/   , '(\1\2)' )
-        .gsub( /<[^<>]+>/                 , ' '      )
-        .gsub( /[[[:space:]]]+/           , ' '      )
-        .sub(  /^[[[:space:]],]+/         , ''       )
-        .sub(  /[[[:space:]],]+$/         , ''       )
-
-    composer[i] =
-      info[i]
-        .gsub( /[^#{NIHONGO}[:space:]]+/  , ' '      )
-        .gsub( /(（[[:space:]]*）)/       , ''       )
-        .gsub( /([（）])[[:space:]]+/     , '\1'     )
-        .gsub( /[[[:space:]]]+/           , ' '      )
-        .sub(  /^[[[:space:]],]+/         , ''       )
-        .sub(  /[[[:space:]],]+$/         , ''       )
-  end
-
-  yomi = myYomi(data[1][1])
-  basename = File.basename( html, ".htm" )
-
-  output.push(
-    [
-      "\\mySUBSECTION{#{sec.gsub(/^[^\d]+/, '')}}{#{sub}}%#{sec}",
-      "{ #{data[0][1]} }"  , # { Liebestreu }
-      "{ #{data[1][1]} }"  , # { 愛の誠 }
-      "{ #{lyricist[5]} }" , # { Robert Runic, (1805-1852) }
-      "{ #{composer[5]} }" , # { Johannes Brahms, (1833-1897) }
-      "{ #{lyricist[7]} }" , # { ライニック }
-      "{ #{composer[7]} }" , # { ブラームス }
-      "{ #{yomi} }"        , # { あいのまこと }
-      "",
-      "\\label{myindex:subsection:#{basename}}",
-      "",
-    ].join( "\n" )
-  )
-
-  output.push( "\\begin{myTBLR}[]" )
-  ren_pushd = nil
-  ( 2 .. data.size - 1 ).select( &:even? ).each do | oo |
-    tt = oo + 1
-
-    ( 0 .. [data[oo].size, data[tt].size].max - 1 ).each do | i |
-
-      orig = data[oo][i].nil? ? '' : data[oo][i]
-      tran = data[tt][i].nil? ? '' : data[tt][i]
-
-      if ren_pushd.nil?
-        next if orig.empty? && tran.empty?
-        ren_pushd = true
+      doc.xpath( '//font' ).each_with_index do | ee, i |
+        info[i] =
+          ee.to_s
+            .gsub( /[[:blank:]]*<\/*font[^<>]*>[[:blank:]]*/, '' )
+            .gsub( /\n/ , ' ' )
+            .gsub( /([[:space:]]|<br>)+/ , ' ' )
       end
 
-      if orig.empty? && tran.empty?
-        output.push( "  \\\\%連間空行" )
+      doc.xpath( '//td' ).each_with_index do | ee, i |
+        data[i] =
+          ee.to_s
+            .sub( /^<[^<>]+>[[:space:]]*/, '' )
+            .split( /[[:space:]]*<[^<>]+>[[:space:]]*/ )
+
+      end
+
+      data.each do | ee |   # 最後の要素が空だったら削除
+        while ee.last.size == 0 do ee.pop end
+      end
+
+      if data[0].size == 2
+        data[0][3] = nil
+      end
+
+      if data[0][3].nil?
+        sec = sub = ""
       else
-        output.push(
-          [
-            "  { #{orig} } &" ,
-            "  { #{tran} }"   ,
-            "  \\\\"
-          ].join( "\n" )
-        )
+        sec = data[0][3].gsub( /([\w.]+\d+).*/, '\1' )
+        sub = data[0][3].gsub( /.*(\d+)$/     , '\1' )
       end
-    end
-  end
-  output.push( "\\end{myTBLR}" )
 
-  ff = "#{composerdir}/#{basename}.tex"
-  File.open( ff, "w" ) do | f |
-    f.puts myConvertHtml2tex(
-             output.join( "\n" )
-           )
-  end
+      lyricist = []
+      composer = []
+      [ 5, 7 ].each do |i|
+        if info[i].nil?
+          lyricist[i] = ''
+          composer[i] = ''
+          next
+        end
 
+        lyricist[i] =
+          info[i]
+            .gsub( /[#{NIHONGO}]+/            , ' '      )
+            .gsub( /[(][[[:space:]]]+[)]/     , ' '      )
+            .gsub( /[(]([^()]+)[)]/           , '\1'     )
+            .gsub( /,*([\d]{4})(-[\d]{4})*/   , '(\1\2)' )
+            .gsub( /<[^<>]+>/                 , ' '      )
+            .gsub( /[[[:space:]]]+/           , ' '      )
+            .sub(  /^[[[:space:]],]+/         , ''       )
+            .sub(  /[[[:space:]],]+$/         , ''       )
+
+        composer[i] =
+          info[i]
+            .gsub( /[^#{NIHONGO}[:space:]]+/  , ' '      )
+            .gsub( /(（[[:space:]]*）)/       , ''       )
+            .gsub( /([（）])[[:space:]]+/     , '\1'     )
+            .gsub( /[[[:space:]]]+/           , ' '      )
+            .sub(  /^[[[:space:]],]+/         , ''       )
+            .sub(  /[[[:space:]],]+$/         , ''       )
+      end
+
+      yomi = myYomi(data[1][1])
+      basename = File.basename( html, ".htm" )
+
+      output.push(
+        [
+          "\\mySUBSECTION{#{sec.gsub(/^[^\d]+/, '')}}{#{sub}}%#{sec}",
+          "{ #{data[0][1]} }"  , # { Liebestreu }
+          "{ #{data[1][1]} }"  , # { 愛の誠 }
+          "{ #{lyricist[5]} }" , # { Robert Runic, (1805-1852) }
+          "{ #{composer[5]} }" , # { Johannes Brahms, (1833-1897) }
+          "{ #{lyricist[7]} }" , # { ライニック }
+          "{ #{composer[7]} }" , # { ブラームス }
+          "{ #{yomi} }"        , # { あいのまこと }
+          "",
+          "\\label{myindex:subsection:#{basename}}",
+          "",
+        ].join( "\n" )
+      )
+
+      output.push( "\\begin{myTBLR}[]" )
+      ren_pushd = nil
+      ( 2 .. data.size - 1 ).select( &:even? ).each do | oo |
+        tt = oo + 1
+
+        ( 0 .. [data[oo].size, data[tt].size].max - 1 ).each do | i |
+
+          orig = data[oo][i].nil? ? '' : data[oo][i]
+          tran = data[tt][i].nil? ? '' : data[tt][i]
+
+          if ren_pushd.nil?
+            next if orig.empty? && tran.empty?
+            ren_pushd = true
+          end
+
+          if orig.empty? && tran.empty?
+            output.push( "  \\\\%連間空行" )
+          else
+            output.push(
+              [
+                "  { #{orig} } &" ,
+                "  { #{tran} }"   ,
+                "  \\\\"
+              ].join( "\n" )
+            )
+          end
+        end
+      end
+      output.push( "\\end{myTBLR}" )
+
+      ff = "#{composerdir}/#{basename}.tex"
+      File.open( ff, "w" ) do | f |
+        f.puts myConvertHtml2tex(
+                 output.join( "\n" )
+               )
+      end
 end
 
 def def_composer( composer, html ) # TODO CHECK
 
-  return nil unless File.exist?( html )
-  doc = Nokogiri::HTML( File.read( html ) )
+      return nil unless File.exist?( html )
+      doc = Nokogiri::HTML( File.read( html ) )
 
-  title = doc.xpath( '/html/head/title' )
+      title = doc.xpath( '/html/head/title' )
 
-  composer_A_file = [] # 分冊化された作曲集リスト
-  composer_B_file = ""    # 小冊子毎
-  composer_B_file_nbr = 0 #
+      composer_A_file = [] # 分冊化された作曲集リスト
+      composer_B_file = ""    # 小冊子毎
+      composer_B_file_nbr = 0 #
 
-  st = doc.xpath( '//p/b' ).size # TODO
-  if st == 0                     # TODO
-    p st
-    raise
-    return                       # TODO
-  end                            # TODO
+      st = doc.xpath( '//p/b' ).size # TODO
+      if st == 0                     # TODO
+        p st
+        raise
+        return                       # TODO
+      end                            # TODO
 
-  doc
-    .xpath( '//body' )
-    .each_with_index do | body, body_ix | # doc.xpath('//body' ) {
+      doc
+        .xpath( '//body' )
+        .each_with_index do | body, body_ix | # doc.xpath('//body' ) {
 
-    composerinfo = proc_010_composer_info( doc )
-    next unless composerinfo
+        composerinfo = proc_010_composer_info( doc )
+        next unless composerinfo
 
-    repp  = '<p></p>'
+        repp  = '<p></p>'
 
-    doc.to_html
-      .split( /(#{repp})/ ).each do | dir_p_a |
+        doc.to_html
+          .split( /(#{repp})/ ).each do | dir_p_a |
 
-      dir_p_a = proc_030_dir_p_a( dir_p_a )
-      next if ( dir_p_a.size < 1 )
+          dir_p_a = proc_030_dir_p_a( dir_p_a )
+          next if ( dir_p_a.size < 1 )
 
-      composer_B_file_nbr += 1
-      composer_B_file =
-        sprintf( "#{composer}/#{composer}-B-%03d.tex",
-                 composer_B_file_nbr
-               )
+          composer_B_file_nbr += 1
+          composer_B_file =
+            sprintf( "#{composer}/#{composer}-B-%03d.tex",
+                     composer_B_file_nbr
+                   )
 
-      proc_033_composer_B_file( dir_p_a, composer, composer_B_file )
+          proc_033_composer_B_file( dir_p_a, composer, composer_B_file )
 
-      composer_A_file.push( "\\input{#{composer_B_file}}" )
-    end
+          composer_A_file.push( "\\input{#{composer_B_file}}" )
+        end
 
-    proc_composer_A_file(
-      composer, composerinfo, composer_A_file
-    )
-  end # doc.xpath('//body') }
+        proc_composer_A_file(
+          composer, composerinfo, composer_A_file
+        )
+      end # doc.xpath('//body') }
 end
 
 def proc_010_composer_info( doc ) # TODO CHECK
 
-  re1 = "[^[:blank:]]+" # 日本語表記
-  re2 = "[^,()]+"       # 名前スペル
-  re3 = "[^()]+"        # 誕生年-死亡年
-  re4 = ".*"            # 国名
+      re1 = "[^[:blank:]]+" # 日本語表記
+      re2 = "[^,()]+"       # 名前スペル
+      re3 = "[^()]+"        # 誕生年-死亡年
+      re4 = ".*"            # 国名
 
-  composerinfo =
-    doc.xpath('//p')[1].text
-      .gsub( /\n/, '' )
-      .match(/(#{re1})[[:blank:]]+[(](#{re2}),(#{re3})[)][[:blank:]]+(#{re4})/)
+      composerinfo =
+        doc.xpath('//p')[1].text
+          .gsub( /\n/, '' )
+          .match(/(#{re1})[[:blank:]]+[(](#{re2}),(#{re3})[)][[:blank:]]+(#{re4})/)
 
-  composerinfo
+      composerinfo
 end
 
 def proc_030_dir_p_a( tt ) # TODO CHECK
 
-  tt = '' if tt =~ /(!DOCTYPE html PUBLIC|更新情報へ|曲目一覧)/
-  tt = tt.gsub( /(>)[[:blank:]]+/                    , '\1' )
-         .gsub( /[[:blank:]]+(>)/                    , '\1' )
-         .gsub( /<(hr|dir)>/                         , '' )
-         .gsub( /[[:blank:]]+(\d)/                   , ' \1' )
-         .gsub( /[[:blank:]]+(\n)/                   , '\1' )
-         .gsub( /(\n)+/                              , '\1' )
-         .gsub( /[[:blank:]]*<p><b>(■)([^<][^<>]*)/ , '\1<a href="">\2</a>' )
-         .gsub( /<\/*(p|b|body|html|dir)>/            , ''   )
-         .sub(  /^[[:space:]]+/, '').sub( /[[:space:]]+$/, '' )
-  tt
+      tt = '' if tt =~ /(!DOCTYPE html PUBLIC|更新情報へ|曲目一覧)/
+      tt = tt.gsub( /(>)[[:blank:]]+/                    , '\1' )
+             .gsub( /[[:blank:]]+(>)/                    , '\1' )
+             .gsub( /<(hr|dir)>/                         , '' )
+             .gsub( /[[:blank:]]+(\d)/                   , ' \1' )
+             .gsub( /[[:blank:]]+(\n)/                   , '\1' )
+             .gsub( /(\n)+/                              , '\1' )
+             .gsub( /[[:blank:]]*<p><b>(■)([^<][^<>]*)/ , '\1<a href="">\2</a>' )
+             .gsub( /<\/*(p|b|body|html|dir)>/            , ''   )
+             .sub(  /^[[:space:]]+/, '').sub( /[[:space:]]+$/, '' )
+      tt
 end
 
-def proc_033_composer_B_file( items, composer_dir, composer_B_filename ) # TODO CHECK
-
+def proc_033_composer_B_file( items, composer_dir, composer_B_filename ) #
   composer_B_file            = []
   composer_linder_input_file = []
   composer_linder_longtblr   = [] # 小目次情報
@@ -532,7 +558,8 @@ def proc_033_composer_B_file( items, composer_dir, composer_B_filename ) # TODO 
   end
 end
 
-def proc_composer_A_file( composer, composerinfo, composer_a_file ) # TODO CHECK
+def proc_composer_A_file( composer, composerinfo, composer_a_file )
+  # TODO CHECK
 
   composerTEMPLATE  = "sty/lieder-template.tex"
   composerTEXFILE = "#{composer}/#{composer}.tex"
@@ -544,7 +571,6 @@ def proc_composer_A_file( composer, composerinfo, composer_a_file ) # TODO CHECK
              .sub( /%%--COMPOSERINFO--%%/ , composerinfo[0] )
              .sub( /%%--作曲家--%%/ , composerinfo[1] )
              .sub( /%%--INPUT--%%/ , "#{composer_a_file.join("\n")}" )
-
   end
 
   File.open( composerTEXFILEhyperlink, "w" ) do | f |
