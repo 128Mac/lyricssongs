@@ -93,17 +93,24 @@ class MyGetLyricInfo
       end
     end
 
-    l1 = lyricist[0].join( ' ' ).gsub( /[#{$WAJI}]+/  , ' ' ).sub( /^[[:space:],]+/ , '' ).sub( /[[:space:]]+$/ , '' )
-    l2 = lyricist[1].join( ' ' ).gsub( /[^#{$WAJI}]+/ , ' ' ).sub( /^[[:space:],]+/ , '' ).sub( /[[:space:]]+$/ , '' )
-    c1 = composer[0].join( ' ' ).gsub( /[#{$WAJI}]+/  , ' ' ).sub( /^[[:space:],]+/ , '' ).sub( /[[:space:]]+$/ , '' )
-    c2 = composer[1].join( ' ' ).gsub( /[^#{$WAJI}]+/ , ' ' ).sub( /^[[:space:],]+/ , '' ).sub( /[[:space:]]+$/ , '' )
+    def l0l1c0c1( ee, pp )
+      ee.join( ' '                     )
+        .gsub(  /[#{pp}]+/       , ' ' ) # 違うところ
+        .sub(   /^[[:space:],]+/ , ''  )
+        .sub(   /[[:space:]]+$/  , ''  )
+    end
+
+    l0 = l0l1c0c1( lyricist[0], "#{$WAJI}"  )
+    l1 = l0l1c0c1( lyricist[1], "^#{$WAJI}" )
+    c0 = l0l1c0c1( composer[0], "#{$WAJI}"  )
+    c1 = l0l1c0c1( composer[1], "^#{$WAJI}" )
 
     @lyricinfo = {
       :File      => html,
       :Title     => [ titleORIG , titleTRAN ],
       :Reference => reference,
-      :Lyricist  => [ l1, l2 ],
-      :Composer  => [ c1, c2 ],
+      :Lyricist  => [ l0, l1 ],
+      :Composer  => [ c0, c1 ],
       :Lyric     => poemdata
     }
   end
