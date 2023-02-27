@@ -132,14 +132,14 @@ def main
                  "$"
                ].join
              )
-            info_title = [ $1, $2 ]
-            info_title[0] =
-              info_title[0].sub( /^■/, '' )
+            misc_info_title = [ $1, $2 ]
+            misc_info_title[0] =
+              misc_info_title[0].sub( /^■/, '' )
           else # if text[1].match
-            info_title = [ "", "" ]
+            misc_info_title = [ "", "" ]
           end # if text[1].match
 
-          info_lyric = [
+          misc_info_lyric = [
             [ text[ 2 .. ] ].join
               .gsub( /[#{$WAJI}][^[:space:]]+/, '' )
               .gsub( /[[:space:]]+/ , ' ' )
@@ -152,17 +152,17 @@ def main
               .gsub( /[[:space:]]+$/, ''  ) ,
           ]
           # DONE text から 整理番号情報を取り出す
-          if info_lyric[0].match( /(Op[.]|WoO|TrV|D )/ )
+          if misc_info_lyric[0].match( /(Op[.]|WoO|TrV|D )/ )
             tmp =
-              info_lyric[0]
+              misc_info_lyric[0]
                 .sub( /[[:space:]]*[(].*/, '')
 
-            info_lyric[0] =
-              info_lyric[0]
+            misc_info_lyric[0] =
+              misc_info_lyric[0]
                 .sub( /#{tmp}[[:space:]]*/, '' )
 
             reference = tmp if reference.nil?
-          end # if info_lyric[0].match( /(Op[.]|WoO|TrV|D )/ )
+          end # if misc_info_lyric[0].match( /(Op[.]|WoO|TrV|D )/ )
           reference = "" if reference.nil?
 
           if 1 == 0 # DEBUG DEBUG DEBUG DEBUG
@@ -172,8 +172,8 @@ def main
                 ":name=>[#{name}]",
                 ":href=>[#{href}]",
                 ":title=>[#{text}]",
-                ":info_title=>[#{info_title}]",
-                ":info_lyric=>[#{info_lyric}]",
+                ":misc_info_title=>[#{misc_info_title}]",
+                ":misc_info_lyric=>[#{misc_info_lyric}]",
                 ":reference=>[#{reference}]",
               ].join( "\n#{File.basename( html )}::" )
             )
