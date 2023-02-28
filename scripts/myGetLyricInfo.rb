@@ -84,11 +84,11 @@ class MyGetLyricInfo
       else
         poemdata.push(
           ee.to_html
-            .gsub(  /(<b>|<[^b][^<>]*>)/                      , ''   ) # <br> 以外の html tag 削除
-            .sub(   /^[[:space:]]*(<br>|[[:space:]])/         , ''   ) # 先頭の空白削除
-            .sub(   /[[:space:]]+(<br>)/                      , '\1' )
-            .sub(   /(<br>[[:space:]]*)*(<br>|[[:space:]])*$/ , ''   ) # 最後の <br> を含む空白を削除
-            .split( /<br>/                          )
+            .gsub(  /(<b>|<[^b][^<>]*>)/    , ''   ) # <br> 以外の html tag 削除
+            .gsub(  /[[:space:]]+(<br>)/    , '\1' )
+            .sub(   /^[[:space:]]+/         , ''   ) # 先頭の空白削除
+            .sub(   /(<br>|[[:space:]]+)+$/ , ''   ) # 最後の <br> を含む空白を削除
+            .split( /<br>/ )
         )
       end
     end
