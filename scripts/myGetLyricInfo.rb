@@ -23,7 +23,7 @@ class MyGetLyricInfo
     fontinfo.each_with_index do | ee, ii |
 
       tmpA.push(
-        ee.to_s
+        ee.to_html
           #.gsub(  /<a ([^<>]*)>/ , '<A>\1<A>'         ) # 将来の作曲者や作詞者情報が必要になった時
           .gsub(   /[[:space:]]+/ , ' '                )
           .split(  /[[:space:]]*<[^<>]+>[[:space:]]*/  )
@@ -52,7 +52,7 @@ class MyGetLyricInfo
       case ii
       when 0 then
 
-        ee.to_s
+        ee.to_html
           .split( /[[:space:]]*<[^<>]+>[[:space:]]*/ )
           .each do | eee |
 
@@ -68,7 +68,7 @@ class MyGetLyricInfo
 
       when 1 then
         tmp1 = []
-        ee.to_s
+        ee.to_html
           .split( /[[:space:]]*<[^<>]+>[[:space:]]*/ )
           .each do | eee |
 
