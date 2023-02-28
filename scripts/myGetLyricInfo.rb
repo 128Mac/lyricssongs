@@ -133,8 +133,30 @@ if __FILE__ == $0 then
       ":Reference=>[#{lyricinfo.lyricinfo[:Reference]}]",
       ":Lyricist=>#{lyricinfo.lyricinfo[:Lyricist]}",
       ":Composer=>#{lyricinfo.lyricinfo[:Composer]}",
-      ":Lyric=>#{lyricinfo.lyricinfo[:Lyric]}",
+      # ":Lyric=>#{lyricinfo.lyricinfo[:Lyric]}",
     ].join( "\n    " )
-    #puts lyricinfo.lyricinfo[:Lyric]
+
+    array = []
+    ( 0 .. lyricinfo.lyricinfo[:Lyric].size - 1 )
+      .select( &:even? ).each do | i |
+
+      ( 0 ..
+        [ lyricinfo.lyricinfo[:Lyric][i+0].size,
+          lyricinfo.lyricinfo[:Lyric][i+1].size
+        ].max - 1 ).each do | j |
+
+        oo = lyricinfo.lyricinfo[:Lyric][i  ][j]
+        tt = lyricinfo.lyricinfo[:Lyric][i+1][j]
+
+        if "#{oo}#{tt}".sub( /[[:space:]]+/, '' ).size > 0
+          array.push(
+            sprintf "\t{ %-30s } & { %s } \\\\", oo, tt
+          )
+        else
+          array.push( "\t\\\\% 連間空行" )
+        end
+      end
+      puts array
+    end
   end
 end
