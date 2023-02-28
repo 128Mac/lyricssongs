@@ -10,7 +10,7 @@
 $LOAD_PATH.push( File.expand_path( __FILE__ ) )
 require_relative 'myGit'
 require_relative 'myYomi'
-#require_relative 'myConvertHtml2tex'
+require_relative 'myConvertHtml2tex'
 #require_relative 'myGetHtmlHash'
 require_relative 'myGetLyricInfo'
 require_relative 'myGetSongbookInfo'
@@ -18,17 +18,20 @@ require_relative 'myGetSongbookInfo'
 def main
 
   if __FILE__ == $0 then
-    ARGV.grep( /.htm$/ ).each do | html |
-      next nil unless File.exist?( html )
+    ARGV.grep( /.htm$/ ).each do | compfile |
+      next nil unless File.exist?( compfile )
 
-      composer = File.basename( html, '.htm' )
-      sbi       = MyGetSongbookInfo.new( html )
+      composer = File.basename( compfile, '.htm' )
+
+      myGit( composer, '!*.tex' )
+
+      sbi       = MyGetSongbookInfo.new( compfile )
 
       if mm = sbi.songbookinfotitle.match(
            [
-             "(.*[[#{$WAJI}]])",
-             "[[:space:]]+",
-             "([^[:space:]].*)",
+             "(.*[[#{$WAJI}]])" ,
+             "[[:space:]]+"     ,
+             "([^[:space:]].*)" ,
            ].join
          )
         composer_name = [
@@ -36,7 +39,7 @@ def main
           mm[2] ]
       else
         composer_name =
-          [ sbi.songbookinfotitle,
+          [ sbi.songbookinfotitle ,
             sbi.songbookinfotitle
           ]
       end
@@ -51,9 +54,9 @@ def main
       end # sbi.songbookinfolist.each do | e1 |
 
       composer_section_filename_format =
-        [ "#{composer}/#{composer}-section-",
-          "%0#{( sectionsize - 1 ).to_s.size}d",
-          ".tex",
+        [ "#{composer}/#{composer}-section-"    ,
+          "%0#{( sectionsize - 1 ).to_s.size}d" ,
+          ".tex"                                ,
         ].join
 
       # DONE セクション毎のファイル名 ... XXX/XXX-section-xxx.tex
@@ -70,136 +73,140 @@ def main
         e1.each do | e2 |
 
           name = e2[:name]
-          href = e2[:href]
-          text = e2[:text]
+          textfile = e2[:href]
+          comporiginaltext = e2[:text]
 
-          href = href.join( '/' ) if href.kind_of?( Array )
+          textfile = textfile.join( '/' ) if textfile.kind_of?( Array )
 
           # <a> や <p> の場合、先行する文字がないのでから文字追加
           # してデータ構造を単純化
-          # text[0] ..... <a><p>に先行する文字
-          # text[1] ..... タイトル
-          # text[2..] ... その他情報
-          text.unshift( "" ) unless text[0] =~ /^\d+\w*$/
+          # comporiginaltext[0] ..... <a><p>に先行する文字
+          # comporiginaltext[1] ..... タイトル
+          # comporiginaltext[2..] ... その他情報
+          comporiginaltext.unshift( "" ) unless comporiginaltext[0] =~ /^\d+\w*$/
 
           case e2[:name]
           when 'a', 'p' then sectionsize += 1
           end
 
           if 1 == 0 # DEBUG
-            STDOUT.puts ["#{composer_name}" ,
-                         "#{name}"          ,
-                         "#{href}"          ,
-                         "#{text}"          ,
+            STDOUT.puts ["#{composer_name}"    ,
+                         "#{name}"             ,
+                         "#{textfile}"         ,
+                         "#{comporiginaltext}" ,
                         ].join( "<>" )
           end # DEBUG
-          # TODO href のファイルの有無
+          # TODO textfile のファイルの有無
 
           reference = nil
           lyricinfo = nil
 
-          unless href.nil?
+          unless textfile.nil?
 
-            if File.exist?( href )
+            if File.exist?( textfile )
 
-              lyricinfo = MyGetLyricInfo.new( href )
+              lyricinfo = MyGetLyricInfo.new( textfile )
 
               if 1 == 0 # DEBUG
                 puts ""
                 puts [
-                  # "#{lyricinfo.lyricinfo[:File]}",
-                  # ":Title=>#{lyricinfo.lyricinfo[:Title]}",
-                  ":Reference=>[#{lyricinfo.lyricinfo[:Reference]}]",
-                  # ":Lyricist=>#{lyricinfo.lyricinfo[:Lyricist]}",
-                  # ":Composer=>#{lyricinfo.lyricinfo[:Composer]}",
+                  # "#{lyricinfo.lyricinfo[:File]}"                  ,
+                  # ":Title=>#{lyricinfo.lyricinfo[:Title]}"         ,
+                  ":Reference=>[#{lyricinfo.lyricinfo[:Reference]}]" ,
+                  # ":Lyricist=>#{lyricinfo.lyricinfo[:Lyricist]}"   ,
+                  # ":Composer=>#{lyricinfo.lyricinfo[:Composer]}"   ,
                 ].join( "\n    " )
               end #DEBUG
 
               unless lyricinfo.lyricinfo[:Reference] == []
                 reference = lyricinfo.lyricinfo[:Reference]
               end
-            end # if File.exist?( href )
-          end # unless href.nil?
+            end # if File.exist?( textfile )
+          end # unless textfile.nil?
 
           # DONE    あれば そのファイルから 整理番号情報を取り出す
-          # DONE text を 原文 と 訳文 に分離
+          # DONE comporiginaltext を 原文 と 訳文 に分離
 
-          if text[1].match(
-               [ "^",
-                 "([^#{$WAJI}]+)",
-                 "[[:space:]]+",
-                 "([^#{$WAJI}]*[#{$WAJI}].*)",
+          if comporiginaltext[1].match(
+               [ "^"                          ,
+                 "([^#{$WAJI}]+)"             ,
+                 "[[:space:]]+"               ,
+                 "([^#{$WAJI}]*[#{$WAJI}].*)" ,
                  "$"
                ].join
              )
-            misc_info_title = [ $1, $2 ]
-            misc_info_title[0] =
-              misc_info_title[0].sub( /^■/, '' )
-          else # if text[1].match
-            misc_info_title = [ "", "" ]
-          end # if text[1].match
+            comptitle = [ $1, $2 ]
+            comptitle[0] =
+              comptitle[0].sub( /^■/, '' )
+          else # if comporiginaltext[1].match
+            comptitle = [ "", "" ]
+          end # if comporiginaltext[1].match
 
-          misc_info_lyric = [
-            [ text[ 2 .. ] ].join
-              .gsub( /[#{$WAJI}][^[:space:]]+/, '' )
-              .gsub( /[[:space:]]+/ , ' ' )
-              .gsub( /^[[:space:]]+/, ''  )
-              .gsub( /[[:space:]]+$/, ''  ) ,
-            [ text[ 2 .. ] ].join
-              .gsub( /[^#{$WAJI}]{2,}/, '' )
-              .gsub( /[[:space:]]+/ , ' ' )
-              .gsub( /^[[:space:]]+/, ''  )
-              .gsub( /[[:space:]]+$/, ''  ) ,
+          compmic = [
+            [ comporiginaltext[ 2 .. ] ].join
+              .gsub( /[#{$WAJI}][^[:space:]]+/ , ''  )
+              .gsub( /[[:space:]]+/            , ' ' )
+              .gsub( /^[[:space:]]+/           , ''  )
+              .gsub( /[[:space:]]+$/           , ''  ) ,
+            [ comporiginaltext[ 2 .. ] ].join
+              .gsub( /[^#{$WAJI}]{2,}/         , ''  )
+              .gsub( /[[:space:]]+/            , ' ' )
+              .gsub( /^[[:space:]]+/           , ''  )
+              .gsub( /[[:space:]]+$/           , ''  ) ,
           ]
-          # DONE text から 整理番号情報を取り出す
-          if misc_info_lyric[0].match( /(Op[.]|WoO|TrV|D )/ )
+          # DONE comporiginaltext から 整理番号情報を取り出す
+          if compmic[0].match( /(Op[.]|WoO|TrV|D )/ )
             tmp =
-              misc_info_lyric[0]
+              compmic[0]
                 .sub( /[[:space:]]*[(].*/, '')
 
-            misc_info_lyric[0] =
-              misc_info_lyric[0]
+            compmic[0] =
+              compmic[0]
                 .sub( /#{tmp}[[:space:]]*/, '' )
 
             reference = tmp if reference.nil?
-          end # if misc_info_lyric[0].match( /(Op[.]|WoO|TrV|D )/ )
+          end # if compmic[0].match( /(Op[.]|WoO|TrV|D )/ )
           reference = "" if reference.nil?
 
           if 1 == 0 # DEBUG DEBUG DEBUG DEBUG
             msg = []
             msg.push(
-              [ '',
-                ":name=>[#{name}]",
-                ":href=>[#{href}]",
-                ":title=>[#{text}]",
-                ":misc_info_title=>[#{misc_info_title}]",
-                ":misc_info_lyric=>[#{misc_info_lyric}]",
-                ":reference=>[#{reference}]",
-              ].join( "\n#{File.basename( html )}::" )
+              [ ''                                         ,
+                ":name=>[#{name}]"                         ,
+                ":textfile=>[#{textfile}]"                 ,
+                ":comporiginaltext=>[#{comporiginaltext}]" ,
+                ":comptitle=>[#{comptitle}]"               ,
+                ":compmic=>[#{compmic}]"                   ,
+                ":reference=>[#{reference}]"               ,
+              ].join( "\n#{File.basename( compfile )}::" )
             )
             unless lyricinfo.nil?
               msg.push(
-                [ '',
-                  ":Title=>[#{lyricinfo.lyricinfo[:Title]}]",
-                  ":Reference=>[#{lyricinfo.lyricinfo[:Reference]}]",
-                  ":Lyricist=>[#{lyricinfo.lyricinfo[:Lyricist]}]",
-                  ":Composer=>[#{lyricinfo.lyricinfo[:Composer]}]",
-                ].join ( "\n#{composer}:#{href}:" )
+                [ ''                                                 ,
+                  ":Title=>[#{lyricinfo.lyricinfo[:Title]}]"         ,
+                  ":Reference=>[#{lyricinfo.lyricinfo[:Reference]}]" ,
+                  ":Lyricist=>[#{lyricinfo.lyricinfo[:Lyricist]}]"   ,
+                  ":Composer=>[#{lyricinfo.lyricinfo[:Composer]}]"   ,
+                ].join ( "\n#{composer}:#{textfile}:" )
               )
             end
 
             STDERR.puts msg.join
           end # if 1 == 0 DEBUG
 
-          #xxx (
-          #  {
-          #    :composer => composer,
-          #    :songbookinfotitle => songbookinfotitle,
-          #    :name => name,
-          #    :href => href,
-          #    :text => text,
-          #  }
-          #)
+          tex_file_output (
+            {
+              :composer         => composer         ,
+              :name             => name             ,
+              :compfile         => compfile         ,
+              :textfile         => textfile         ,
+              :comporiginaltext => comporiginaltext ,
+              :comptitle        => comptitle        ,
+              :compmic          => compmic          ,
+              :reference        => reference        ,
+              :lyricinfo        => lyricinfo        ,
+            }
+          )
 
         end # e1.each do | e2 |
       end # sbi.songbookinfolist.each do | e1 |
@@ -207,8 +214,95 @@ def main
   end
 end
 
-def xxx( ee )
-    pp ee
+def tex_file_output( ee )
+
+
+  return nil if ee[:lyricinfo].nil?
+
+  yomi = yomi = myYomi( ee[:lyricinfo].lyricinfo[:Title][1] )
+  array = []
+
+  array.push(
+    [
+      [ "\\SUBSECTION" ],
+      [ "% タイトル #1 #2",
+        "{ #{ee[:lyricinfo].lyricinfo[:Title][0]} }",
+        "{ #{ee[:lyricinfo].lyricinfo[:Title][1]} }",
+      ].join( "\n" ),
+      [ "% 作詞情報 #3 #4",
+        "{ #{ee[:lyricinfo].lyricinfo[:Lyricist][0]} }",
+        "{ #{ee[:lyricinfo].lyricinfo[:Lyricist][1]} }",
+      ].join( "\n" ),
+      [ "% 作曲情報 #5 #6",
+        "{ #{ee[:lyricinfo].lyricinfo[:Composer][0]} }",
+        "{ #{ee[:lyricinfo].lyricinfo[:Composer][1]} }",
+      ].join( "\n"),
+      [ "{ #{yomi} }",
+        "% よみ情報 #7",
+      ].join,
+      [ "{ #{ee[:lyricinfo].lyricinfo[:Reference]} }",
+        "% 整理番号 #8",
+      ].join,
+    ].join( "\n" )
+  )
+
+  tmp = File.basename(ee[:textfile], ".htm" )
+  array.push(
+    "",
+    "\\label{myindex:subsection:#{tmp}}",
+  )
+
+  array.push(
+    "",
+    "\\begin{myTBLR}[]"
+  )
+
+  ( 0 .. ee[:lyricinfo].lyricinfo[:Lyric].size - 1 )
+    .select( &:even? ).each do | i |
+
+    array.push( "\\\\" ) if i > 0
+
+    tmpi = ee[:lyricinfo].lyricinfo[:Lyric][i+0].size
+    tmpj = ee[:lyricinfo].lyricinfo[:Lyric][i+1].size
+    if tmpi < tmpj
+      ( tmpi .. tmpj - 1 )
+        .each do | j |
+        ee[:lyricinfo].lyricinfo[:Lyric][i+0][j] = ""
+      end
+    end
+
+    ee[:lyricinfo].lyricinfo[:Lyric][i+0]
+      .zip( ee[:lyricinfo].lyricinfo[:Lyric][i+1] )
+      .each do | jj |
+
+      if jj.join.size > 0
+        array.push(
+          [ "{ #{jj[0]} } &",
+            "{ #{jj[1]} }",
+            "\\\\",
+          ].join( "\n" )
+        )
+      else
+        array.push( "\\\\% 連間空行" )
+      end
+    end
+  end
+
+  array.push(
+    "\\end{myTBLR}"
+  )
+
+  ff =
+    [ "#{ee[:composer]}"                  ,
+      "/"                                 ,
+      "#{File.basename( ee[:textfile] )}" ,
+      ".tex"                              ,
+    ].join
+  File.open( ff, "w" ) do | f |
+    f.puts myConvertHtml2tex(
+             array.join( "\n" )
+           )
+  end
 end
 
 def def_booklet( composerdir, html ) # TODO CHECK
