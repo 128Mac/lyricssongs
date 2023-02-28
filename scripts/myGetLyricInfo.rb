@@ -144,6 +144,15 @@ if __FILE__ == $0 then
 
       array.push( "  \\\\" ) if i > 0
 
+      tmpi = lyricinfo.lyricinfo[:Lyric][i+0].size
+      tmpj = lyricinfo.lyricinfo[:Lyric][i+1].size
+      if tmpi < tmpj
+        ( tmpi .. tmpj - 1 )
+          .each do | j |
+          lyricinfo.lyricinfo[:Lyric][i+0][j] = ""
+        end
+      end
+
       lyricinfo.lyricinfo[:Lyric][i+0]
         .zip( lyricinfo.lyricinfo[:Lyric][i+1] )
         .each_with_index do | jj |
