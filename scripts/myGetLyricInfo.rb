@@ -126,6 +126,7 @@ if __FILE__ == $0 then
     next unless File.exist?( html )
 
     lyricinfo = MyGetLyricInfo.new( html )
+
     puts ""
     puts [
       "#{lyricinfo.lyricinfo[:File]}",
@@ -137,26 +138,24 @@ if __FILE__ == $0 then
     ].join( "\n    " )
 
     array = []
+
     ( 0 .. lyricinfo.lyricinfo[:Lyric].size - 1 )
       .select( &:even? ).each do | i |
 
-      ( 0 ..
-        [ lyricinfo.lyricinfo[:Lyric][i+0].size,
-          lyricinfo.lyricinfo[:Lyric][i+1].size
-        ].max - 1 ).each do | j |
+      array.push( "  \\\\" ) if i > 0
 
-        oo = lyricinfo.lyricinfo[:Lyric][i  ][j]
-        tt = lyricinfo.lyricinfo[:Lyric][i+1][j]
+      lyricinfo.lyricinfo[:Lyric][i+0]
+        .zip( lyricinfo.lyricinfo[:Lyric][i+1] )
+        .each_with_index do | jj |
 
-        if "#{oo}#{tt}".sub( /[[:space:]]+/, '' ).size > 0
-          array.push(
-            sprintf "\t{ %-30s } & { %s } \\\\", oo, tt
-          )
+        if  jj.join.size  > 0
+          tmp = sprintf "  { %-40s } & { %s } \\\\", jj[0], jj[1]
+          array.push( tmp )
         else
-          array.push( "\t\\\\% 連間空行" )
+          array.push( "  \\\\% 連間空行" )
         end
       end
-      puts array
     end
+    puts array
   end
 end
