@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby -
 
-#require "date"
+require "date"
 #require 'fileutils'
 #require 'nkf'
 #require 'nokogiri'
@@ -18,14 +18,24 @@ require_relative 'myGetSongbookInfo'
 def main
 
   if __FILE__ == $0 then
-    ARGV.grep( /.htm$/ ).each do | compfile |
+
+    htmlfilescount = ARGV.grep( /.htm$/ ).size
+
+    ARGV.grep( /.htm$/ ).each_with_index do | compfile, number |
       next nil unless File.exist?( compfile )
+
+      STDERR.puts [ "#{number+1} / #{htmlfilescount}",
+                    DateTime.now.strftime( "%F %T" ),
+                    "#{compfile}",
+                  ].join( ' ' )
+
+      htmlfilescount -= 1
 
       composer = File.basename( compfile, '.htm' )
 
       myGit( composer, '!*.tex' )
 
-      sbi       = MyGetSongbookInfo.new( compfile )
+      sbi = MyGetSongbookInfo.new( compfile )
 
       if mm = sbi.songbookinfotitle.match(
            [
@@ -44,49 +54,53 @@ def main
           ]
       end
 
-      sectionsize = 0
+      sectioncount = 0
       sbi.songbookinfolist.each do | e1 |
         e1.each do | e2 |
           case e2[:name]
-          when 'a', 'p' then sectionsize += 1
+          when 'a', 'p' then sectioncount += 1
           end
         end # e1.each do | e2 |
       end # sbi.songbookinfolist.each do | e1 |
 
       composer_section_filename_format =
         [ "#{composer}/#{composer}-section-"    ,
-          "%0#{( sectionsize - 1 ).to_s.size}d" ,
+          "%0#{( sectioncount - 1 ).to_s.size}d" ,
           ".tex"                                ,
         ].join
 
       # DONE セクション毎のファイル名 ... XXX/XXX-section-xxx.tex
 
-      ( 0 .. sectionsize - 1 ).each do | ii |
-        STDOUT.puts sprintf( composer_section_filename_format, ii )  if 1 == 0
+      if 1 == 0 # DEBUG
+        ( 0 .. sectioncount - 1 ).each do | ii |
+          STDOUT.puts sprintf( composer_section_filename_format, ii )
+        end
       end
 
-      # TODO toc list A
-      # TODO toc list B
-      # TODO Sxxx.tex
+      bookARRAY    = []
+      sectionARRAY = []
+      sectioncount = 0
+      output_filename_of_section = ""
 
       sbi.songbookinfolist.each do | e1 |
         e1.each do | e2 |
 
-          name = e2[:name]
-          textfile = e2[:href]
-          comporiginaltext = e2[:text]
+          name             = e2[:name] # <a> <p> <dir>
+          textfile         = e2[:href] # 詩のファイル名 TEXT/Sxxx.htm
+          comporiginaltext = e2[:text] # タイトルやその他情報
 
           textfile = textfile.join( '/' ) if textfile.kind_of?( Array )
+          textfile = textfile.to_s
 
-          # <a> や <p> の場合、先行する文字がないのでから文字追加
-          # してデータ構造を単純化
-          # comporiginaltext[0] ..... <a><p>に先行する文字
-          # comporiginaltext[1] ..... タイトル
-          # comporiginaltext[2..] ... その他情報
-          comporiginaltext.unshift( "" ) unless comporiginaltext[0] =~ /^\d+\w*$/
-
-          case e2[:name]
-          when 'a', 'p' then sectionsize += 1
+          unless comporiginaltext[0] =~ /^\d+\w*$/
+            # 先行文字が無い <a> や <p><a> を <dir> と同形式にすることで
+            # 処理を単純化するための前処理
+            # 先行文字は作曲集の項番を示す数字列と
+            # 場合によってそれに続く補助英字で構成される
+            # comporiginaltext[0] ..... <a> や <p><a>に先行する文字
+            # comporiginaltext[1] ..... タイトル
+            # comporiginaltext[2..] ... その他情報
+            comporiginaltext.unshift( "" )
           end
 
           if 1 == 0 # DEBUG
@@ -95,13 +109,13 @@ def main
                          "#{textfile}"         ,
                          "#{comporiginaltext}" ,
                         ].join( "<>" )
+            next
           end # DEBUG
-          # TODO textfile のファイルの有無
 
-          reference = nil
-          lyricinfo = nil
+          reference = nil # 整理番号
+          lyricinfo = nil # textfile の内容
 
-          unless textfile.nil?
+          unless textfile.nil? # textfile から reference lyricinfo を作成
 
             if File.exist?( textfile )
 
@@ -124,11 +138,8 @@ def main
             end # if File.exist?( textfile )
           end # unless textfile.nil?
 
-          # DONE    あれば そのファイルから 整理番号情報を取り出す
-          # DONE comporiginaltext を 原文 と 訳文 に分離
-
-          if comporiginaltext[1].match(
-               [ "^"                          ,
+          if comporiginaltext[1].match( # タイトル部分の 原文 と 訳文 に分離
+               [ "^■*"                        ,
                  "([^#{$WAJI}]+)"             ,
                  "[[:space:]]+"               ,
                  "([^#{$WAJI}]*[#{$WAJI}].*)" ,
@@ -136,39 +147,43 @@ def main
                ].join
              )
             comptitle = [ $1, $2 ]
-            comptitle[0] =
-              comptitle[0].sub( /^■/, '' )
-          else # if comporiginaltext[1].match
+          else
             comptitle = [ "", "" ]
           end # if comporiginaltext[1].match
 
-          compmic = [
-            [ comporiginaltext[ 2 .. ] ].join
-              .gsub( /[#{$WAJI}][^[:space:]]+/ , ''  )
-              .gsub( /[[:space:]]+/            , ' ' )
-              .gsub( /^[[:space:]]+/           , ''  )
-              .gsub( /[[:space:]]+$/           , ''  ) ,
-            [ comporiginaltext[ 2 .. ] ].join
-              .gsub( /[^#{$WAJI}]{2,}/         , ''  )
-              .gsub( /[[:space:]]+/            , ' ' )
-              .gsub( /^[[:space:]]+/           , ''  )
-              .gsub( /[[:space:]]+$/           , ''  ) ,
+          compmiscinfo = [ # その他情報を纏める
+            [ comporiginaltext[ 2 .. ] ].join # 原文部分
+              .gsub( /[^[:space:]]*[#{$WAJI}].*/  , ''  ) # 和字を含む文字列以降
+              .gsub( /[[:space:]]+/               , ' ' )
+              .gsub( /^[[:space:]]+/              , ''  )
+              .gsub( /[[:space:]]+$/              , ''  ) ,
+
+            [ comporiginaltext[ 2 .. ] ].join # 和訳部分
+              .gsub( /[^#{$WAJI}]{2,}[[:space:]]/ , ''  ) # 和字を含まない文字列以降
+              .gsub( /[[:space:]]+/               , ' ' )
+              .gsub( /^[[:space:]]+/              , ''  )
+              .gsub( /[[:space:]]+$/              , ''  ) ,
           ]
-          # DONE comporiginaltext から 整理番号情報を取り出す
-          if compmic[0].match( /(Op[.]|WoO|TrV|D )/ )
+          compmiscinfo[1] = # 重複情報削除
+            compmiscinfo[1]
+              .sub( compmiscinfo[1], "" )
+
+          # 整理番号情報は作品に記載されたもの、そこになければ曲目一覧からを取り出す
+          if compmiscinfo[0].match( # 整理番号情報を取り出す
+               /(Op[.]|WoO|TrV|D )/ )
             tmp =
-              compmic[0]
+              compmiscinfo[0]
                 .sub( /[[:space:]]*[(].*/, '')
 
-            compmic[0] =
-              compmic[0]
+            compmiscinfo[0] =
+              compmiscinfo[0]
                 .sub( /#{tmp}[[:space:]]*/, '' )
 
             reference = tmp if reference.nil?
-          end # if compmic[0].match( /(Op[.]|WoO|TrV|D )/ )
+          end # if compmiscinfo[0].match(
           reference = "" if reference.nil?
 
-          if 1 == 0 # DEBUG DEBUG DEBUG DEBUG
+          if 1 == 0 # DEBUG
             msg = []
             msg.push(
               [ ''                                         ,
@@ -176,7 +191,7 @@ def main
                 ":textfile=>[#{textfile}]"                 ,
                 ":comporiginaltext=>[#{comporiginaltext}]" ,
                 ":comptitle=>[#{comptitle}]"               ,
-                ":compmic=>[#{compmic}]"                   ,
+                ":compmiscinfo=>[#{compmiscinfo}]"         ,
                 ":reference=>[#{reference}]"               ,
               ].join( "\n#{File.basename( compfile )}::" )
             )
@@ -191,10 +206,11 @@ def main
               )
             end
 
-            STDERR.puts msg.join
+            STDOUT.puts msg.join
+            next
           end # if 1 == 0 DEBUG
 
-          tex_file_output (
+          proc_file_output_section_or_subsection(
             {
               :composer         => composer         ,
               :name             => name             ,
@@ -202,60 +218,155 @@ def main
               :textfile         => textfile         ,
               :comporiginaltext => comporiginaltext ,
               :comptitle        => comptitle        ,
-              :compmic          => compmic          ,
+              :compmiscinfo     => compmiscinfo     ,
               :reference        => reference        ,
               :lyricinfo        => lyricinfo        ,
             }
           )
+          # proc_file_output_section( "ファイル名など指定しなくて" )
 
+          tempref = reference.to_s.size > 0 ? "(#{reference})" : ""
+          if textfile.to_s.size > 0
+            pageref = [ "\\pageref{"                 ,
+                        "myindex:subsection:"        ,
+                        File.basename( textfile.to_s , ".htm" ),
+                        "}"                          ,
+                      ].join
+          else
+            pageref = nil
+          end
+
+          case e2[:name]
+          when 'a', 'p' then
+
+            unless sectionARRAY.empty?
+              output_filename_of_section = # 初回対策
+                sprintf( composer_section_filename_format, sectioncount)
+
+              bookARRAY.push(
+                proc_file_output_section(
+                  sectionARRAY,
+                  output_filename_of_section
+                )
+              )
+              sectioncount += 1 # 最終 section 用準備
+              output_filename_of_section =
+                sprintf( composer_section_filename_format, sectioncount)
+            end
+
+            yomi = myYomi( comptitle[1] )
+            sectionARRAY = [
+              { :section =>
+                [ "\\SECTION",
+                  "{ #{comptitle[0]} }%書名・詩集名（原）" ,
+                  "{ #{comptitle[1]} }%書名・詩集名（訳）" ,
+                  "{ #{reference} }%整理番号" ,
+                  [
+                    "{ #{compmiscinfo[0]} }" ,
+                    "{ #{compmiscinfo[1]} }",
+                    "%監修者等(原・訳)、年情報" ,
+                  ].join,
+                  "{ #{yomi} }%よみ" ,
+                ].join( "\n" ),
+              }
+            ]
+          end
+
+          ### \SECTION 情報を sectionARRAY へ入れる TODO
+          tmptoc =[ # 章目次・小目次
+            [ "#{comporiginaltext[0]}" , # <a> <p><a> の前の文字列
+              "%----%----%----%----%" ,
+            ].join( " " )              ,
+            [ "&"                      ,
+              "#{comptitle[0]}"        , # タイトル原語
+              "#{tempref}"             , # (整理番号)
+              "\\dotfill"              ,
+            ].join( " " )              ,
+            [ "&"                      ,
+              "#{comptitle[1]}"        , # タイトル和訳
+              "\\dotfill"              ,
+            ].join( " " )              ,
+            [ "&"                      ,
+              "#{pageref}"             , # 参照ページ情報
+              '\\\\%'                  ,
+            ].join( " " )              ,
+          ].join( "\n" )#--------------
+
+          if textfile.size > 0 # \input ファイル名情報
+            tmpinput =
+              [ "\\input{",
+                "#{composer}",
+                "/",
+                "#{File.basename(textfile.to_s)}",
+                ".tex}",
+              ].join
+          else
+            tmpinput = nil
+          end # if textfile.size > 0
+
+          sectionARRAY.push( # 章目次・小目次と \input ファイル名情報
+            { :toc => tmptoc, :input => tmpinput }
+          )
         end # e1.each do | e2 |
       end # sbi.songbookinfolist.each do | e1 |
+
+      bookARRAY.push(
+        proc_file_output_section(
+          sectionARRAY,
+          output_filename_of_section
+        )
+      )
+      proc_file_output_book(
+        {
+          :template     => $COMPOSERTEMPLATE2,
+          :composer     => composer,
+          :composerinfo => [
+            sbi.songbookinfocomposerinfo, # [0]COMPOSERINFO
+            composer_name[0], # [0]作曲家
+            composer_name[1], # [0]COMPOSER
+          ],
+          :input        => bookARRAY,
+        }
+      )
     end
   end
 end
 
-def tex_file_output( ee )
-
+def proc_file_output_section_or_subsection( ee )
 
   return nil if ee[:lyricinfo].nil?
 
-  yomi = yomi = myYomi( ee[:lyricinfo].lyricinfo[:Title][1] )
+  yomi = myYomi( ee[:lyricinfo].lyricinfo[:Title][1] )
   array = []
 
-  array.push(
+  array.push( # \SUBSECTION 情報
     [
-      [ "\\SUBSECTION" ],
-      [ "% タイトル #1 #2",
+      [ "\\SUBSECTION[]" ],
+      [ "% タイトル #2 #3",
         "{ #{ee[:lyricinfo].lyricinfo[:Title][0]} }",
         "{ #{ee[:lyricinfo].lyricinfo[:Title][1]} }",
       ].join( "\n" ),
-      [ "% 作詞情報 #3 #4",
+      [ "% 作詞情報 #4 #5",
         "{ #{ee[:lyricinfo].lyricinfo[:Lyricist][0]} }",
         "{ #{ee[:lyricinfo].lyricinfo[:Lyricist][1]} }",
       ].join( "\n" ),
-      [ "% 作曲情報 #5 #6",
+      [ "% 作曲情報 #6 #7",
         "{ #{ee[:lyricinfo].lyricinfo[:Composer][0]} }",
         "{ #{ee[:lyricinfo].lyricinfo[:Composer][1]} }",
-      ].join( "\n"),
+      ].join( "\n" ),
       [ "{ #{yomi} }",
-        "% よみ情報 #7",
+        "% よみ情報 #8",
       ].join,
       [ "{ #{ee[:lyricinfo].lyricinfo[:Reference]} }",
-        "% 整理番号 #8",
+        "% 整理番号 #9",
       ].join,
     ].join( "\n" )
   )
 
   tmp = File.basename(ee[:textfile], ".htm" )
-  array.push(
-    "",
-    "\\label{myindex:subsection:#{tmp}}",
-  )
+  array.push( "", "\\label{myindex:subsection:#{tmp}}", )
 
-  array.push(
-    "",
-    "\\begin{myTBLR}[]"
-  )
+  array.push( "", "\\begin{myTBLR}[]" )
 
   ( 0 .. ee[:lyricinfo].lyricinfo[:Lyric].size - 1 )
     .select( &:even? ).each do | i |
@@ -288,9 +399,7 @@ def tex_file_output( ee )
     end
   end
 
-  array.push(
-    "\\end{myTBLR}"
-  )
+  array.push( "\\end{myTBLR}" )
 
   ff =
     [ "#{ee[:composer]}"                  ,
@@ -298,377 +407,88 @@ def tex_file_output( ee )
       "#{File.basename( ee[:textfile] )}" ,
       ".tex"                              ,
     ].join
+
   File.open( ff, "w" ) do | f |
-    f.puts myConvertHtml2tex(
-             array.join( "\n" )
-           )
+    f.puts myConvertHtml2tex( array.join( "\n" ) )
   end
 end
 
-def def_booklet( composerdir, html ) # TODO CHECK
+def proc_file_output_section( aSECTION, outfile )
 
-      return nil unless File.exist?( html )
+  return outfile  if aSECTION.empty?
 
-      doc = Nokogiri::HTML( File.read( html ) )
+  # :section [ "\SECTION{..}", .....] この時は :toc :input は無い
+  # :toc
+  # :input
 
-      title = doc.xpath( '/html/head/title' )
+  cnttoc   = 0
+  cntinput = 0
+  aOUTPUT = []
 
-      return if doc.xpath( '//font' ).size < 1
-      return if doc.xpath( '//td'   ).size < 1
-
-      output = []
-      info = []
-      data = []
-
-      doc.xpath( '//font' ).each_with_index do | ee, i |
-        info[i] =
-          ee.to_s
-            .gsub( /[[:blank:]]*<\/*font[^<>]*>[[:blank:]]*/, '' )
-            .gsub( /\n/ , ' ' )
-            .gsub( /([[:space:]]|<br>)+/ , ' ' )
+  aSECTION.each do | hash |
+    # :toc と :input はそれぞれ先に有効件数を調べておく
+    hash.each do | key, val |
+      case key
+      when :section then
+        aOUTPUT.push( val )
+      when :toc     then
+        cnttoc   += 1 if val.to_s.size > 0
+      when :input   then
+        cntinput += 1 if val.to_s.size > 0
       end
+    end
+  end
 
-      doc.xpath( '//td' ).each_with_index do | ee, i |
-        data[i] =
-          ee.to_s
-            .sub( /^<[^<>]+>[[:space:]]*/, '' )
-            .split( /[[:space:]]*<[^<>]+>[[:space:]]*/ )
+  if cnttoc > 0
+    aOUTPUT.push( '\begin{longtblr}[]{ colspec = { r X X r } }' )
+    aSECTION.each do | e |
+      aOUTPUT.push( e[:toc] ) if e[:toc].to_s.size > 0
+    end
+    aOUTPUT.push( '\end{longtblr}' )
+    aOUTPUT.push( '' ) if cntinput > 0
+  end
 
-      end
+  if cntinput > 0
+    aSECTION.each do | e |
+      aOUTPUT.push( e[:input] ) if e[:input].to_s.size > 0
+    end
+  end
 
-      data.each do | ee |   # 最後の要素が空だったら削除
-        while ee.last.size == 0 do ee.pop end
-      end
+  File.open( outfile, "w" ) do | f |
+    f.puts myConvertHtml2tex( aOUTPUT.join( "\n" ) )
+  end
 
-      if data[0].size == 2
-        data[0][3] = nil
-      end
-
-      if data[0][3].nil?
-        sec = sub = ""
-      else
-        sec = data[0][3].gsub( /([\w.]+\d+).*/, '\1' )
-        sub = data[0][3].gsub( /.*(\d+)$/     , '\1' )
-      end
-
-      lyricist = []
-      composer = []
-      [ 5, 7 ].each do |i|
-        if info[i].nil?
-          lyricist[i] = ''
-          composer[i] = ''
-          next
-        end
-
-        lyricist[i] =
-          info[i]
-            .gsub( /[#{NIHONGO}]+/            , ' '      )
-            .gsub( /[(][[[:space:]]]+[)]/     , ' '      )
-            .gsub( /[(]([^()]+)[)]/           , '\1'     )
-            .gsub( /,*([\d]{4})(-[\d]{4})*/   , '(\1\2)' )
-            .gsub( /<[^<>]+>/                 , ' '      )
-            .gsub( /[[[:space:]]]+/           , ' '      )
-            .sub(  /^[[[:space:]],]+/         , ''       )
-            .sub(  /[[[:space:]],]+$/         , ''       )
-
-        composer[i] =
-          info[i]
-            .gsub( /[^#{NIHONGO}[:space:]]+/  , ' '      )
-            .gsub( /(（[[:space:]]*）)/       , ''       )
-            .gsub( /([（）])[[:space:]]+/     , '\1'     )
-            .gsub( /[[[:space:]]]+/           , ' '      )
-            .sub(  /^[[[:space:]],]+/         , ''       )
-            .sub(  /[[[:space:]],]+$/         , ''       )
-      end
-
-      yomi = myYomi(data[1][1])
-      basename = File.basename( html, ".htm" )
-
-      output.push(
-        [
-          "\\mySUBSECTION{#{sec.gsub(/^[^\d]+/, '')}}{#{sub}}%#{sec}",
-          "{ #{data[0][1]} }"  , # { Liebestreu }
-          "{ #{data[1][1]} }"  , # { 愛の誠 }
-          "{ #{lyricist[5]} }" , # { Robert Runic, (1805-1852) }
-          "{ #{composer[5]} }" , # { Johannes Brahms, (1833-1897) }
-          "{ #{lyricist[7]} }" , # { ライニック }
-          "{ #{composer[7]} }" , # { ブラームス }
-          "{ #{yomi} }"        , # { あいのまこと }
-          "",
-          "\\label{myindex:subsection:#{basename}}",
-          "",
-        ].join( "\n" )
-      )
-
-      output.push( "\\begin{myTBLR}[]" )
-      ren_pushd = nil
-      ( 2 .. data.size - 1 ).select( &:even? ).each do | oo |
-        tt = oo + 1
-
-        ( 0 .. [data[oo].size, data[tt].size].max - 1 ).each do | i |
-
-          orig = data[oo][i].nil? ? '' : data[oo][i]
-          tran = data[tt][i].nil? ? '' : data[tt][i]
-
-          if ren_pushd.nil?
-            next if orig.empty? && tran.empty?
-            ren_pushd = true
-          end
-
-          if orig.empty? && tran.empty?
-            output.push( "  \\\\%連間空行" )
-          else
-            output.push(
-              [
-                "  { #{orig} } &" ,
-                "  { #{tran} }"   ,
-                "  \\\\"
-              ].join( "\n" )
-            )
-          end
-        end
-      end
-      output.push( "\\end{myTBLR}" )
-
-      ff = "#{composerdir}/#{basename}.tex"
-      File.open( ff, "w" ) do | f |
-        f.puts myConvertHtml2tex(
-                 output.join( "\n" )
-               )
-      end
+  "\\input{#{outfile}}" # XXX/XXX.tex に書きこむイメージ
 end
 
-def def_composer( composer, html ) # TODO CHECK
+def proc_file_output_book( hash )
+  # :template
+  # :composer
+  # :composerinfo
+  # :input
 
-      return nil unless File.exist?( html )
-      doc = Nokogiri::HTML( File.read( html ) )
-
-      title = doc.xpath( '/html/head/title' )
-
-      composer_A_file = [] # 分冊化された作曲集リスト
-      composer_B_file = ""    # 小冊子毎
-      composer_B_file_nbr = 0 #
-
-      st = doc.xpath( '//p/b' ).size # TODO
-      if st == 0                     # TODO
-        p st
-        raise
-        return                       # TODO
-      end                            # TODO
-
-      doc
-        .xpath( '//body' )
-        .each_with_index do | body, body_ix | # doc.xpath('//body' ) {
-
-        composerinfo = proc_010_composer_info( doc )
-        next unless composerinfo
-
-        repp  = '<p></p>'
-
-        doc.to_html
-          .split( /(#{repp})/ ).each do | dir_p_a |
-
-          dir_p_a = proc_030_dir_p_a( dir_p_a )
-          next if ( dir_p_a.size < 1 )
-
-          composer_B_file_nbr += 1
-          composer_B_file =
-            sprintf( "#{composer}/#{composer}-B-%03d.tex",
-                     composer_B_file_nbr
-                   )
-
-          proc_033_composer_B_file( dir_p_a, composer, composer_B_file )
-
-          composer_A_file.push( "\\input{#{composer_B_file}}" )
-        end
-
-        proc_composer_A_file(
-          composer, composerinfo, composer_A_file
-        )
-      end # doc.xpath('//body') }
-end
-
-def proc_010_composer_info( doc ) # TODO CHECK
-
-      re1 = "[^[:blank:]]+" # 日本語表記
-      re2 = "[^,()]+"       # 名前スペル
-      re3 = "[^()]+"        # 誕生年-死亡年
-      re4 = ".*"            # 国名
-
-      composerinfo =
-        doc.xpath('//p')[1].text
-          .gsub( /\n/, '' )
-          .match(/(#{re1})[[:blank:]]+[(](#{re2}),(#{re3})[)][[:blank:]]+(#{re4})/)
-
-      composerinfo
-end
-
-def proc_030_dir_p_a( tt ) # TODO CHECK
-
-      tt = '' if tt =~ /(!DOCTYPE html PUBLIC|更新情報へ|曲目一覧)/
-      tt = tt.gsub( /(>)[[:blank:]]+/                    , '\1' )
-             .gsub( /[[:blank:]]+(>)/                    , '\1' )
-             .gsub( /<(hr|dir)>/                         , '' )
-             .gsub( /[[:blank:]]+(\d)/                   , ' \1' )
-             .gsub( /[[:blank:]]+(\n)/                   , '\1' )
-             .gsub( /(\n)+/                              , '\1' )
-             .gsub( /[[:blank:]]*<p><b>(■)([^<][^<>]*)/ , '\1<a href="">\2</a>' )
-             .gsub( /<\/*(p|b|body|html|dir)>/            , ''   )
-             .sub(  /^[[:space:]]+/, '').sub( /[[:space:]]+$/, '' )
-      tt
-end
-
-def proc_033_composer_B_file( items, composer_dir, composer_B_filename ) #
-  composer_B_file            = []
-  composer_linder_input_file = []
-  composer_linder_longtblr   = [] # 小目次情報
-  myOpTitleORIG = '' # Op. / WoO / other
-  baseOpID      = ''
-
-  items.split(/<br>[[:space:]]*/).each do | item |
-
-    re = [
-      '(.*)'     , # m[1] ■  数字、空白
-      '[[:blank:]]*<a href=' ,
-      '"(.*)"'   , # m[2] ../TEXT/Sxxx.htm 空
-      '>'        ,
-      '([^<>]*)' , # m[3] 題名
-      '<\/a>'    ,
-      '(.*)'     , # m[4] OP 番号、年情報、その他情報
+  composerTEXFILE  =
+    [ "#{hash[:composer]}", "/",
+      "#{hash[:composer]}", ".tex",
     ].join
 
-    m = item.gsub( /[[:blank:]]+</, '<' ).match( /#{re}/ )
-    if m
-      if 1 == 0
-        puts "<#{m[1]}><#{m[2]}><#{m[3]}><#{m[4]}>"
-        puts item
-        puts "#{m[2]}"
-      end
-    else
-      puts ">>#{item}<<"
-      raise
-    end
-
-    nihongo = '\p{hani}\p{hira}\p{kana}ー「」（）。、：・０-９'
-    idx = []
-    idx[0] = m[1] # ■ 番号 空
-    idx[1] = File.basename( m[2], ".htm" ) # ファイル名情報
-    idx[2] = m[3].sub( /([^#{nihongo}]+)([#{nihongo}].*)/, '\1' )#原題
-               .sub( /[[:space:]]+$/, '' )
-    idx[3] = m[3].sub( /([^#{nihongo}]+)([#{nihongo}].*)/, '\2' )#訳題
-
-    mm = m[4].match( /(.*)([(][^()]+[)])(.*)/ )
-    if mm
-      idx[4] = mm[1] # Op 番号
-      idx[5] = mm[2] # 年情報
-      idx[6] = mm[3] # 監修者等（原語）
-      idx[7] = mm[3] # 監修者等（訳語）
-    else
-      idx[4] = m[4] # Op 番号
-      idx[5] = ''   # 年情報
-      idx[6] = m[4] # 監修者等（原語）
-      idx[7] = m[4] # 監修者等（訳語）
-    end
-    idx[4] = idx[4].gsub( /[^\w\d.]+/  , '-' )
-               .sub( /^-+/             , ''  )
-               .sub( /-+$/             , ''  )
-    idx[6] = idx[6].gsub( /[^\w\d.]+/  , ''  )
-               .sub( /#{idx[4]}/       , ''  )
-    idx[7] = idx[7].gsub( /[\w\d.]+/   , ''  )
-               .sub( /原詩：$/         , ''  )
-    idx.each_with_index do | e , i |
-      idx[i] = idx[i]
-                 .sub( /^[[:space:]]+/ , ''  )
-                 .sub( /[[:space:]]+$/ , ''  )
-    end
-    baseOpID = idx[4] if baseOpID.size == 0 && idx[4].size > 0
-    idx[4] = baseOpID if baseOpID.size > 0 && idx[4].size == 0
-
-    if idx[0] == '■' # プログラム的には <p><b> を一レコードとして扱う
-      idx[8] = myYomi( idx[3] )
-
-      composer_linder_input_file.push(
-        '\mySECTION' +
-        "{ #{idx[4].gsub(/^[^\d]+/, '').gsub(/-.*/, '')} }" + "%#{idx[4]}" ,
-        "{ #{idx[2]} }" + '%' ,
-        "{ #{idx[3]} }" + '%書名・詩集名' ,
-        "{ #{idx[6]} }" +
-        "{ #{idx[7]} }" +
-        "{ #{idx[5]} }" + '%監修者等(原・訳)、年情報' ,
-        "{ #{idx[8]} }" + '%よみ' ,
-        '' , ''
-      )
-    else # DONE 3-3-1-2) 小目次情報（■以外の時)
-
-      myOpTitleTRAN = '' # 作品 / 整理番号 / 作品
-      myOpTitleHash = {
-        "WoO" => "整理番号：",
-      }
-      tmpORIG = idx[4].sub( /(Op[.]|\w+).*/, '\1' )
-                  .gsub( /\d+/, '')
-      tmpTRAN = myOpTitleHash.fetch( tmpORIG, "作品" )
-
-      composer_linder_longtblr.push(
-        "% #{idx[4]} #{idx[1]}" ,
-        "   #{tmpORIG}#{idx[0]} & #{idx[2]} \\dotfill",
-        " & #{tmpTRAN}#{idx[0]} & #{idx[3]} \\dotfill",
-        " & \\pageref{myindex:subsection:#{idx[1]}}",
-        '\\\\%'
-      )
-
-      if ( tmpORIG == "Op." ) && ( tmpTRAN == "作品" )
-        composer_B_file.push( "\\input{#{composer_dir}/#{idx[1]}.tex}" )
-      else
-        composer_B_file.push(
-          [
-            "{",
-            "   \\renewcommand{\\myOpTitleORIG}{#{tmpORIG}}",
-            "   \\renewcommand{\\myOpTitleTRAN}{#{tmpTRAN}}",
-            "   \\input{#{composer_dir}/#{idx[1]}.tex}" ,
-            "}",
-          ].join( "\n" )
-        )
-      end
-    end
-  end
-
-  if ( composer_linder_longtblr.size > 0 )
-    composer_linder_longtblr.unshift(
-      '\begin{longtblr}{ colspec = { c X c X r } }'
-    )
-    composer_linder_longtblr.push(
-      '\end{longtblr}', "\n"
-    )
-  end
-
-  File.open( composer_B_filename, "w" ) do | f |
-    f.puts myConvertHtml2tex(
-             [
-               composer_linder_input_file ,
-               composer_linder_longtblr   ,
-               composer_B_file            ,
-             ].flatten.join( "\n" )
-           )
-  end
-end
-
-def proc_composer_A_file( composer, composerinfo, composer_a_file )
-  # TODO CHECK
-
-  composerTEMPLATE  = "sty/lieder-template.tex"
-  composerTEXFILE = "#{composer}/#{composer}.tex"
-  composerTEXFILEhyperlink = "#{composer}/#{composer}-hyper-link.tex"
+  composerTEXFILEhyperlink =
+    [ "#{hash[:composer]}", "/",
+      "#{hash[:composer]}", "-hyper-link", ".tex",
+    ].join
 
   File.open( composerTEXFILE, "w" ) do | f |
-    f.puts File.read( composerTEMPLATE )
-             .sub( /%%--COMPOSER--%%/     , composerinfo[2] )
-             .sub( /%%--COMPOSERINFO--%%/ , composerinfo[0] )
-             .sub( /%%--作曲家--%%/ , composerinfo[1] )
-             .sub( /%%--INPUT--%%/ , "#{composer_a_file.join("\n")}" )
+    f.puts File
+             .read( hash[:template] )
+             .gsub( /%%--COMPOSERINFO--%%/ , hash[:composerinfo][0] )
+             .gsub( /%%--作曲家--%%/        , hash[:composerinfo][1] )
+             .gsub( /%%--COMPOSER--%%/     , hash[:composerinfo][2] )
+             .gsub( /%%--INPUT--%%/ , "#{hash[:input].join("\n")}"  )
   end
 
   File.open( composerTEXFILEhyperlink, "w" ) do | f |
-    f.puts File.read( composerTEXFILE )
+    f.puts File
+             .read( composerTEXFILE )
              .sub( /^%%(\\usepackage)/, '')
   end
 end
