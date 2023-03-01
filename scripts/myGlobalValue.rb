@@ -9,3 +9,6 @@ $WAJI = [
   '：・' , # 記号類
   '０-９' ,
 ].join
+
+$COMPOSERTEMPLATE  = "sty/lieder-template.tex"
+$COMPOSERTEMPLATE2 = "sty/lieder-template2.tex"
