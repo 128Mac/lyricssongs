@@ -15,12 +15,23 @@ class MyGetSongbookInfo
 
     @songbookinfolist = []
 
-    @songbookinfotitle = Nokogiri::HTML( File.read( html ) )
-                           .xpath( '/html/head/title' )
-                           .to_s
-                           .gsub( /<[^<>]+>[[:space:]]*/ , '' )
-                           .sub(  /^[[:space:]]+/        , '' )
-                           .sub(  /[[:space:]]+$/        , '' )
+    @songbookinfotitle =
+      Nokogiri::HTML( File.read( html ) )
+        .xpath( '/html/head/title'   )
+        .to_html
+        .gsub( /<[^<>]+>/      , ''  )
+        .gsub( /[[:space:]]+/  , ' ' )
+        .sub(  /^[[:space:]]+/ , ''  )
+        .sub(  /[[:space:]]+$/ , ''  )
+
+    @songbookinfocomposerinfo =
+      Nokogiri::HTML( File.read( html ) )
+        .xpath( '/html/body/p/font')
+        .to_html
+        .gsub( /<[^<>]+>/      , ''  )
+        .gsub( /[[:space:]]+/  , ' ' )
+        .sub(  /^[[:space:]]+/ , ''  )
+        .sub(  /[[:space:]]+$/ , ''  )
 
     Nokogiri::HTML( File.read( html ) )
       .xpath( '/html/body/dir' )
@@ -283,6 +294,10 @@ class MyGetSongbookInfo
   def songbookinfotitle
     @songbookinfotitle
   end
+
+  def songbookinfocomposerinfo
+    @songbookinfocomposerinfo
+  end
 end
 
 if __FILE__ == $0 then
@@ -292,6 +307,7 @@ if __FILE__ == $0 then
     sbi = MyGetSongbookInfo.new( html )
 
     puts "\ntitle=>#{sbi.songbookinfotitle}"
+    puts "\ncomposerinfo=>#{sbi.songbookinfocomposerinfo}"
     sbi.songbookinfolist.each do | ee |
       ee.each do | eee |
 
