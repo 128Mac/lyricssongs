@@ -271,26 +271,29 @@ def main
               }
             ]
           end
-
-          ### \SECTION 情報を sectionARRAY へ入れる TODO
-          tmptoc =[ # 章目次・小目次
+          tmptoc = [ # 章目次・小目次
             [ "#{comporiginaltext[0]}" , # <a> <p><a> の前の文字列
-              "%----%----%----%----%" ,
+              "%----%----%----%----%"  ,
             ].join( " " )              ,
             [ "&"                      ,
               "#{comptitle[0]}"        , # タイトル原語
               "#{tempref}"             , # (整理番号)
-              "\\dotfill"              ,
             ].join( " " )              ,
             [ "&"                      ,
               "#{comptitle[1]}"        , # タイトル和訳
-              "\\dotfill"              ,
             ].join( " " )              ,
             [ "&"                      ,
               "#{pageref}"             , # 参照ページ情報
               '\\\\%'                  ,
             ].join( " " )              ,
-          ].join( "\n" )#--------------
+          ]
+
+          case e2[:name]
+          when 'a', 'p' then
+            tmptoc.push( [ '\cline[2pt]{2-3}' ] )
+          else
+            tmptoc.push( [ '\cline[dashed]{2-3}'] )
+          end
 
           if textfile.size > 0 # \input ファイル名情報
             tmpinput =
@@ -341,11 +344,14 @@ def proc_file_output_section_or_subsection( ee )
 
   array.push( # \SUBSECTION 情報
     [
-      [ "\\SUBSECTION[]" ],
-      [ "% タイトル #2 #3",
+      [ "\\SUBSECTION" ],
+      [ "% タイトル #1 #2",
         "{ #{ee[:lyricinfo].lyricinfo[:Title][0]} }",
         "{ #{ee[:lyricinfo].lyricinfo[:Title][1]} }",
       ].join( "\n" ),
+      [ "{ #{ee[:lyricinfo].lyricinfo[:Reference]} }",
+        "% 整理番号 #3",
+      ].join,
       [ "% 作詞情報 #4 #5",
         "{ #{ee[:lyricinfo].lyricinfo[:Lyricist][0]} }",
         "{ #{ee[:lyricinfo].lyricinfo[:Lyricist][1]} }",
@@ -356,9 +362,6 @@ def proc_file_output_section_or_subsection( ee )
       ].join( "\n" ),
       [ "{ #{yomi} }",
         "% よみ情報 #8",
-      ].join,
-      [ "{ #{ee[:lyricinfo].lyricinfo[:Reference]} }",
-        "% 整理番号 #9",
       ].join,
     ].join( "\n" )
   )
@@ -440,10 +443,23 @@ def proc_file_output_section( aSECTION, outfile )
   end
 
   if cnttoc > 0
-    aOUTPUT.push( '\begin{longtblr}[]{ colspec = { r X X r } }' )
+    aOUTPUT.push(
+      [ '\begin{longtblr}[]{'                  ,
+        '  colspec = { r X X r },'             ,
+        '  rowhead = 1,'                       ,
+        '}'                                    ,
+        [ ' & \textbf{\large Liste der Lieder}',
+          ' & \textbf{\large 曲目一覧}'         ,
+          ' & \\\\'                            ,
+        ].join,
+        '\cline[2pt]{2-3}',
+      ].join( "\n" )
+    )
+
     aSECTION.each do | e |
       aOUTPUT.push( e[:toc] ) if e[:toc].to_s.size > 0
     end
+
     aOUTPUT.push( '\end{longtblr}' )
     aOUTPUT.push( '' ) if cntinput > 0
   end
