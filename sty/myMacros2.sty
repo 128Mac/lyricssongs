@@ -1,0 +1,130 @@
+\newlength{\len}% SECTION / SUBSECTION で書名等の引数の長さ計算用
+
+\newcommand{\SECTION}[6]{%
+  \def\myTitleORIG{#1}% 書名・詩集名（原）   { {Liederkreis }
+  \def\myTitleTRAN{#2}% 書名・詩集名（訳）   { リーダークライス }
+  \def\myYOMI{#3}%%%%%% 監修者等(訳)        { ハインリッヒ・ハイネ }
+  \def\myREFER{#4}%%%%% %よみ              { りーだーくらいす }
+  \def\myMiscORIG{#5}%% 整理番号            { Op.24 }
+  \def\myMiscTRAN{#6}%% 監修者等(原)、年情報 { Heinrich Heine }
+  %
+  \newpage%
+  %
+  % (注意) 以下は SUBSECTION と同じデザインだが、
+  % 将来それぞれのデザイン変更等に対応するため再定義
+  %
+  \def\glueA{~ ~ \hfill}%
+  %
+  % 以下のように制御すると原題あるいは邦訳のどちらかの長さが規定以上の
+  % 時複雑な計算を要するので、X することは \parbox なので改行などの調
+  % 整はlatex に任せる
+  %
+  % 原文・訳文側の関連項目のどちらか一方指定時 \par\hfill で改行・右寄せ
+  \def\glueB{} \settowidth{\len}{\myMiscORIG\myMiscTRAN} \ifdim \len > 0pt \def\glueB{\par\hfill} \fi%
+  %
+  \phantomsection%
+  \section*{%
+    \begin{tblr}[t]{ | X @{ ~ ~ ~ ~ ~ ~ } X | }%
+      \hline\hline[2pt]%
+      {\myTitleORIG\small\glueA \myREFER \glueB\myMiscORIG} & %
+      {\myTitleTRAN\small\glueA          \glueB\myMiscTRAN} \\%
+      \hline[2pt]\hline%
+    \end{tblr}%
+  }%
+  \label{myindex:section:\myREFER}%
+  \index{\myTitleORIG(\myYOMI)@\myTitleORIG(\myTitleTRAN)}%
+  \index{\myYOMI(\myTitleORIG)@\myTitleTRAN(\myTitleORIG)}%
+  \addcontentsline{toc}{section}%
+  {%
+    \makebox[.465\textwidth][l]{{\small \myREFER} ~ \myTitleORIG \dotfill}%
+    ~ ~ %
+    \makebox[.465\textwidth][l]{                  ~ \myTitleTRAN \dotfill}%
+  }%
+  \fancyhead[L]{\small\myTitleORIG ~ {\scriptsize \myREFER}}%
+  \fancyhead[R]{\small\myTitleTRAN ~                       }%
+  \fancyfoot[L]{Inhaltsverzeichnis}%
+  \fancyfoot[C]{--- ~ \thepage ~ ---} %
+  \fancyfoot[R]{目次}%
+  \bigskip%
+}
+
+\newcommand{\SUBSECTION}[8]{%
+  \def\myTitleORIG{#1}%%%% 書名・詩名（原）
+  \def\myTitleTRAN{#2}%%%% 書名・詩名（訳）
+  \def\myYOMI{#3}%%%%%%%%% よみ
+  \def\myREFFER{#4}%%%%%%% 整理番号
+  \def\myLyricistORIG{#5}% 作詞家情報（原）
+  \def\myLyricistTRAN{#6}% 作詞家情報（訳）
+  \def\myComposerORIG{#7}% 作曲家情報（原）
+  \def\myComposerTRAN{#8}% 作曲家情報（訳）
+  %
+  \bigskip\bigskip%
+  \needspace{12\baselineskip}%
+  %
+  % (注意) 以下は SECTION と同じデザインだが、
+  % 将来それぞれのデザイン変更等に対応するため再定義
+  %
+  \def\glueA{~ ~ \hfill}
+  % 以下のように制御すると原題あるいは邦訳のどちらかの長さが規定以上の
+  % 時複雑な計算を要するので、X することは \parbox なので改行などの調
+  % 整はlatex に任せる
+  %
+  % 原文・訳文側の関連項目のどちらか一方指定時 \par\hfill で改行・右寄せ
+  \def\glueB{} \settowidth{\len}{\myLyricistORIG\myLyricistTRAN} \ifdim \len > 0pt \def\glueB{\par\hfill} \fi%
+  \def\glueC{} \settowidth{\len}{\myComposerORIG\myComposerTRAN} \ifdim \len > 0pt \def\glueC{\par\hfill} \fi%
+  %
+  \phantomsection%
+  \par% ヘッダーのルーラーとの干渉解消のため
+  \subsection*{%
+    \begin{tblr}[t]{ | X @{ ~ ~ ~ ~ ~ ~ } X | }%
+      % コメント化した部分を利用すると微妙な空白が入り右詰めの
+      % 行末が不揃いになる
+      \hline[dotted]\hline%
+      {\myTitleORIG\small\glueA \mbox{ \myREFER}\glueB\myLyricistORIG\glueC\myComposerORIG} & %
+      {\myTitleTRAN\small\glueA \mbox{         }\glueB\myLyricistTRAN\glueC\myComposerTRAN} \\%
+      \hline\hline[dotted]%
+    \end{tblr}%
+    }%
+    \bigskip% 作品コンテンツとタイトル部分を際立てる為
+    %
+    \index{\myTitleORIG(\myYOMI)@\myTitleORIG(\myTitleTRAN)}%
+    \index{\myYOMI(\myTitleORIG)@\myTitleTRAN(\myTitleORIG)}%
+    \addcontentsline{toc}{subsection}%
+    {%
+      \makebox[.465\textwidth][l]{{\small \myREFFER} ~ \myTitleORIG \dotfill\hspace{1em}}%
+      ~ %
+      \makebox[.465\textwidth][l]{                   ~ \myTitleTRAN \dotfill\hspace{1em}}%
+    }%
+    \fancyfoot[L]{\small\myTitleORIG ~ {\scriptsize \myREFFER}}%
+    \fancyfoot[R]{\small\myTitleTRAN ~                        }%
+}
+% 次ページに跨る時のメッセージ制御
+\DefTblrTemplate{contfoot-text}{normal}{\footnotesize 次ページに続く}%%%{Continued on next page}
+\SetTblrTemplate{contfoot-text}{normal}
+\DefTblrTemplate{conthead-text}{normal}{}%%%{(Continued)}
+\SetTblrTemplate{conthead-text}{normal}
+
+% 次ページに table: という表示を消す
+\DefTblrTemplate{caption-tag}{normal}{}
+\SetTblrTemplate{caption-tag}{normal}
+\DefTblrTemplate{caption-sep}{normal}{}
+\SetTblrTemplate{caption-sep}{normal}
+
+\newenvironment{myTBLR}[1][]%
+{%
+  \needspace{4\baselineskip}%
+  \bigskip%
+  \begin{longtblr}%
+    [ %
+    caption   = {}   , %
+    label     = none , %
+    #1                 %
+    ] %
+    { %
+      colspec = { X | @{ ~ ~ ~ ~ ~ } X }, % 等配分
+    } %
+    %
+  }{\end{longtblr}%
+  \bigskip%次の作品との距離はここで基本調整
+  \bigskip%
+}
