@@ -260,13 +260,13 @@ def main
                 [ "\\SECTION",
                   "{ #{comptitle[0]} }%書名・詩集名（原）" ,
                   "{ #{comptitle[1]} }%書名・詩集名（訳）" ,
+                  "{ #{yomi} }%よみ" ,
                   "{ #{reference} }%整理番号" ,
                   [
                     "{ #{compmiscinfo[0]} }" ,
                     "{ #{compmiscinfo[1]} }",
                     "%監修者等(原・訳)、年情報" ,
                   ].join,
-                  "{ #{yomi} }%よみ" ,
                 ].join( "\n" ),
               }
             ]
@@ -345,24 +345,24 @@ def proc_file_output_section_or_subsection( ee )
   array.push( # \SUBSECTION 情報
     [
       [ "\\SUBSECTION" ],
-      [ "% タイトル #1 #2",
+      [ "% 書名・詩名",
         "{ #{ee[:lyricinfo].lyricinfo[:Title][0]} }",
         "{ #{ee[:lyricinfo].lyricinfo[:Title][1]} }",
       ].join( "\n" ),
-      [ "{ #{ee[:lyricinfo].lyricinfo[:Reference]} }",
-        "% 整理番号 #3",
+      [ "{ #{yomi} }",
+        "% よみ情報",
       ].join,
-      [ "% 作詞情報 #4 #5",
+      [ "{ #{ee[:lyricinfo].lyricinfo[:Reference]} }",
+        "% 整理番号",
+      ].join,
+      [ "% 作詞情報",
         "{ #{ee[:lyricinfo].lyricinfo[:Lyricist][0]} }",
         "{ #{ee[:lyricinfo].lyricinfo[:Lyricist][1]} }",
       ].join( "\n" ),
-      [ "% 作曲情報 #6 #7",
+      [ "% 作曲情報",
         "{ #{ee[:lyricinfo].lyricinfo[:Composer][0]} }",
         "{ #{ee[:lyricinfo].lyricinfo[:Composer][1]} }",
       ].join( "\n" ),
-      [ "{ #{yomi} }",
-        "% よみ情報 #8",
-      ].join,
     ].join( "\n" )
   )
 
