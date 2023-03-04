@@ -23,11 +23,13 @@ def myYomiJuman( text )
 
     if status == 0
       stdout
+        .force_encoding( 'UTF-8' )
         .sub(   /EOS$/, '' )
         .gsub(  /\\/  , '' )
         .split( "\n" )
         .each do | e |
-        array.push( e.split( " " )[1] ) # 各行の2番目を取り出す
+        ee = e.split( " " )[1] # 各行の2番目を取り出す
+        array.push( ee ) if ee =~ /#{$WAJI}/
       end
     else
       array.push( "juman error", text )
@@ -36,10 +38,10 @@ def myYomiJuman( text )
     array.push( ss )
   end
 
-  yomi = array.join.force_encoding( 'UTF-8' )
+  yomi = array.join
   NKF.nkf( "-w --hiragana", yomi )
     .gsub( /[\p{hani}]/, "◆" )
-    .sub(  /(.*◆)/,      'んんん$1' )
+    .sub(  /(.*◆)/,      'んんん\1' )
 end
 
 if __FILE__ == $0 then
