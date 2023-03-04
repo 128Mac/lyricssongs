@@ -2,6 +2,11 @@
 
 require 'systemu'
 require 'nkf'
+
+$LOAD_PATH.push( File.expand_path( __FILE__ ) )
+require_relative 'myGlobalValue'
+require_relative 'myYomiJuman'
+
 #     require 'systemu'
 #     date = %q( ruby -e"  t = Time.now; STDOUT.puts t; STDERR.puts t  " )
 #     status, stdout, stderr = systemu date
@@ -28,8 +33,7 @@ def myYomiJuman( text )
         .gsub(  /\\/  , '' )
         .split( "\n" )
         .each do | e |
-        ee = e.split( " " )[1] # 各行の2番目を取り出す
-        array.push( ee ) if ee =~ /#{$WAJI}/
+        array.push( e.split( " " )[1] )  # 各行の2番目を取り出す
       end
     else
       array.push( "juman error", text )
@@ -39,9 +43,20 @@ def myYomiJuman( text )
   end
 
   yomi = array.join
-  NKF.nkf( "-w --hiragana", yomi )
-    .gsub( /[\p{hani}]/, "◆" )
-    .sub(  /(.*◆)/,      'んんん\1' )
+
+  if yomi =~ /[\p{hani}]/
+    yomi =
+      NKF.nkf( "-w --hiragana", yomi )
+        .gsub( /[\p{hani}]/, "◆" )
+        .sub(  /^/         , 'んんん' )
+    STDERR.puts [ "",
+                  "JUMAN （一部）よみ変換できず、要手動編集",
+                  "JUMAN よみ 変　換　前 #{text}",
+                  "JUMAN よみ 暫定変換後 #{yomi}",
+                ].join( "\n" )
+  end
+
+  yomi
 end
 
 if __FILE__ == $0 then
