@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 
 require 'systemu'
-
+require 'nkf'
 #     require 'systemu'
 #     date = %q( ruby -e"  t = Time.now; STDOUT.puts t; STDERR.puts t  " )
 #     status, stdout, stderr = systemu date
@@ -9,22 +9,37 @@ require 'systemu'
 #     # => [#<Process::Status: pid 50931 exit 0>, "2011-12-11 22:07:30 -0700\n", "2011-12-11 22:07:30 -0700\n"]
 
 def myYomiJuman( text )
-     yomi = []
-     status, stdout, stderr = systemu [
-                       "nkf -w" ,
-                       "echo #{text.sub( /[[:space:]]+/, '' )}" ,
-                       "juman -b"          , # -b 複数読みがあった場合の処置
-                       "nkf -w --hiragana" , # systemu からの出力強制変換
-                     ].join( ' | ')
-     if status == 0
-       stdout
-         .split( "\n" ).grep( /^[^E][^O][^S]/ ).each do | e |
-         yomi.push( e.split( " " )[1] ) # 各行の2番目を取り出す
-       end
-     else
-       yomi.push( text )
-     end
-     yomi.join.force_encoding('UTF-8')
+  ss = NKF
+         .nkf( "-w ", text)
+         .gsub( /[(]/ , "（" )
+         .gsub( /[)]/ , "）" )
+
+  array= []
+  if ss =~ /[\p{hani}]/
+    status, stdout, stderr = systemu [
+                      "echo #{ss}" ,
+                      "juman -b"   , # -b 複数読みがあった場合の処置
+                    ].join( ' | ')
+
+    if status == 0
+      stdout
+        .sub(   /EOS$/, '' )
+        .gsub(  /\\/  , '' )
+        .split( "\n" )
+        .each do | e |
+        array.push( e.split( " " )[1] ) # 各行の2番目を取り出す
+      end
+    else
+      array.push( "juman error", text )
+    end
+  else
+    array.push( ss )
+  end
+
+  yomi = array.join.force_encoding( 'UTF-8' )
+  NKF.nkf( "-w --hiragana", yomi )
+    .gsub( /[\p{hani}]/, "◆" )
+    .sub(  /(.*◆)/,      'んんん$1' )
 end
 
 if __FILE__ == $0 then
