@@ -105,10 +105,18 @@ class MyGetLyricInfo
     end
 
     def l0l1c0c1( ee, pp )
-      ee.join( ' '                     )
-        .gsub(  /[#{pp}]+/       , ' ' ) # 違うところ
-        .sub(   /^[[:space:],]+/ , ''  )
-        .sub(   /[[:space:]]+$/  , ''  )
+
+      ee =
+        ee.join( ' '                     ) # from array
+          .gsub(  /[#{pp}]+/       , ' ' ) # 違うところ
+          .sub(   /^[[:space:],]+/ , ''  )
+          .sub(   /[[:space:]]+$/  , ''  )
+
+      while  ee.match( /(.*)([[:space:]]*&amp;[[:space:]]*)(.*)/ )
+        ee = $1 + " \\& " + $3
+      end
+
+      ee
     end
 
     l0 = l0l1c0c1( lyricist[0], "#{$WAJI}"  )
