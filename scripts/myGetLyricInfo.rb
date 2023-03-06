@@ -90,6 +90,17 @@ class MyGetLyricInfo
             .sub(   /(<br>|[[:space:]]+)+$/ , ''   ) # 最後の <br> を含む空白を削除
             .split( /<br>/ )
         )
+        # /body/table/tbody/tr/td
+        # /body/table/tbody/tr/td/dir ← インデントが必要なケース
+        if ee.xpath( 'dir' ).to_html.size > 0
+          indentglue =
+            poemdata[-1].each_with_index do | e, i |
+            if e.size > 0
+              poemdata[-1][i] = " ~ ~ ~ ~  #{poemdata[-1][i]}"
+              # TODO FIX see https://tex.stackexchange.com/questions/675331/tabularray-expand-multiple-macros-with-background-color
+            end
+          end
+        end
       end
     end
 
