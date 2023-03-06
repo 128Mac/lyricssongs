@@ -107,10 +107,11 @@ class MyGetLyricInfo
     def l0l1c0c1( ee, pp )
 
       ee =
-        ee.join( ' '                     ) # from array
-          .gsub(  /[#{pp}]+/       , ' ' ) # 違うところ
-          .sub(   /^[[:space:],]+/ , ''  )
-          .sub(   /[[:space:]]+$/  , ''  )
+        ee.join( ' ' ) # from array
+          .gsub( /（([^（）]+)）/, '(\1)' ) # 全角丸カッコを半角化
+          .gsub( /[#{pp}]+/       , ' ' ) # 違うところ
+          .sub(  /^[[:space:],]+/ , ''  )
+          .sub(  /[[:space:]]+$/  , ''  )
 
       while  ee.match( /(.*)([[:space:]]*&amp;[[:space:]]*)(.*)/ )
         ee = $1 + " \\& " + $3
