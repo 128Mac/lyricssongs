@@ -67,19 +67,19 @@ class MyGetLyricInfo
         reference = tmp2.join( ' ' ).gsub( /[[:blank:]]+/, " ")
 
       when 1 then
-        tmp1 = []
-        ee.to_html
-          .split( /[[:space:]]*<[^<>]+>[[:space:]]*/ )
-          .each do | eee |
 
-          case eee
-          when /^$/ then
-          else
-            tmp1.push( eee )
-          end
-        end
+        re = [ # 作品タイトル名にの整理番号は除去 / 英字で始まり . - 数字を含むもの
+          '(', [ 'Op[.]', 'WoO[ .]', 'TrV ', 'AV ', 'D ', ].join( '|' ), ')',
+          '(', '\d', '[-/,\d\w]*', ')',
+        ].join
 
-        titleTRAN  = tmp1.join( ' ' )
+        titleTRAN =
+          ee.to_html
+            .gsub( /[[:space:]]*<[^<>]+>/, '' )
+            .gsub( /(#{re})/, '　' )
+            .sub(  /^[[:space:]]+/, '' )
+            .sub(  /[　[:space:]]+$/, '' )
+            .gsub( /[[:space:]]+/, '　' )
 
       else
         poemdata.push(
