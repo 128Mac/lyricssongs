@@ -56,7 +56,7 @@ def myYomiJuman( text )
                 ].join( "\n" )
   end
 
-  yomi
+  NKF.nkf( "-w --hiragana", yomi )
 end
 
 if __FILE__ == $0 then
