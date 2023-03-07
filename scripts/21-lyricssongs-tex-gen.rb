@@ -339,15 +339,18 @@ def proc_file_output_section_or_subsection( ee )
 
   return nil if ee[:lyricinfo].nil?
 
-  yomi = myYomi( ee[:lyricinfo].lyricinfo[:Title][1] )
+  # yomi = myYomi( ee[:lyricinfo].lyricinfo[:Title][1] ) # TODO
+  yomi = myYomi( ee[:comptitle][1] ) # TODO
   array = []
 
   array.push( # \SUBSECTION 情報
     [
       [ "\\SUBSECTION" ],
       [ "% 書名・詩名",
-        "{ #{ee[:lyricinfo].lyricinfo[:Title][0]} }",
-        "{ #{ee[:lyricinfo].lyricinfo[:Title][1]} }",
+        # "{ #{ee[:lyricinfo].lyricinfo[:Title][0]} }", # TODO 本来ならこちらからなのだが
+        # "{ #{ee[:lyricinfo].lyricinfo[:Title][1]} }", # TODO どこかおかしい
+        "{ #{ee[:comptitle][0]} }", # TODO
+        "{ #{ee[:comptitle][1]} }", # TODO
       ].join( "\n" ),
       [ "{ #{yomi} }",
         "% よみ情報",
