@@ -2,10 +2,22 @@
 
 $LOAD_PATH.push( File.expand_path( __FILE__ ) )
 require_relative 'myYomiJuman'
+require_relative 'myGlobalValue'
 # require_relative 'myYomiJumanpp'
 
 $YOMI_DB_CACHE = { }
 
+if File.exist?( $YOMI_DB_CACHE_FILE )
+  File.read( $YOMI_DB_CACHE_FILE ).split("\n").each do | ee |
+    if mm = ee.sub(   /^[[:space:]]+/ , ''   )
+              .sub(   /[[:space:]]+$/ , ''   )
+              .sub(   / *(=>) */      , '\1' )
+              .match( /(.*)=>(.*)/           )
+
+      $YOMI_DB_CACHE[mm[1]] = mm[2]
+    end
+  end
+end
 # 先頭文字の濁点・半濁点の補正
 $Dakuten_handakuten_HASH = { # 濁点・半濁点変換他
   "ぁ"   => "あ", "ぃ"  => "い", "ぅ"   => "う", "ぇ"   => "え", "ぉ"  => "お",
@@ -36,23 +48,26 @@ end
 
 def myYomi( str )
 
-  arr = []
-  arr.push( $YOMI_DB_CACHE[ str ] )# TODO キャッシュに使えるようにする
+  arr = [ $YOMI_DB_CACHE[ str ] ]
 
   if arr[0].nil? # よみがキャッシュにない時は jumanで変換
     arr = []
     if str =~ /[\p{hani}\p{kana}]/
       arr.push( myYomiJuman( yomi_sub( str ) ) )
-      $YOMI_DB_CACHE = { str => arr[-1] }
+      $YOMI_DB_CACHE[str] = arr[-1]
     else
       arr.push( str )
     end
   end
 
-  # 先頭の１文字が濁点・半濁点など対象文字を
-  mm = arr[0].match( /^(.)/ )
-  nn = $Dakuten_handakuten_HASH[mm[1]]
-  nn = mm[1] if nn.nil?
+  # 先頭の１ないし２文字が濁点・半濁点など対象文字を清音化
+  mm = arr[0].match( /^(..)/ ) # ゔぁ ゔぃ ゔぅ ゔぇ ゔぉ
+  unless nn = $Dakuten_handakuten_HASH[mm[1]]
+
+    mm = arr[0].match( /^(.)/ )
+    nn = $Dakuten_handakuten_HASH[mm[1]]
+    nn = mm[1] if nn.nil?
+  end
 
   [ nn, arr.join, ].join( "-" )
 end
