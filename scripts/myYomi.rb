@@ -49,12 +49,12 @@ def myYomi( str )
     end
   end
 
-  # 先頭の１文字が濁点・半濁点など対象文字であれば変換文字を前置
-  if mm = arr[0].match( /^(.)/ )
-    arr.unshift $Dakuten_handakuten_HASH[mm[1]]
-  end
+  # 先頭の１文字が濁点・半濁点など対象文字を
+  mm = arr[0].match( /^(.)/ )
+  nn = $Dakuten_handakuten_HASH[mm[1]]
+  nn = mm[1] if nn.nil?
 
-  arr.join
+  [ nn, arr.join, ].join( "-" )
 end
 
 $Yomi_bubun_henkan_HASH = {
