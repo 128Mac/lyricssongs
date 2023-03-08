@@ -1,13 +1,22 @@
 \newlength{\len}% SECTION / SUBSECTION で書名等の引数の長さ計算用
 
-\newcommand{\SECTION}[6]{%
-  \def\mySecTitleORIG{#1}% 書名・詩集名（原）   { {Liederkreis }
-  \def\mySecTitleTRAN{#2}% 書名・詩集名（訳）   { リーダークライス }
-  \def\mySecYOMI{#3}%%%%%% %よみ              { りーだーくらいす }
-  \def\mySecREFERENCE{#4}% 整理番号            { Op.24 }
-  \def\mySecMiscORIG{#5}%% 監修者等(訳)        { ハインリッヒ・ハイネ }
-  \def\mySecMiscTRAN{#6}%% 監修者等(原)、年情報 { Heinrich Heine }
-  %
+\newcommand{\myINDEX}[5]{%
+  % 1 整理番号
+  % 2,3 タイトル、よみ（原）
+  % 4,5 タイトル、よみ（訳）
+  \index{#3(#5)@#2(#4)#1}%
+  \index{#5(#3)@#4(#2)#1}%
+}
+
+\newcommand{\SECTION}[7]{%
+  \def\mySecTitleORIG{#1}% タイトル（原）
+  \def\mySecYOMIORIG{#2}%% よみ（原）
+  \def\mySecTitleTRAN{#3}% タイトル（訳）
+  \def\mySecYOMITRAN{#4}%% よみ（訳）
+  \def\mySecREFERENCE{#5}% 整理番号
+  \def\mySecMiscORIG{#6}%% その他情報（原）
+  \def\mySecMiscTRAN{#7}%% その他情報（訳）
+%
   \newpage%
   %
   % (注意) 以下は SUBSECTION と同じデザインだが、
@@ -27,8 +36,10 @@
       \hline[2pt]\hline%
     \end{tblr}%
   }%
-  \index{\mySecTitleORIG(\mySecYOMI)@\mySecTitleORIG(\mySecTitleTRAN)\mySecREFERENCE}%
-  \index{\mySecYOMI(\mySecTitleORIG)@\mySecTitleTRAN(\mySecTitleORIG)\mySecREFERENCE}%
+  \myINDEX{\mySecREFERENCE}%
+  {\mySecTitleORIG}{\mySecYOMIORIG}%
+  {\mySecTitleTRAN}{\mySecYOMITRAN}%
+  %
   \addcontentsline{toc}{section}%
   {%
     \parbox[b]{.465\textwidth}{\mySecTitleORIG ~ \mbox{\small(\mySecREFERENCE)} ~ \dotfill\hspace{1em}}%
@@ -40,15 +51,16 @@
   \bigskip%
 }
 
-\newcommand{\SUBSECTION}[8]{%
-  \def\mySubSecTitleORIG{#1}%%%% 書名・詩名（原）
-  \def\mySubSecTitleTRAN{#2}%%%% 書名・詩名（訳）
-  \def\mySubSecYOMI{#3}%%%%%%%%% よみ
-  \def\mySubSecREFERENCE{#4}%%%% 整理番号
-  \def\mySubSecLyricistORIG{#5}% 作詞家情報（原）
-  \def\mySubSecLyricistTRAN{#6}% 作詞家情報（訳）
-  \def\mySubSecComposerORIG{#7}% 作曲家情報（原）
-  \def\mySubSecComposerTRAN{#8}% 作曲家情報（訳）
+\newcommand{\SUBSECTION}[9]{%
+  \def\mySubSecTitleORIG{#1}%%%% タイトル（原）
+  \def\mySubSecYOMIORIG{#2}%%%%% よみ（原）
+  \def\mySubSecTitleTRAN{#3}%%%% タイトル（訳）
+  \def\mySubSecYOMITRAN{#4}%%%%% よみ（訳）
+  \def\mySubSecREFERENCE{#5}%%%% 整理番号
+  \def\mySubSecLyricistORIG{#6}% 作詞家情報（原）
+  \def\mySubSecLyricistTRAN{#7}% 作詞家情報（訳）
+  \def\mySubSecComposerORIG{#8}% 作曲家情報（原）
+  \def\mySubSecComposerTRAN{#9}% 作曲家情報（訳）
   %
   \needspace{12\baselineskip}%
   \bigskip%
@@ -82,8 +94,10 @@
   }%
   \bigskip% 作品コンテンツとタイトル部分を際立てる為
   %
-  \index{\mySubSecTitleORIG(\mySubSecYOMI)@\mySubSecTitleORIG(\mySubSecTitleTRAN)\mySubSecREFERENCE}%
-  \index{\mySubSecYOMI(\mySubSecTitleORIG)@\mySubSecTitleTRAN(\mySubSecTitleORIG)\mySubSecREFERENCE}%
+  \myINDEX{\mySubSecREFERENCE}%
+  {\mySubSecTitleORIG}{\mySubSecYOMIORIG}%
+  {\mySubSecTitleTRAN}{\mySubSecYOMITRAN}%
+  %
   \addcontentsline{toc}{subsection}%
   {%
     \parbox[b]{.465\textwidth}{\mySubSecTitleORIG ~ \mbox{\small(\mySubSecREFERENCE)} ~ \dotfill}%

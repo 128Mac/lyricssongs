@@ -254,19 +254,20 @@ def main
                 sprintf( composer_section_filename_format, sectioncount)
             end
 
-            yomi = myYomi( comptitle[1] )
+            yomi = [ myYomi( comptitle[0] ),
+                     myYomi( comptitle[1] )
+                   ]
             sectionARRAY = [
               { :section =>
                 [ "\\SECTION",
-                  "{ #{comptitle[0]} }%書名・詩集名（原）" ,
-                  "{ #{comptitle[1]} }%書名・詩集名（訳）" ,
-                  "{ #{yomi} }%よみ" ,
-                  "{ #{reference} }%整理番号" ,
-                  [
-                    "{ #{compmiscinfo[0]} }" ,
-                    "{ #{compmiscinfo[1]} }",
-                    "%監修者等(原・訳)、年情報" ,
-                  ].join,
+                  [ "{ #{comptitle[0]} }"    , "% タイトル（原）"   , ].join,
+                  [ "{ #{yomi[0]} }"         , "% よみ（原）"       , ].join,
+                  [ "{ #{comptitle[1]} }"    , "% タイトル（訳）"   , ].join,
+                  [ "{ #{yomi[1]} }"         , "% よみ（訳）"       , ].join,
+                  [ "{ #{reference} }"       , "% 整理番号"         , ].join,
+                  [ "{ #{compmiscinfo[0]} }" , "% その他情報（原）" , ].join,
+                  [ "{ #{compmiscinfo[1]} }" , "% その他情報（訳）" , ].join,
+                  "" ,
                 ].join( "\n" ),
               }
             ]
@@ -340,32 +341,25 @@ def proc_file_output_section_or_subsection( ee )
   return nil if ee[:lyricinfo].nil?
 
   # yomi = myYomi( ee[:lyricinfo].lyricinfo[:Title][1] ) # TODO
-  yomi = myYomi( ee[:comptitle][1] ) # TODO
+  yomi = [ myYomi( ee[:comptitle][0] ), # TODO
+           myYomi( ee[:comptitle][1] )  # TODO
+         ]
   array = []
 
   array.push( # \SUBSECTION 情報
     [
       [ "\\SUBSECTION" ],
-      [ "% 書名・詩名",
-        # "{ #{ee[:lyricinfo].lyricinfo[:Title][0]} }", # TODO 本来ならこちらからなのだが
-        # "{ #{ee[:lyricinfo].lyricinfo[:Title][1]} }", # TODO どこかおかしい
-        "{ #{ee[:comptitle][0]} }", # TODO
-        "{ #{ee[:comptitle][1]} }", # TODO
-      ].join( "\n" ),
-      [ "{ #{yomi} }",
-        "% よみ情報",
-      ].join,
-      [ "{ #{ee[:lyricinfo].lyricinfo[:Reference]} }",
-        "% 整理番号",
-      ].join,
-      [ "% 作詞情報",
-        "{ #{ee[:lyricinfo].lyricinfo[:Lyricist][0]} }",
-        "{ #{ee[:lyricinfo].lyricinfo[:Lyricist][1]} }",
-      ].join( "\n" ),
-      [ "% 作曲情報",
-        "{ #{ee[:lyricinfo].lyricinfo[:Composer][0]} }",
-        "{ #{ee[:lyricinfo].lyricinfo[:Composer][1]} }",
-      ].join( "\n" ),
+      [ #"{ #{ee[:lyricinfo].lyricinfo[:Title][0]} }"   , # TODO 本来ならこちらからなのだが
+        "{ #{ee[:comptitle][0]} }"                      , "% タイトル（原）" , ].join, # TODO
+      [ "{ #{yomi[0]} }"                                , "% よみ情報（原）" , ].join,
+      [ #"{ #{ee[:lyricinfo].lyricinfo[:Title][1]} }"   , # TODO どこかおかしい
+        "{ #{ee[:comptitle][1]} }"                      , "% タイトル（訳）" , ].join, # TODO
+      [ "{ #{yomi[1]} }"                                , "% よみ情報（訳）" , ].join,
+      [ "{ #{ee[:lyricinfo].lyricinfo[:Reference]} }"   , "% 整理番号"       , ].join,
+      [ "{ #{ee[:lyricinfo].lyricinfo[:Lyricist][0]} }" , "% 作詞情報（原）" , ].join,
+      [ "{ #{ee[:lyricinfo].lyricinfo[:Lyricist][1]} }" , "% 作詞情報（訳）" , ].join,
+      [ "{ #{ee[:lyricinfo].lyricinfo[:Composer][0]} }" , "% 作曲情報（原）" , ].join,
+      [ "{ #{ee[:lyricinfo].lyricinfo[:Composer][1]} }" , "% 作曲情報（訳）" , ].join,
     ].join( "\n" )
   )
 

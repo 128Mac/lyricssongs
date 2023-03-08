@@ -19,6 +19,9 @@ $Dakuten_handakuten_HASH = { # 濁点・半濁点変換他
   "っ"   => "つ", "ゐ"  => "い",                "ゑ"   => "え",
 
   "ゔぁ" => "ば", "ゔぃ" => "び", "ゔぅ" => "ぶ", "ゔぇ" => "べ", "ゔぉ" => "ぼ",
+
+  "Ä" => "A", "Ö" => "O", "Ü" => "U", "ß" => "S",
+  "ä" => "A", "ö" => "O", "ü" => "U",
 }
 # 英数字が先頭に来る場合、tr では全部変えてしまうのでこの変換テーブルに登録しておく
 [ [ "0", "9", "０-９" ],
@@ -33,12 +36,10 @@ end
 
 def myYomi( str )
 
-  # TODO toml ファイルをキャッシュに使えるようにする
-
   arr = []
-  arr.push( $YOMI_DB_CACHE[ str ] )
+  arr.push( $YOMI_DB_CACHE[ str ] )# TODO キャッシュに使えるようにする
 
-  if arr[0].nil?
+  if arr[0].nil? # よみがキャッシュにない時は jumanで変換
     arr = []
     if str =~ /[\p{hani}\p{kana}]/
       arr.push( myYomiJuman( yomi_sub( str ) ) )
@@ -48,9 +49,10 @@ def myYomi( str )
     end
   end
 
-  # 先頭の１文字だけ濁点・半濁点を変換
-  arr[0] = arr[0].sub( /^(#{$Dakuten_handakuten_HASH.keys.join( '|' )})/,
-                       $Dakuten_handakuten_HASH )
+  # 先頭の１文字が濁点・半濁点など対象文字であれば変換文字を前置
+  if mm = arr[0].match( /^(.)/ )
+    arr.unshift $Dakuten_handakuten_HASH[mm[1]]
+  end
 
   arr.join
 end
