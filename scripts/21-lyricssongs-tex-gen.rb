@@ -254,6 +254,9 @@ def main
                 sprintf( composer_section_filename_format, sectioncount)
             end
 
+            comptitle[1] = # 整理番号混入緊急対処
+              comptitle[1].sub( /[[:space:]]*(Op[.]|WoO[.]|D )[-0-9]+$/, '' )
+
             yomi = [ myYomi( comptitle[0] ),
                      myYomi( comptitle[1] )
                    ]

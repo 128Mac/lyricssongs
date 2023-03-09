@@ -90,6 +90,9 @@ class MyGetSongbookInfo
           end
 
           tmpT = myStripSpaces( tmpT )
+          if tmpT.kind_of?( String )
+            tmpT = tmpT.sub( /[[:space:]]*(Op[.]|WoO[.]|D )[-0-9]+$/, '' )
+          end
 
           href.push( tmpH ) unless tmpH.nil?
           text.push( tmpT ) unless tmpT.nil?
