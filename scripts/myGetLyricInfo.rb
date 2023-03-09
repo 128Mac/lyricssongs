@@ -77,10 +77,9 @@ class MyGetLyricInfo
           ee.to_html
             .gsub( /[[:space:]]*<[^<>]+>/, '' )
             .gsub( /(#{re})/, '　' )
-            .sub(  /^[[:space:]]+/, '' )
-            .sub(  /[　[:space:]]+$/, '' )
             .gsub( /[[:space:]]+/, '　' )
-
+            .sub(  /^[[:space:]]+/, '' )
+            .sub(  /[[:space:]]+$/, '' )
       else
         poemdata.push(
           ee.to_html
