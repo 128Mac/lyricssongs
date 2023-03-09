@@ -7,6 +7,33 @@ require_relative 'myGlobalValue'
 
 $YOMI_DB_CACHE = { }
 
+# 既存の .tex ファイルの
+
+Dir.glob( "[A-Z]*/*.tex" )
+  .grep( /^[^a-z]/ )
+  .each do | texfile |
+
+  key = nil
+
+  File.read( texfile )
+    .split( "\n" )
+    .grep( /(タイトル|よみ情報)（訳）/ )
+    .each do | ee |
+
+    next if ee =~ /んんん/
+
+    nn = ee.sub( /^[{[:space:]]+/   , '' )
+           .sub( /[[:space:]}]*%.*/ , '' )
+
+    if /(.)-(.*)/.match( nn )
+      $YOMI_DB_CACHE[key] = $2 unless key.nil?
+      key = nil
+    else
+      key = nn
+    end
+  end
+end
+
 if File.exist?( $YOMI_DB_CACHE_FILE )
   File.read( $YOMI_DB_CACHE_FILE ).split("\n").each do | ee |
     if mm = ee.sub(   /^[[:space:]]+/ , ''   )
