@@ -22,8 +22,9 @@ def myYomiJuman( text )
   array= []
   if ss =~ /[\p{hani}]/
     status, stdout, stderr = systemu [
-                      "echo #{ss}" ,
-                      "juman -b"   , # -b 複数読みがあった場合の処置
+                      "echo #{ss}"        ,
+                      "juman -b"          , # -b 複数読みがあった場合の処置
+                      "nkf -w --hiragana" ,
                     ].join( ' | ')
 
     if status == 0
