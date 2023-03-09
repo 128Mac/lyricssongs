@@ -40,9 +40,12 @@
   {\mySecTitleORIG}{\mySecYOMIORIG}%
   {\mySecTitleTRAN}{\mySecYOMITRAN}%
   %
+  \settowidth{\len}{\mySecREFERENCE}%
+  \ifdim \len > 0pt \def\tmpSecRef{ ~ \mbox{\small(\mySecREFERENCE)}}%
+  \else\def\tmpSecRef{}\fi%
   \addcontentsline{toc}{section}%
   {%
-    \parbox[b]{.465\textwidth}{\mySecTitleORIG ~ \mbox{\small(\mySecREFERENCE)} ~ \dotfill\hspace{1em}}%
+    \parbox[b]{.465\textwidth}{\mySecTitleORIG\tmpSecRef ~ \dotfill\hspace{1em}}%
     ~ ~ %
     \parbox[b]{.465\textwidth}{\mySecTitleTRAN ~ \dotfill\hspace{1em}}%
   }%
@@ -92,8 +95,8 @@
       \hline[1.5pt]%
       \mySubSecTitleORIG\glueA{ \small\mbox{\mySubSecREFERENCE} } &%
       \mySubSecTitleTRAN \\%
-      \parbox[t]{.9\linewidth}{ \small\mySubSecLYRICIST } &\\%
-      \parbox[t]{.9\linewidth}{ \small\mySubSecCOMPOSER } &\\%
+      \parbox[t]{.97\linewidth}{ \small\mySubSecLYRICIST } &\\%
+      \parbox[t]{.97\linewidth}{ \small\mySubSecCOMPOSER } &\\%
       \hline[1.5pt]%
     \end{tblr}%
   }%
@@ -103,9 +106,12 @@
   {\mySubSecTitleORIG}{\mySubSecYOMIORIG}%
   {\mySubSecTitleTRAN}{\mySubSecYOMITRAN}%
   %
+  \settowidth{\len}{\mySubSecREFERENCE}%
+  \ifdim \len > 0pt \def\tmpSubSecRef{ ~ \mbox{\small(\mySubSecREFERENCE)}}%
+  \else\def\tmpSubSecRef{}\fi%
   \addcontentsline{toc}{subsection}%
   {%
-    \parbox[b]{.465\textwidth}{\mySubSecTitleORIG ~ \mbox{\small(\mySubSecREFERENCE)} ~ \dotfill}%
+    \parbox[b]{.465\textwidth}{\mySubSecTitleORIG\tmpSubSecRef ~ \dotfill}%
     ~ ~ %
     \parbox[b]{.465\textwidth}{\mySubSecTitleTRAN ~ \dotfill}%
   }%

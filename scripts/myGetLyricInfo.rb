@@ -36,7 +36,7 @@ class MyGetLyricInfo
           .gsub( /[[:space:]]+/ , ' ' )
           .sub(  /^[[:space:]]+/, ''  )
           .sub(  /[[:space:]]+$/, ''  )
-          .gsub( /(詩：.*[(][^()]+[)][[:space:]]*[#{$WAJI}]+)/, '\1' + "\\par\\hspace{2cm}"  )
+          .gsub( /(詩：.*[(][^()]+[)][[:space:]]*[#{$WAJI}]+)/, '\1' + "\\par\\hspace{4em}"  )
       )
     end
 

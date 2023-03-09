@@ -263,13 +263,13 @@ def main
             sectionARRAY = [
               { :section =>
                 [ "\\SECTION",
-                  [ "{ #{comptitle[0]} }"    , "% タイトル（原）"   , ].join,
-                  [ "{ #{yomi[0]} }"         , "% よみ情報（原）"   , ].join,
-                  [ "{ #{comptitle[1]} }"    , "% タイトル（訳）"   , ].join,
-                  [ "{ #{yomi[1]} }"         , "% よみ情報（訳）"   , ].join,
-                  [ "{ #{reference} }"       , "% 整理番号"         , ].join,
-                  [ "{ #{compmiscinfo[0]} }" , "% その他情報（原）" , ].join,
-                  [ "{ #{compmiscinfo[1]} }" , "% その他情報（訳）" , ].join,
+                  [ "{#{comptitle[0]}}"    , "% タイトル（原）"   , ].join,
+                  [ "{#{yomi[0]}}"         , "% よみ情報（原）"   , ].join,
+                  [ "{#{comptitle[1]}}"    , "% タイトル（訳）"   , ].join,
+                  [ "{#{yomi[1]}}"         , "% よみ情報（訳）"   , ].join,
+                  [ "{#{reference}}"       , "% 整理番号"         , ].join,
+                  [ "{#{compmiscinfo[0]}}" , "% その他情報（原）" , ].join,
+                  [ "{#{compmiscinfo[1]}}" , "% その他情報（訳）" , ].join,
                   "" ,
                 ].join( "\n" ),
               }
@@ -352,15 +352,15 @@ def proc_file_output_section_or_subsection( ee )
   array.push( # \SUBSECTION 情報
     [
       [ "\\SUBSECTION" ],
-      [ #"{ #{ee[:lyricinfo].lyricinfo[:Title][0]} }"   , # TODO 本来ならこちらからなのだが
-        "{ #{ee[:comptitle][0]} }"                      , "% タイトル（原）" , ].join, # TODO
-      [ "{ #{yomi[0]} }"                                , "% よみ情報（原）" , ].join,
-      [ #"{ #{ee[:lyricinfo].lyricinfo[:Title][1]} }"   , # TODO どこかおかしい
-        "{ #{ee[:comptitle][1]} }"                      , "% タイトル（訳）" , ].join, # TODO
-      [ "{ #{yomi[1]} }"                                , "% よみ情報（訳）" , ].join,
-      [ "{ #{ee[:lyricinfo].lyricinfo[:Reference]} }"   , "% 整理番号" , ].join,
-      [ "{ #{ee[:lyricinfo].lyricinfo[:Miscinfo][0]} }" , "% 詞情報" , ].join,
-      [ "{ #{ee[:lyricinfo].lyricinfo[:Miscinfo][1]} }" , "% 曲情報" , ].join,
+      [ #"{#{ee[:lyricinfo].lyricinfo[:Title][0]}}"   , # TODO 本来ならこちらからなのだが
+        "{#{ee[:comptitle][0]}}"                      , "% タイトル（原）" , ].join, # TODO
+      [ "{#{yomi[0]}}"                                , "% よみ情報（原）" , ].join,
+      [ #"{#{ee[:lyricinfo].lyricinfo[:Title][1]}}"   , # TODO どこかおかしい
+        "{#{ee[:comptitle][1]}}"                      , "% タイトル（訳）" , ].join, # TODO
+      [ "{#{yomi[1]}}"                                , "% よみ情報（訳）" , ].join,
+      [ "{#{ee[:lyricinfo].lyricinfo[:Reference]}}"   , "% 整理番号" , ].join,
+      [ "{#{ee[:lyricinfo].lyricinfo[:Miscinfo][0]}}" , "% 詞情報" , ].join,
+      [ "{#{ee[:lyricinfo].lyricinfo[:Miscinfo][1]}}" , "% 曲情報" , ].join,
     ].join( "\n" )
   )
 
