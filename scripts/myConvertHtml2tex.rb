@@ -13,7 +13,7 @@ def myConvertHtml2tex(str)
   convert_pattern_HASH = {
     '[[:blank:]]*“[[:blank:]]*' => ' {\glqq}' ,
     '[[:blank:]]*”[[:blank:]]*' => '{\grqq} ' ,
-    '([[:blank:]]+)(I*[VI])([^A-HJUX-Za-zäöüÄÖÜß:<]{2,5})' => ' \textrm{\2}\3',
+    '([[:blank:]]+)(I*[VI])([^-A-HJUX-Za-zäöüÄÖÜß:<]{2,5})' => ' \textrm{\2}\3',
     '_' => '\\_',
   }
 
