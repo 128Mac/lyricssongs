@@ -19,7 +19,7 @@ class MyGetLyricInfo
     return nil if fontinfo.size == 0
 
     tmpA = []
-
+    tmpB = []
     fontinfo.each_with_index do | ee, ii |
 
       tmpA.push(
@@ -29,11 +29,27 @@ class MyGetLyricInfo
           .split(  /[[:space:]]*<[^<>]+>[[:space:]]*/  )
           .reject( &:empty?                            )
       )
+
+      tmpB.push(
+        ee.to_html
+          .gsub( /<[^<>]+>/     , ''  )
+          .gsub( /[[:space:]]+/ , ' ' )
+          .sub(  /^[[:space:]]+/, ''  )
+          .sub(  /[[:space:]]+$/, ''  )
+          .gsub( /(詩：.*[(][^()]+[)][[:space:]]*[#{$WAJI}]+)/, '\1' + "\\par\\hspace{2cm}"  )
+      )
     end
 
     tmpA.push( [], [], [] )
+    tmpB =
+      tmpB.join( " " )
+        .gsub(  /[[:space:]]*(曲：)/, "\n" + '\1' )
+        .gsub(  /[[:blank:]]+([#{$WAJI}]+：)/, '　\1' )
+        .split( "\n" )
+
     lyricist = [ tmpA[0] + tmpA[1] , tmpA[0] + tmpA[1] ]
     composer = [ tmpA[2]           , tmpA[2]           ]
+    miscinfo = tmpB
 
     tmp = doc.xpath( '/html/body/table' )
 
@@ -131,7 +147,8 @@ class MyGetLyricInfo
       :Reference => reference,
       :Lyricist  => [ l0, l1 ],
       :Composer  => [ c0, c1 ],
-      :Lyric     => poemdata
+      :Miscinfo  => miscinfo,
+      :Lyric     => poemdata,
     }
   end
 
@@ -154,6 +171,7 @@ if __FILE__ == $0 then
       ":Reference=>[#{lyricinfo.lyricinfo[:Reference]}]",
       ":Lyricist=>#{lyricinfo.lyricinfo[:Lyricist]}",
       ":Composer=>#{lyricinfo.lyricinfo[:Composer]}",
+      ":Miscinfo=>#{lyricinfo.lyricinfo[:Miscinfo]}"
       # ":Lyric=>#{lyricinfo.lyricinfo[:Lyric]}",
     ].join( "\n    " )
 

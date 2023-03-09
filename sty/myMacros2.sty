@@ -28,7 +28,7 @@
   %
   \phantomsection%
   \section*{%
-    \begin{tblr}[t]{ | X @{ ~ ~ ~ ~ ~ ~ } X | }%
+    \begin{tblr}{ | X @{ ~ ~ ~ ~ ~ ~ } X | }%
       \hline\hline[2pt]%
       \mySecTitleORIG\glueA{\mbox{\small\mySecREFERENCE}} &%
       \mySecTitleTRAN \\%
@@ -51,21 +51,19 @@
   \bigskip%
 }
 
-\newcommand{\SUBSECTION}[9]{%
-  \def\mySubSecTitleORIG{#1}%%%% タイトル（原）
-  \def\mySubSecYOMIORIG{#2}%%%%% よみ（原）
-  \def\mySubSecTitleTRAN{#3}%%%% タイトル（訳）
-  \def\mySubSecYOMITRAN{#4}%%%%% よみ（訳）
-  \def\mySubSecREFERENCE{#5}%%%% 整理番号
-  \def\mySubSecLyricistORIG{#6}% 作詞家情報（原）
-  \def\mySubSecLyricistTRAN{#7}% 作詞家情報（訳）
-  \def\mySubSecComposerORIG{#8}% 作曲家情報（原）
-  \def\mySubSecComposerTRAN{#9}% 作曲家情報（訳）
+\newcommand{\SUBSECTION}[7]{%
+  \def\mySubSecTitleORIG{#1}% タイトル（原）
+  \def\mySubSecYOMIORIG{#2}%% よみ（原）
+  \def\mySubSecTitleTRAN{#3}% タイトル（訳）
+  \def\mySubSecYOMITRAN{#4}%% よみ（訳）
+  \def\mySubSecREFERENCE{#5}% 整理番号
+  \def\mySubSecLYRICIST{#6}%% 詞情報
+  \def\mySubSecCOMPOSER{#7}%% 曲情報
   %
-  \needspace{12\baselineskip}%
   \bigskip%
+  \needspace{12\baselineskip}%
   %
-% (注意) 以下は SECTION と同じデザインだが、
+  % (注意) 以下は SECTION と同じデザインだが、
   % 将来それぞれのデザイン変更等に対応するため再定義
   %
   % 整理番号・原文・訳文側の関連項目のどちらか一方指定時 \par\hfill で改行・右寄せ
@@ -81,14 +79,21 @@
   % \settowidth{\len}{\mySubSecComposerORIG\mySubSecComposerTRAN}%
   % \ifdim \len > .465\linewidth \def\glueC{\par\hfill} \fi%
   %
+  ~ \par% このようにしないとヘッダールーラと表題部が重なってしまうので苦肉の策
   \phantomsection%
   \subsection*{%
-    \begin{tblr}[t]{ | X @{ ~ ~ ~ ~ ~ ~ } X | }%
+    % tabularray でのマルチカラム について
+    % https://tex.stackexchange.com/questions/603349/tabularray-and-new-command-for-multicolumn-cells
+    \begin{tblr}{%
+        colspec = {| X @{ ~ ~ ~ ~ ~ ~ } X |},%
+        cell{2}{1} = {c=2}{l},%
+        cell{3}{1} = {c=2}{l},%
+      }%
       \hline[1.5pt]%
-      \mySubSecTitleORIG\glueA{\small\mbox{\mySubSecREFERENCE}} &%
+      \mySubSecTitleORIG\glueA{ \small\mbox{\mySubSecREFERENCE} } &%
       \mySubSecTitleTRAN \\%
-      \hfill {\small\mySubSecLyricistORIG} & {\small\mySubSecLyricistTRAN} \\%
-      \hfill {\small\mySubSecComposerORIG} & {\small\mySubSecComposerTRAN} \\%
+      \parbox[t]{.9\linewidth}{ \small\mySubSecLYRICIST } &\\%
+      \parbox[t]{.9\linewidth}{ \small\mySubSecCOMPOSER } &\\%
       \hline[1.5pt]%
     \end{tblr}%
   }%
