@@ -1,11 +1,12 @@
 #!/usr/bin/env ruby
 
+$LOAD_PATH.push( File.expand_path( __FILE__ ) )
+require_relative 'myGlobalValue'
+
 def myCorrection( str )
 
   # hash = {'b'=>'B', 'c'=>'C'}
   # p "abcabc".gsub(/[bc]/, hash)     #=> "aBCaBC"
-
-  waji = '\p{han}\p{hira}\p{kana}ー「」（）。、：・０-９'
 
   # hash1 には 部分文字列を再利用しないパターンを登録
   hash1 = {
@@ -29,20 +30,25 @@ def myCorrection( str )
     # ローマ数字関連
     '[[:space:]]*[IＩ]{3}' => ' III', '[[:space:]]*[IＩ]{2}' => ' II', '[[:space:]]*ＩV' => ' IV',# 要注意順序
     '([^ＭＨＬＩI])Ｉ([^IVＩ])' => '\1I\2',
-
+    '[[:blank:]]*([IV]+<)' => ' \1',
     # タイポ
     'WoO[.]７' => 'WoO.7',
+    'WoO22'   => 'WoO.22',
+    'WoO.0+'  => 'WoO.',
+    'WoO +'   => 'WoO.',
+    #
     'ニ(人の擲弾兵|紳士|十頭)' => '二\1', # カタカナ「ニ」(x30cb) が混入
     '(　)−(ああ、神父様、後でいらしてくだされ)' => '\1ー\2', # 余分な文字が混入
     '(　)　(娘さんが病んでおられるのなら)' => '\1ー\2', # 原文に合わせる（上記対応で発見）
 
     # 表記統一
-    "([#{waji}]):" => '\1：', # 和字の直後の「:]を「：」
-    "([#{waji}])_([#{waji}])" => '\1　\2', # 和字間を「_」で接続しているが空白に変更
-    "[[:blank:]]*([^#{waji}])(，)[[:blank:]]*" => '\1, ', # 和字単語以外のところの「読点（，）」「カンマ(,)」に変更
+    "([#{$WAJI}]):" => '\1：', # 和字の直後の「:]を「：」
+    "([#{$WAJI}])_([#{$WAJI}])" => '\1　\2', # 和字間を「_」で接続しているが空白に変更
+    "[[:blank:]]*([^#{$WAJI}])(，)[[:blank:]]*" => '\1, ', # 和字単語以外のところの「読点（，）」「カンマ(,)」に変更
     '([\p{kana}ー])，([\p{kana}ー])' => '\1,\2', # ファミリ、ネームの順の表記統一
     '([\p{kana}ー]+)−([\p{kana}ー]+)' => '\1＝\2', # 個人名表記の統一
-    '([曲番集])[[:blank:]]+[「『]([^「」『』]+)[』」]' => '\1「\2」',
+    '([曲番集])[[:blank:]]*[「『]([^「」『』]+)[』」]' => '\1「\2」',
+
     '　(\d+)　' => ' \1 ',
   }
   hash2.each do | k , v | str.gsub!( /#{k}/, "#{v}" ) if str.match( /#{k}/ ) end
@@ -205,4 +211,4 @@ def myCorrection( str )
   str
 end
 
-if __FILE__ == $0 then puts myConvertHtml2tex File.read( ARGV[0] ) end
+if __FILE__ == $0 then puts myCorrection File.read( ARGV[0] ) end
