@@ -30,14 +30,18 @@ class MyGetLyricInfo
           .reject( &:empty?                            )
       )
 
-      tmpB.push(
+      tmpBsub =
         ee.to_html
           .gsub( /<[^<>]+>/     , ''  )
           .gsub( /[[:space:]]+/ , ' ' )
           .sub(  /^[[:space:]]+/, ''  )
           .sub(  /[[:space:]]+$/, ''  )
           .gsub( /(詩：.*[(][^()]+[)][[:space:]]*[#{$WAJI}]+)/, '\1' + "\\par\\hspace{4em}"  )
-      )
+
+      while tmpBsub.match( /(.*)([[:space:]]*&amp;[[:space:]]*)(.*)/ ) # & の特殊処理
+        tmpBsub = $1 + " \\& " + $3
+      end
+      tmpB.push( tmpBsub )
     end
 
     tmpA.push( [], [], [] )
