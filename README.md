@@ -1,29 +1,32 @@
 
 # Table of Contents
 
-1.  [lyricssongs](#orgb4797e2)
-    1.  [概要](#org4b98311)
-    2.  [必要なもの](#orgb150dc6)
-        1.  [git 環境](#org3123c54)
-        2.  [ruby 環境](#org398b395)
-        3.  [JUMAN](#org53e84e0)
-    3.  [利用方法](#org056a642)
-    4.  [TODO](#orgbf0a578)
+1.  [lyricssongs](#orgec7c03d)
+    1.  [概要](#orgd9bd27f)
+    2.  [必要なもの](#org51bd43a)
+        1.  [git 環境](#org4d63cdf)
+        2.  [ruby 環境](#org0cffff7)
+        3.  [JUMAN](#org2e11e10)
+    3.  [利用方法](#org27aad61)
+    4.  [よみ](#org0629411)
+        1.  [概要](#org3b51f65)
+        2.  [yomi.dict の保守](#org22a0da9)
+    5.  [TODO](#org008fc1e)
 
 
-<a id="orgb4797e2"></a>
+<a id="orgec7c03d"></a>
 
 # lyricssongs
 
 
-<a id="org4b98311"></a>
+<a id="orgd9bd27f"></a>
 
 ## 概要
 
 [　梅丘歌曲会館 　詩と音楽　](http://www7b.biglobe.ne.jp/~lyricssongs/index.htm)の作曲家別の作品集を latex 化するための　ruby スクリプト
 
 
-<a id="orgb150dc6"></a>
+<a id="org51bd43a"></a>
 
 ## 必要なもの
 
@@ -32,7 +35,7 @@
 -   JUMAN
 
 
-<a id="org3123c54"></a>
+<a id="org4d63cdf"></a>
 
 ### git 環境
 
@@ -45,7 +48,7 @@
         git config --global user.name "Your Name"
 
 
-<a id="org398b395"></a>
+<a id="org0cffff7"></a>
 
 ### ruby 環境
 
@@ -55,7 +58,7 @@
         -   利用する gem パッケージは scripts/Gemfile 参照
 
 
-<a id="org53e84e0"></a>
+<a id="org2e11e10"></a>
 
 ### JUMAN
 
@@ -85,7 +88,7 @@
         C:\Program Files\juman\unins000.exe
 
 
-<a id="org056a642"></a>
+<a id="org27aad61"></a>
 
 ## 利用方法
 
@@ -105,9 +108,11 @@
 -   htm ファイルの tex 化と latex によるテスト＆対策
     -   ダウンロードした htm ファイルを tex 化
         
-            ruby scripts/20-lyricssongs-tex-gen.rb  TOML/Brahms.toml ...
+            ruby scripts/21-lyricssongs-tex-gen.rb  COMP/Brahms.htm ...
         
-        -   scripts/10-lyricssongs-tex-gen.rb は廃止の予定です
+        -   廃止の予定情報
+            -   scripts/21-lyricssongs-tex-gen.rb は廃止の予定です
+            -   scripts/10-lyricssongs-tex-gen.rb は廃止の予定です
         
         -   上記の処理で、 作曲家毎に各ディレクトリに LaTeX に必要なものが書き込まれます。
         -   Brams を例にとれば以下のようなものが作成されます。
@@ -124,19 +129,83 @@
 -   現在判明していること
 
 
-<a id="orgbf0a578"></a>
+<a id="org0629411"></a>
+
+## よみ
+
+
+<a id="org3b51f65"></a>
+
+### 概要
+
+作品タイトル名索引を作成するためには「あいうえお順」になるよう「ひらが
+な」にする必要があり、形態要素解析プログラムを今回は juman の出力結果
+を利用することとした。
+
+作品情報は「さ-さくいん@索引」のようにひらがなの先頭の一文字を前置する
+ように設計したので、以下の点に留意する必要がある。
+
+-   先頭の数文字程度が妥当なひらがなであれば良い
+-   先頭の文字が濁点や半濁点などであれば対応の文字を前置する （例「け-げー
+    て@ゲーテ」）
+
+21-lyricssongs-tex-gen.rb は .htm ファイルから .tex ファイルを作成する
+際にこの索引情報を生成するが、「よみ」情報を以下のファイルからキャッシュ
+として蓄えて利用する。
+
+-   以前 21-lyricssongs-tex-gen.rb で生成した .htm ファイル
+-   yomi.dict (ここに登録されたものが有効になる)
+
+
+<a id="org22a0da9"></a>
+
+### yomi.dict の保守
+
+初回の「よみ」は juman の出力結果で作成される。タイトルだけでは十分な
+情報がないため十分な形態要素解析ができず、間違った「よみ」で処理される
+ので必要に応じて、修正作業が必要である。
+
+考慮する点は以下のとおおり。
+
+-   先頭数文字が妥当であれば変更不要
+-   juman 利用での問題点
+    -   「夏」→「か」/「春」→「しゅん」/「花」→「か」のようになることが多い
+        -   ある程度はスクリプト内にハードコードして対応はしているが漏れはたくさんある
+    -   漢字のままになってしまうケースがあるので 21-lyricssongs-tex-gen.rb
+        実行時に以下のような手動編集を促す警告メッセージを表示する
+        
+            JUMAN （一部）よみ変換できず、要手動編集
+            JUMAN よみ 変　換　前 諷刺の歌
+            JUMAN よみ 暫定変換後 んんん◆◆のうた
+    -   警告メッセージが表示されたものは yomi.dict に「諷刺の歌=>ふうしの
+        うた」のように追加登録し、再処理すれば所定の「よみ」が採用される
+
+-   現状の「よみ」情報は、myYomiDictList.rb で表示することができるので
+    yomi.dict にリダイレクトしてもよい
+-   登録したもののチェックは以下のような方法で確認できる
+    
+        ruby scripts/myYomi.rb  'ヴェネツィアの歌I' '笑いと涙' 竪琴弾き'
+
+
+<a id="org008fc1e"></a>
 
 ## TODO
 
 -   [X] juman 対応
--   [ ] style macro の見直し
--   [ ] Op 番号、作品番号の表示が　 Op.Op などとなるなど　とおかしい
+-   [X] style macro の見直し
+-   [X] Op 番号、作品番号の表示が　 Op.Op などとなるなど　とおかしい
     -   Op 番号なしなどがたくさんあるので
     -   他の作者では Op 番号や WoO 番号が無い、あるいはそのほかの記号があるので、対応検討中（アイデア募集）
--   [ ] 予想外のデータ対策（これは当分は終結はしないだろう）
-    -   [ ] 下線（アンダースコア）のデータあり、暫定で &ensp;で対応
--   [ ] Brahms の 299 ページ目で、現代のタイトルが行溢れしています
--   [ ] Windows 環境で「警告？(guessed encoding: UTF-8 = utf8) 」
+    -   [X] 整理番号はタイトルの補助的な文字列としスタイルマクロを全面改訂
+    -   [X] 作曲者リストの整理番号と作品リストの先頭の文字から各作品の整理番号を合成していたが、
+        リンク情報から作品のデータをさらに読み込み、作品整理番号を取得することにした。
+
+-   [X] 予想外のデータ対策（これは当分は終結はしないだろう）
+    -   [X] 下線（アンダースコア）のデータあり、暫定で &ensp;で対応
+    -   [X] html での &amp; を & に変換するとエラーになるので \\&
+    -   [X] Wolf で「>>」&#x2026;「<<」が html encoding された &lt; &gt; になっているので LaTeX エラーが生じている
+-   [X] Brahms の 299 ページ目で、原題タイトルが行溢れ
+-   [X] Windows 環境で「警告？(guessed encoding: UTF-8 = utf8) 」
     -   [uplatex guess encoding wrong #1137](https://github.com/MiKTeX/miktex/issues/1137)
         [edocevoli commented on Jul 28, 2022](https://github.com/MiKTeX/miktex/issues/1137#issuecomment-1197987983)
         
@@ -146,8 +215,6 @@
         provides. MiKTeX provides the new implementation. Maybe the
         implementation is wrong in some way. I cannot tell. This must be
         fixed upstream.
-        
-        → 次期バージョンで解消できるといいな
     
-    -   [ ] Wolf で「>>」&#x2026;「<<」が html encoding された &lt; &gt; になっているので LaTeX エラーが生じている
+    -   [X] systemu 経由で入手する情報を NKF で UTF-8 化
 
