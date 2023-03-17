@@ -506,7 +506,7 @@ def proc_file_output_book( hash )
   File.open( composerTEXFILEhyperlink, "w" ) do | f |
     f.puts File
              .read( composerTEXFILE )
-             .sub( /^%%(\\usepackage)/, '')
+             .gsub( /^%%(\\usepackage)/, '\1' )
   end
 end
 
