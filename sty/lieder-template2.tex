@@ -1,4 +1,15 @@
-%#! cluttex --engine=platex --max-iterations=4 --makeindex='mendex -c -g -l -r -s sty/myjpbase.ist'
+%#! cluttex
+% +++
+% sequence = ["cluttex"]
+% [programs.cluttex]
+% command = "cluttex"
+% opts = [
+%     "--engine=platex",
+%     "--max-iterations=3",
+%     "--makeindex='mendex -c -g -l -r -s ../sty/myjpbase.ist'",
+%     "--output-directory=out"
+% ]
+% +++
 \documentclass[a4paper,10pt,landscape,dvipdfmx]{jlreq}
 \usepackage[T1]{fontenc}
 \usepackage{txfonts}
