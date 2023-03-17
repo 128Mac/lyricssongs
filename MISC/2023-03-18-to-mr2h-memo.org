@@ -1,0 +1,133 @@
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="http://www.pirilampo.org/styles/bigblow/css/htmlize.css"/>
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="http://www.pirilampo.org/styles/bigblow/css/bigblow.css"/>
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="http://www.pirilampo.org/styles/bigblow/css/hideshow.css"/>
+
+#+HTML_HEAD: <script type="text/javascript" src="http://www.pirilampo.org/styles/bigblow/js/jquery-1.11.0.min.js"></script>
+#+HTML_HEAD: <script type="text/javascript" src="http://www.pirilampo.org/styles/bigblow/js/jquery-ui-1.10.2.min.js"></script>
+
+#+HTML_HEAD: <script type="text/javascript" src="http://www.pirilampo.org/styles/bigblow/js/jquery.localscroll-min.js"></script>
+#+HTML_HEAD: <script type="text/javascript" src="http://www.pirilampo.org/styles/bigblow/js/jquery.scrollTo-1.4.3.1-min.js"></script>
+#+HTML_HEAD: <script type="text/javascript" src="http://www.pirilampo.org/styles/bigblow/js/jquery.zclip.min.js"></script>
+#+HTML_HEAD: <script type="text/javascript" src="http://www.pirilampo.org/styles/bigblow/js/bigblow.js"></script>
+#+HTML_HEAD: <script type="text/javascript" src="http://www.pirilampo.org/styles/bigblow/js/hideshow.js"></script>
+#+HTML_HEAD: <script type="text/javascript" src="http://www.pirilampo.org/styles/lib/js/jquery.stickytableheaders.min.js"></script>
+#+TITLE: 2023-03-18 作業依頼( Strauss )
+#+OPTIONS: email:nil ^:nil
+
+
+* スクリプト更新
+... *lyricssongs* ディレクトリで ...
+
+** 作業ディレクトリとブランチ
+
+   | 作業ディレクトリ | lyricssongs |
+   | ブランチ        | main        |
+
+** git fect でリポジトリデータベース同期
+
+   - コマンド
+     #+BEGIN_SRC bash
+     git fetch
+     #+END_SRC
+
+   - 出力例
+
+     #+BEGIN_SRC
+     remote: Enumerating objects: 30, done.
+     remote: Counting objects: 100% (30/30), done.
+     remote: Compressing objects: 100% (6/6), done.
+     remote: Total 23 (delta 17), reused 23 (delta 17), pack-reused 0
+     Unpacking objects: 100% (23/23), 2.62 KiB | 16.00 KiB/s, done.
+     From https://github.com/128Mac/lyricssongs
+        4cd9acf..743abb0  main       -> origin/main
+     #+END_SRC
+
+** git pull で更新された情報をダウンロード
+
+   - コマンド
+     #+BEGIN_SRC bash
+     git pull
+     #+END_SRC
+   - 出力例
+
+     #+BEGIN_SRC
+     Updating 4cd9acf..743abb0
+     Fast-forward
+      scripts/21-lyricssongs-tex-gen.rb | 15 +++++++++------   ←まとめページスキップ修正
+      scripts/myYomiJuman.rb            |  1 +                 ←よみ変換できない時 yomi.dict へ書き込める情報を出力
+      sty/lieder-template2.tex          | 13 ++++++++++++-     ←llmk 1.2 対応
+      yomi.dict                         |  1 +                 ←諷刺の歌 を登録
+      4 files changed, 23 insertions(+), 7 deletions(-)
+     #+END_SRC
+
+* Strauss 用 .tex ファイル生成
+
+... *lyricssongs* ディレクトリで ... Strauss ディレクトリに .tex ファイルを生成
+
+** 準備＆確認
+
+  lyricssongs に Strauss や EDIT\Strauss は *存在しない* こと
+  を前提としています。
+
+  存在していたら、退避などの必要な処置を講じてください。
+
+** .tex ファイル作成
+
+  #+BEGIN_SRC bash
+  ruby scripts/21-lyricssongs-tex-gen.rb COMP/Strauss.htm
+  ruby scripts/21-lyricssongs-tex-gen.rb COMP/Strauss.htm
+  #+END_SRC
+
+  生成される .tex ファイルをリポジトリに登録するため *二度* 実行してください。
+
+** コンパイル
+
+  #+BEGIN_SRC bash
+  llmk Strauss/Strauss
+  #+END_SRC
+
+** 既知の Underfull　警告メッセージ
+
+    | ページ | Underfull とタイトル 情報                         | .tex ファイル            |
+    |-------+-------------------------------------------------+------------------------|
+    |    19 | ACHT GE-DICH-TE AUS ^^RLETZ-TE BL^^E4T-TER^^P   | Strauss-section-03.tex |
+    |       | Acht Gedichte aus {\glqq}Letzte Blätter{\grqq}  |                        |
+    |       | 「最後の葉」からの８つの詩                          |                        |
+    |-------+-------------------------------------------------+------------------------|
+    |    50 | BREIT' ^^FCBER MEIN HAUPT DEIN SCHWAR-ZES HAAR  | S2267.htm.tex          |
+    |       | Breit' über mein Haupt dein schwarzes Haar      |                        |
+    |       | ぼくの頭の上に広げてくれよ　おまえの黒い髪を           |                        |
+    |-------+-------------------------------------------------+------------------------|
+    |    58 | ALL MEIN' GE-DAN-KEN, MEIN HERZ UND MEIN SINN   | S2139.htm.tex          |
+    |       | All mein' Gedanken, mein Herz und mein Sinn     |                        |
+    |       | ぼくの考えの、心の、感覚のすべては                   |                        |
+    |-------+-------------------------------------------------+------------------------|
+    |   139 | DREI GE-S^^E4N-GE ^^E4L-TE-RER DEUT-SCHER DICH- | Strauss-section-19.tex |
+    |       | Drei Gesänge älterer deutscher Dichter          |                        |
+    |       | ３つの古いドイツの歌                               |                        |
+    |-------+-------------------------------------------------+------------------------|
+    |   146 | F^^FCNF GE-DICH-TE VON FRIED-RICH R^^FCCK-      | Strauss-section-20.tex |
+    |       | Fünf Gedichte von Friedrich Rückert             |                        |
+    |       | リュッケルトの５つの詩                              |                        |
+
+* 手動編集
+
+lyricssongs ディレクトリで作成された Strauss.pdf をざっとみた範囲で、
+問題がなければ Strauss ディレクトリを EDIT に移動し、初動編集の準備を
+実施し、チェック開始＆必要に応じて直接ファイルを編集してください。
+
+** Strauss 関連ファイルを手動編集ディレクトリ EDIT へ移動 ... lyricssongs ディレクトリで ...
+
+   - コマンド
+     #+BEGIN_SRC bash
+     mv Strauss     EDIT
+     mv Strauss.pdf EDIT
+     #+END_SRC
+
+** EDIT\Strauss ディレクトリに移動し手動編集用ブランチを作成しそこへ移動
+
+   - コマンド
+     #+BEGIN_SRC bash
+     cd EDIT\Strauss
+     git checkout -b phase-1
+     #+END_SRC

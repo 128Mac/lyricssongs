@@ -1,0 +1,171 @@
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="http://www.pirilampo.org/styles/bigblow/css/htmlize.css"/>
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="http://www.pirilampo.org/styles/bigblow/css/bigblow.css"/>
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="http://www.pirilampo.org/styles/bigblow/css/hideshow.css"/>
+
+#+HTML_HEAD: <script type="text/javascript" src="http://www.pirilampo.org/styles/bigblow/js/jquery-1.11.0.min.js"></script>
+#+HTML_HEAD: <script type="text/javascript" src="http://www.pirilampo.org/styles/bigblow/js/jquery-ui-1.10.2.min.js"></script>
+
+#+HTML_HEAD: <script type="text/javascript" src="http://www.pirilampo.org/styles/bigblow/js/jquery.localscroll-min.js"></script>
+#+HTML_HEAD: <script type="text/javascript" src="http://www.pirilampo.org/styles/bigblow/js/jquery.scrollTo-1.4.3.1-min.js"></script>
+#+HTML_HEAD: <script type="text/javascript" src="http://www.pirilampo.org/styles/bigblow/js/jquery.zclip.min.js"></script>
+#+HTML_HEAD: <script type="text/javascript" src="http://www.pirilampo.org/styles/bigblow/js/bigblow.js"></script>
+#+HTML_HEAD: <script type="text/javascript" src="http://www.pirilampo.org/styles/bigblow/js/hideshow.js"></script>
+#+HTML_HEAD: <script type="text/javascript" src="http://www.pirilampo.org/styles/lib/js/jquery.stickytableheaders.min.js"></script>
+
+#+TITLE: 改訂版で行いたいこと
+#+Options: email:nil
+
+* 目的
+
+当初は、一人の作曲家だけなので、えぃやとざっくり変換していましたが、多
+くのデータを対象にすると、色々と不都合が出てきます。その不都合部分を、
+手動で直すか、一律的にスクリプトで対応ができるかの情報を収集したいと考
+えています。
+
+対象のファイルも多数あるので、一つ一つこまめに記録してゆく作業は面倒な
+ので、git も利用しようと思います。幸いというか、和田が改訂版のスクリプ
+トの出来具合を把握するために git 環境を各作曲家毎に設置してあるのでそ
+れを利用しようと思います。
+
+その手順をこの文章に書きたいと思います。
+
+* チェック項目
+
+基本的には、ざぁーと　PDF を見ていただいて、気になるところがあれば、報
+告していただきたいのですが ...
+
+「表紙をもっとかっこよく」とか「表題部分のレイアウトについて」等々全体
+に関わる問題は、編集を伴わないので、git では無理なので、今まで通りメー
+ルで行いましょう。
+
+そのほかは、各作品毎順次 PDF と Web ページ、時にお手元の書籍類を比較し
+ておかしなところを探していただけたらと思います。
+
+今の所、ざっくり把握しているのは、改訂版では、インデントに利用していた
+と思われる行頭のスペースの取り出し、反映しています。そのため、フレーズ
+自体が全体的に右寄りになったりしています。また原文ではインデントされて
+いるのに訳文では行われていないものなどもあります。
+
+で、見つけたおかしなものは直接ファイルを変更してください。
+
+本来、変更したら、できるだけ小さな変更粒度でコミットしていただきたいの
+ですが、当分は、「おやすみ」のサイン代わりにその日の作業終了時にコミッ
+トしていただければと思います。
+
+* 初期設定
+
+** 現在存在する EDIT ディレクトリの保存
+
+ブラームスのように既に追加した方が良いと判断して修正を加えたものがある
+ので、後ほど、改訂班の方にも反映したいので日付付きリネームしておいてく
+ださい。
+
+#+BEGIN_SRC shell
+mv EDIT EDIT-2023-03-13
+#+END_SRC
+
+** 作業ディレクトリの作成他
+
+1) 作業ディレクトリを作成
+2) ブラームス関連のディレクトリやファイルを作業ディレクトリへ移動
+3) スタイルファイルもコピー
+4) 現状を容認し全てを git 管理下におく作業を行う
+5) EDIT\Brahms へ移動し git 関連作業
+   - 作業開始を宣言
+   - 手動作業用ブランチ phase-1 を作成しブランチを切り替える
+6) 和田用に Brahms 以下を zip でアーカイブしメールで送ってください
+
+#+BEGIN_SRC shell
+  mkdir EDIT
+  mv Brahms* EDIT
+  cp -r sty  EDIT
+  cd EDIT\Brahms
+  git add .
+  git commit -am "手動編集開始"
+  git checkout -b phase-1
+
+  ファイルのイクスプローラ等で Brahms 以下を zip で纏めて、和田にメールして
+  ください
+#+END_SRC
+
+* 日々の作業（前日作業の確認)
+
+1) 前日作成した pdf をリネーム
+2) 和田からの追加修正情報をパッチとして受け取ってたら git apply で更新
+3) llmk で pdf を作成
+   - エラーが無くなるまで、修正しては再度 llmk の作業を繰り返す
+     - もちろん自己解決を諦めて和田に振って、 pdf の比較作業をスキップ
+       してもも良いです。
+4) リネームした pdf とできたばかりの比較
+
+   ページ数が沢山あるので便利ツールの diffpdf (*1) というアプリを使いましょう。
+
+   (*1) 別項に記述した URL のページで diffpdf とはどんなものか見ておいてください。
+
+   - diffpdf を利用して前日のものと比較して妥当か否かチェック
+   - 修正ミス等があれば直接ファイルを編集してください
+     - 必要に応じて llmk で再度 pdf を作っても良いのですが、時間を要す
+       るので pdf 再作成は翌日朝に先延ばしを原則にしましょう
+
+* 日々の作業（チェック＆修正）
+
+前日チェックした次から、PDF Web ページ、お手持ちの資料を比較検討し、お
+かしなところを見つけたら、直接ファイルを直してください。
+
+1) ファイルの探し方は別項に記述した「ripgrep」を使うとファイル名も一緒
+   に表示してくれるのでそれを目安にしてください。
+2) 探すディレクトリは lyricssongs\EDIT\Brahms です。
+3) エディタは使い慣れたもので結構です。
+4) 本来は、修正の都度、変更した理由などをコミットメッセージに含めたも
+   のをコミットしますが、不慣れだと思うので、しばらくはファイルの中に
+   latex の ％ で始まるコメントとして必要なら記入しておいてください
+5) 不慣れだとはいえ、一日一回は「疲れた、おやすみ」のサイン代わりに
+   commit し git show でパッチを作成し和田にメールで送りつけてください
+
+   #+BEGIN_SRC
+     EDIT\Brahms のディレクトリで行ってください
+
+     git commit -am '2023-xx-yy 作業結果'
+     git show > 2023-xx-yy-Brams.patch
+
+     # 2023-xx-yy-Brams.patch はメール送信後は不要なので削除してください
+   #+END_SRC
+
+   - 和田は、受け取った diff 内容から以下の検討を行う
+     - 関連する修正の有無
+     - 次の作曲者用にスクリプトに組み込むべきか検討
+   - 必要に応じて追加修正パッチを作成
+   - 検査結果及び追加パッチを必要に応じて明朝までにメールで回答
+6) コミットログに都度コミットしたくなったら申し出てください
+
+* ツールの使い方
+
+** ripgrep
+
+- 基本形
+  #+BEGIN_SRC
+    cd 検索したいディレクトリ
+
+    rg 検索したい文字列
+  #+END_SRC
+
+- or 検索
+  #+BEGIN_SRC
+    rg -e 検索したい文字列1 -e 検索したい文字列2
+  #+END_SRC
+- and 検索
+  #+BEGIN_SRC
+    rg '検索したい文字列1.*検索したい文字列'
+  #+END_SRC
+- 比較的よく使うオプション
+  - -i ... ignore case ... 大文字、小文字関係なしに検索
+  - -l ... ファイル名のみ表示
+  - -A n / -B n / -C n
+    - 検索したい文字列の前後を調べるとき、組み合わせも可能
+    - -A ... after  検索した行とその下 n 行
+    - -B ... before 検索した行とその上 n 行
+    - -C ... center 検索した行とその上下 n 行
+** diff-pdf
+- sccop install diffpdf でインストール
+  - 類似の diff-pdf もあるけど windows の場合は diffpdf の方が良いように思う
+- 利用方法は https://www.gigafree.net/tool/pdf/diffpdf.html を参考にしてください

@@ -1,0 +1,40 @@
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="http://www.pirilampo.org/styles/bigblow/css/htmlize.css"/>
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="http://www.pirilampo.org/styles/bigblow/css/bigblow.css"/>
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="http://www.pirilampo.org/styles/bigblow/css/hideshow.css"/>
+
+#+HTML_HEAD: <script type="text/javascript" src="http://www.pirilampo.org/styles/bigblow/js/jquery-1.11.0.min.js"></script>
+#+HTML_HEAD: <script type="text/javascript" src="http://www.pirilampo.org/styles/bigblow/js/jquery-ui-1.10.2.min.js"></script>
+
+#+HTML_HEAD: <script type="text/javascript" src="http://www.pirilampo.org/styles/bigblow/js/jquery.localscroll-min.js"></script>
+#+HTML_HEAD: <script type="text/javascript" src="http://www.pirilampo.org/styles/bigblow/js/jquery.scrollTo-1.4.3.1-min.js"></script>
+#+HTML_HEAD: <script type="text/javascript" src="http://www.pirilampo.org/styles/bigblow/js/jquery.zclip.min.js"></script>
+#+HTML_HEAD: <script type="text/javascript" src="http://www.pirilampo.org/styles/bigblow/js/bigblow.js"></script>
+#+HTML_HEAD: <script type="text/javascript" src="http://www.pirilampo.org/styles/bigblow/js/hideshow.js"></script>
+#+HTML_HEAD: <script type="text/javascript" src="http://www.pirilampo.org/styles/lib/js/jquery.stickytableheaders.min.js"></script>
+#+TITLE: lyricssongs ディレクトリ構造
+#+OPTIONS: email:nil ^:nil
+
+* lyricssongs ディレクトリ構造
+
+2023-03-18 08:00 現在のディレクトリは以下のような構造を想定しています。
+
+
+#+BEGIN_EXAMPLE
+lyricssongs
+  ├── (Brahms) ........ 21-lyricssongs-tex-gen で作成 (*1)し EDIT に移動 (今はないと思います）
+  ├── COMP ............ 梅ヶ丘からダウンロードした作曲家毎の .htm ファイル
+  ├── EDIT  ........... 手動編集ディレクトリ
+  │   ├── Brahms ...... (*1) を移動したしたもの
+  │   ├── out
+  │   ├── Strauss ..... 手動編集の Strauss
+  │   └── sty
+  ├── MISC ............ 和田からのパッチや HTML ファイル置き場として「新設します」
+  │                     今後は、作業依頼やパッチをここに置くので pull していただこうと思います
+  │
+  ├── Strauss ......... 21-lyricssongs-tex-gen で作成 (*2) を *これから EDIT へ移動*
+  ├── TEXT ............ 梅ヶ丘からダウンロードした作品毎の .htm ファイル
+  ├── TOML ............ 梅ヶ丘からダウンロードする作曲家情報
+  ├── out
+  ├── scripts
+  └── sty
+#+END_EXAMPLE

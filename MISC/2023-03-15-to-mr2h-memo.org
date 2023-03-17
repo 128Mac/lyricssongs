@@ -1,0 +1,144 @@
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="http://www.pirilampo.org/styles/bigblow/css/htmlize.css"/>
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="http://www.pirilampo.org/styles/bigblow/css/bigblow.css"/>
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="http://www.pirilampo.org/styles/bigblow/css/hideshow.css"/>
+
+#+HTML_HEAD: <script type="text/javascript" src="http://www.pirilampo.org/styles/bigblow/js/jquery-1.11.0.min.js"></script>
+#+HTML_HEAD: <script type="text/javascript" src="http://www.pirilampo.org/styles/bigblow/js/jquery-ui-1.10.2.min.js"></script>
+
+#+HTML_HEAD: <script type="text/javascript" src="http://www.pirilampo.org/styles/bigblow/js/jquery.localscroll-min.js"></script>
+#+HTML_HEAD: <script type="text/javascript" src="http://www.pirilampo.org/styles/bigblow/js/jquery.scrollTo-1.4.3.1-min.js"></script>
+#+HTML_HEAD: <script type="text/javascript" src="http://www.pirilampo.org/styles/bigblow/js/jquery.zclip.min.js"></script>
+#+HTML_HEAD: <script type="text/javascript" src="http://www.pirilampo.org/styles/bigblow/js/bigblow.js"></script>
+#+HTML_HEAD: <script type="text/javascript" src="http://www.pirilampo.org/styles/bigblow/js/hideshow.js"></script>
+#+HTML_HEAD: <script type="text/javascript" src="http://www.pirilampo.org/styles/lib/js/jquery.stickytableheaders.min.js"></script>
+#+TITLE: 2023-03-15 作業報告＆作業依頼
+#+OPTIONS: email:nil
+* 作業状況
+
+- [X] 3/14 作業分
+  二つのファイルが混入しています。git 管理外なので単純に削除してください。
+  - 削除依頼 Brahms.fls
+  - 削除依頼 Brahms.log
+
+- [X] op.103 八つに分割
+   八つに分割される前のイメージはソース上はまだ残っていますが
+   有効なところまで取り込むよう \endinput 行を追加してコントロールしています。
+   - 変更 Brahms-section-Op.103.tex
+   - 変更 Brahms-subsection-Op.103-1.tex
+   - 追加 Brahms-subsection-Op.103-2.tex
+   - 追加 Brahms-subsection-Op.103-3.tex
+   - 追加 Brahms-subsection-Op.103-4.tex
+   - 追加 Brahms-subsection-Op.103-5.tex
+   - 追加 Brahms-subsection-Op.103-6.tex
+   - 追加 Brahms-subsection-Op.103-7.tex
+   - 追加 Brahms-subsection-Op.103-8.tex
+
+- [X] op.14-8 あこがれ
+   - 変更 Brahms-section-03.tex
+   - 追加 Brahms-subsection-Op.14-8.tex
+
+- [X] llmk 対応
+  - 変更 Brahms.tex
+
+* commit作業依頼
+
+大賀さん側のローカルリポジトリへの登録作業です。
+
+** 余分なファイル削除
+** git status で変更状況確認
+
+コミットするにあたっての作業計画を把握します。
+
+#+BEGIN_SRC
+git status                                                                                                                       ─╯
+On branch phase-1
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+        modified:   Brahms-section-03.tex
+        modified:   Brahms-section-Op.103.tex
+        modified:   Brahms.tex
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+        Brahms-subsection-Op.103-1.tex
+        Brahms-subsection-Op.103-2.tex
+        Brahms-subsection-Op.103-3.tex
+        Brahms-subsection-Op.103-4.tex
+        Brahms-subsection-Op.103-5.tex
+        Brahms-subsection-Op.103-6.tex
+        Brahms-subsection-Op.103-7.tex
+        Brahms-subsection-Op.103-8.tex
+        Brahms-subsection-Op.14-8.tex
+        KEEP.tex
+
+no changes added to commit (use "git add" and/or "git commit -a")
+#+END_SRC
+
+三つファイルが修正され、いくつか管理対象外のファイルがあることがわかります。
+
+- 「Changes not staged for commit」
+
+  ここに分類されたものは「git diff」「git diff ファイルパス」などで差分をチェックできます。
+  作業メモなどが紛れ込んでいないなどの最終チェックが可能です
+-  Untracked files」
+
+  ここに分類されたものは、追加されたものや作業で作成した git 未管理ファイルのリストです。
+  - 「KEEP.tex」のような念の為保存しておいたファイルはここで削除など整理してください。
+    今回は、単純に削除しました。
+  - 追加したものは 「git add ファイル名パス」として git に管理登録する必要があります
+
+** 追加ファイルの登録
+
+- git add
+
+  今回は追加するものがあるので以下のようなコマンドで git 管理ファイルとして登録
+
+  #+BEGIN_SRC bash
+  git add Brahms-subsection-Op*.tex
+  #+END_SRC
+
+- git status
+
+  追加登録したものが「new file」として登録されていることを確認
+
+  #+BEGIN_SRC
+  On branch phase-1
+  Changes to be committed:
+    (use "git restore --staged <file>..." to unstage)
+          modified:   Brahms-section-03.tex
+          modified:   Brahms-section-Op.103.tex
+          new file:   Brahms-subsection-Op.103-1.tex
+          new file:   Brahms-subsection-Op.103-2.tex
+          new file:   Brahms-subsection-Op.103-3.tex
+          new file:   Brahms-subsection-Op.103-4.tex
+          new file:   Brahms-subsection-Op.103-5.tex
+          new file:   Brahms-subsection-Op.103-6.tex
+          new file:   Brahms-subsection-Op.103-7.tex
+          new file:   Brahms-subsection-Op.103-8.tex
+          new file:   Brahms-subsection-Op.14-8.tex
+          modified:   Brahms.tex
+  #+END_SRC
+
+** llmk でビルド
+- コマンド ... EDIT ディレクトリで
+  #+BEGIN_SRC
+    llmk Brahms/Brahms
+  #+END_SRC
+
+- チェック項目
+  - llmk の中間ファイルがカレントではなく out に書き出されていること
+  - Brahms.pdf がカレントに作成されること
+  - Op.14-8 が追加されていること
+  - Op.103 が八つに分割されていること
+** コミット
+
+今回の修正は三種類あるので以下のようにコミット
+
+  #+BEGIN_SRC bash
+    git commit -m 'fix llmk 1.2 でも output directory を指定できるよう対応' Brahms.tex
+
+    git commit -m 'fix/add 「Op.14-8 あこがれ」' Brahms-section-03.tex Brahms-subsection-Op.14-8.tex
+
+    git commit -m 'add 「Op.103 を八つに分割' *Op.103*.tex
+  #+END_SRC

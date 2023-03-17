@@ -1,0 +1,182 @@
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="http://www.pirilampo.org/styles/bigblow/css/htmlize.css"/>
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="http://www.pirilampo.org/styles/bigblow/css/bigblow.css"/>
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="http://www.pirilampo.org/styles/bigblow/css/hideshow.css"/>
+
+#+HTML_HEAD: <script type="text/javascript" src="http://www.pirilampo.org/styles/bigblow/js/jquery-1.11.0.min.js"></script>
+#+HTML_HEAD: <script type="text/javascript" src="http://www.pirilampo.org/styles/bigblow/js/jquery-ui-1.10.2.min.js"></script>
+
+#+HTML_HEAD: <script type="text/javascript" src="http://www.pirilampo.org/styles/bigblow/js/jquery.localscroll-min.js"></script>
+#+HTML_HEAD: <script type="text/javascript" src="http://www.pirilampo.org/styles/bigblow/js/jquery.scrollTo-1.4.3.1-min.js"></script>
+#+HTML_HEAD: <script type="text/javascript" src="http://www.pirilampo.org/styles/bigblow/js/jquery.zclip.min.js"></script>
+#+HTML_HEAD: <script type="text/javascript" src="http://www.pirilampo.org/styles/bigblow/js/bigblow.js"></script>
+#+HTML_HEAD: <script type="text/javascript" src="http://www.pirilampo.org/styles/bigblow/js/hideshow.js"></script>
+#+HTML_HEAD: <script type="text/javascript" src="http://www.pirilampo.org/styles/lib/js/jquery.stickytableheaders.min.js"></script>
+#+TITLE: 2023-03-15 同じ内容のものが掲載されている
+#+OPTIONS: email:nil
+
+* 状況＆判断
+
+一部の楽曲集は、個別の楽曲集へのリンクのほか、それらを一つの HTML ファイルにまとめた URL のリンクがあります。
+そのまとめたリンクへリンクも解析・取り込みしているため。発生している症状です。
+
+Web での表現は以下のようになっています。参考までに。
+#+BEGIN_SRC html
+  <P>
+    <B>■
+      <A href=../TEXT/SET115.htm>   <!-- まとめたリンク --->
+        Die sch&#246;ne Magelone　美しきマゲローネ
+      </A>
+    </B>
+    Op.33 (1861-65) 詞:ティーク<BR>
+    <DIR>
+      1
+      <A href=../TEXT/S115.htm>     <!-- 個別のリンク --->
+        Keinen hat es noch gereut　いまだかつて悔いた者はない
+      </a><BR>
+      ...
+    </DIR>
+#+END_SRC
+
+分析した結果、以下の理由により *まとめたものは不要* と判断しています。
+
+- 内容的に重複している
+- ？？と思う誤変換などがある
+  - 「不思議」が「上思議」のように「不」が「上」になってる
+  - 「名声」が「吊声」  .... 服が中国語のものになっていたのと同じかな
+  - 『「倒れてしまった！」』が『「倒れてしまった！《』と『「』と『」』が不釣り合いになっている
+- タイトル部分を挿入した結果、コンテンツ部分をインデントしているので左余白が目立つ
+
+* 差分情報
+
+次のようなものは取り除いてあります
+- 空白が余分に入っている
+- まとめるために挿入したタイトル情報
+
+** [[http://www7b.biglobe.ne.jp/~lyricssongs/TEXT/SET115.htm][ ■ Die schöne Magelone　美しきマゲローネ Op.33 (1861-65) 詞:ティーク]]
+
+#+BEGIN_SRC diff
+--- SET115.htm.tex	2023-03-15 09:20:31.192959762 +0900
++++ Brahms-section-06.tex	2023-03-15 09:44:12.519848961 +0900
+@@ -36,7 +32,7 @@
+ \\
+ \\% 連間空行
+ { Wunderlich fliehen } &
+-{ だが上思議にも消え去るのだ }
++{ だが不思議にも消え去るのだ }
+ \\
+ { Gestalten dahin, } &
+ { それらの姿は　彼方へと }
+@@ -49,7 +45,7 @@
+ \\
+ \\% 連間空行
+ { Ruhm streut ihm Rosen } &
+-{ 吊声が彼のためにバラを撒く }
++{ 名声が彼のためにバラを撒く }
+ \\
+ { Schnell in die Bahn, } &
+ { すばやく　道の上に }
+@@ -298,7 +285,7 @@
+ { 青い空の広がりの中へと }
+ \\
+ { Ruhm schien mir ein Morgentraum, } &
+-{ 吊声も私にははかない夢 }
++{ 名声も私にははかない夢 }
+ \\
+ { Nur ein Klang der Meereswogen. } &
+ { ただの海の波の嘆きにしか過ぎません }
+@@ -367,7 +351,7 @@
+ \\
+ \\% 連間空行
+ { Tief lag ich in bangen } &
+-{ 奥深くに　私は上安のうちに }
++{ 奥深くに　私は不安のうちに }
+ \\
+ { Gemäuern gefangen, } &
+ { 壁に囲まれて捕らわれていました }
+@@ -795,7 +764,7 @@
+ { そして取り囲むがいい　私のまわりを！ }
+ \\
+ { Mag Unglück doch laut um mich bellen, } &
+-{ 上運が私に激しく咆えかけようと構わぬ }
++{ 不運が私に激しく咆えかけようと構わぬ }
+ \\
+ { Erbost sein das grausame Meer! } &
+ { 怒るがいい　残忍な海よ！ }
+@@ -985,16 +948,13 @@
+ { どこに希望があるのだ　墓の中の他に？ }
+ \\
+ { Fern muß ich mein Elend tragen, } &
+-{ 遠くへと私は自らの上幸を運ばねばならぬ }
++{ 遠くへと私は自らの不幸を運ばねばならぬ }
+ \\
+ { Heimlich bricht das Herz mir ab. } &
+ { ひそかにこの胸は張り裂けてしまうだろう }
+ \\
+@@ -1051,7 +1011,7 @@
+ { 帆はふくらんでいます }
+ \\
+ { Die Furcht ist nur Tand: } &
+-{ 上安などささいなこと }
++{ 不安などささいなこと }
+ \\
+ { Dort, jenseit den Wellen } &
+ { あの波の向こうには }
+@@ -1179,7 +1133,7 @@
+ { たくさんの時を生き続ける }
+ \\
+ { Und kein Zweifel macht sie bange, } &
+-{ いかなる疑念もそれを上安にさせることはない }
++{ いかなる疑念もそれを不安にさせることはない }
+ \\
+ { Immer bleibt ihr Mut gesund. } &
+ { 常にその勇気は健やかなのだ }
+#+END_SRC
+
+** [[http://www7b.biglobe.ne.jp/~lyricssongs/TEXT/SET5620.htm][ ■ Fünf Ophelia-Lieder　５つのオフィーリアの歌 WoO22 (1873) 詞:シュレーゲル，アウグスト・ヴィルヘルム 原詩：シェイクスピア]]
+
+#+BEGIN_SRC diff
+--- SET5620.htm.tex	2023-03-15 09:20:31.226629905 +0900
++++ Brahms-section-16.tex	2023-03-15 09:44:12.558151564 +0900
+@@ -89,19 +76,16 @@
+ { そしてたくさんの涙が流れ落ちたの　お墓の奥底へと }
+ \\
+ { Ihr müßt singen: «'Nunter, hinunter! } &
+-{ あなたたちは歌わなくてはなりません　「倒れてしまった！《と }
++{ あなたたちは歌わなくてはなりません　「倒れてしまった！」と }
+ \\
+ { Und ruft ihr ihn 'nunter.» } &
+-{ そしてもしもあの方に呼びかけるのなら　「倒れてしまった！《と }
++{ そしてもしもあの方に呼びかけるのなら　「倒れてしまった！」と }
+ \\
+ { Denn traut lieb Fränzel ist all meine Lust. } &
+ { とても好きなフレンツェルは私の喜びのすべてなのです }
+ \\
+#+END_SRC
+
+** [[http://www7b.biglobe.ne.jp/~lyricssongs/TEXT/SET2219.htm][ ■ Vier ernste Gesänge　４つの厳粛な歌 Op.121 (1896) 詞:聖歌]]
+#+BEGIN_SRC diff
+--- SET2219.htm.tex	2023-03-15 09:20:31.209548125 +0900
++++ Brahms-section-35.tex	2023-03-15 09:44:12.606996567 +0900
+@@ -56,25 +52,22 @@
+ ...
+ { Ich wandte mich und sahe an } &
+ { 我は振り返りそして見たり }
+ \\
+ { Alle, die Unrecht leiden unter der Sonne; } &
+-{ 太陽のもとで上正に苦しむすべての者たちを }
++{ 太陽のもとで不正に苦しむすべての者たちを }
+ \\
+ { Und siehe, da waren Tränen derer, } &
+ { そして見よ、そこで涙を流す者たちの涙を }
+ \\
+ { Die Unrecht litten und hatten keinen Tröster; } &
+-{ 彼らは上正に苦しみ慰める者とていない }
++{ 彼らは不正に苦しみ慰める者とていない }
+ \\
+ { Und die ihnen Unrecht täten, waren zu mächtig, } &
+-{ そして彼らに上正をなす者はあまりに強大なれば }
++{ そして彼らに不正をなす者はあまりに強大なれば }
+ \\
+ { Daß sie keinen Tröster haben konnten. } &
+ { 誰も彼らを慰めることあたわざり }
+#+END_SRC

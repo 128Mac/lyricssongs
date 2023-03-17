@@ -1,0 +1,398 @@
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="http://www.pirilampo.org/styles/bigblow/css/htmlize.css"/>
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="http://www.pirilampo.org/styles/bigblow/css/bigblow.css"/>
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="http://www.pirilampo.org/styles/bigblow/css/hideshow.css"/>
+
+#+HTML_HEAD: <script type="text/javascript" src="http://www.pirilampo.org/styles/bigblow/js/jquery-1.11.0.min.js"></script>
+#+HTML_HEAD: <script type="text/javascript" src="http://www.pirilampo.org/styles/bigblow/js/jquery-ui-1.10.2.min.js"></script>
+
+#+HTML_HEAD: <script type="text/javascript" src="http://www.pirilampo.org/styles/bigblow/js/jquery.localscroll-min.js"></script>
+#+HTML_HEAD: <script type="text/javascript" src="http://www.pirilampo.org/styles/bigblow/js/jquery.scrollTo-1.4.3.1-min.js"></script>
+#+HTML_HEAD: <script type="text/javascript" src="http://www.pirilampo.org/styles/bigblow/js/jquery.zclip.min.js"></script>
+#+HTML_HEAD: <script type="text/javascript" src="http://www.pirilampo.org/styles/bigblow/js/bigblow.js"></script>
+#+HTML_HEAD: <script type="text/javascript" src="http://www.pirilampo.org/styles/bigblow/js/hideshow.js"></script>
+#+HTML_HEAD: <script type="text/javascript" src="http://www.pirilampo.org/styles/lib/js/jquery.stickytableheaders.min.js"></script>
+#+TITLE: 2023-03-17 作業依頼
+#+OPTIONS: email:nil
+
+
+* 内容が重複部分削除 （すでに終了）
+
+git 管理下のファイルは、単純にファイル削除して、現状容認でも良いのですが
+通常は、以下のような方法で行います。
+
+
+1) Brahms のリポジトリへ移動
+
+   大賀さんはデスクトップに git clone した lyricssongs ディレクトリで
+   PowerShell 起動のショートカットを設置していたと思いますので、以下の
+   ような感じですので適宜調整してください。
+
+   - コマンド
+
+     #+BEGIN_SRC bash
+     cd EDIT\Brahms
+     #+END_SRC
+
+2) ブランチは phase-1 であることを確認（ git checkout phase-1　で調整）
+
+   - コマンド
+
+     #+BEGIN_SRC bash
+     git status
+     #+END_SRC
+
+   - 出力例
+
+     #+BEGIN_SRC
+     On branch phase-1
+     nothing to commit, working tree clean
+     #+END_SRC
+
+3) 対象ファイルを git 的に削除
+
+   - コマンド
+
+     #+BEGIN_SRC bash
+     git rm SET115.htm.tex SET2219.htm.tex SET5620.htm.tex
+     #+END_SRC
+
+   - 出力例
+
+     #+BEGIN_SRC
+     rm 'SET115.htm.tex'
+     rm 'SET2219.htm.tex'
+     rm 'SET5620.htm.tex'
+     #+END_SRC
+
+   - git status で確認すると以下のように表示されます
+
+     #+BEGIN_SRC
+     On branch phase-1
+     Changes to be committed:
+       (use "git restore --staged <file>..." to unstage)
+             deleted:    SET115.htm.tex
+             deleted:    SET2219.htm.tex
+             deleted:    SET5620.htm.tex
+     #+END_SRC
+
+4) タイプセットできるか確認
+   - コマンド
+     #+BEGIN_SRC bash
+     llmk Brahms
+     #+END_SRC
+
+   - 出力状況は省略
+
+5) コミット
+
+   - コマンド
+     #+BEGIN_SRC bash
+     git commit -m '内容の重複したファイルの削除' SET115.htm.tex SET2219.htm.tex SET5620.htm.tex
+     #+END_SRC
+
+   - 出力例
+     #+BEGIN_SRC
+     [phase-1 cdab620] 内容の重複したファイルの削除
+      3 files changed, 1637 deletions(-)
+      delete mode 100644 SET115.htm.tex
+      delete mode 100644 SET2219.htm.tex
+      delete mode 100644 SET5620.htm.tex
+     #+END_SRC
+
+   - 念の為、git status で clean になっていることを確認
+     #+BEGIN_SRC
+     On branch phase-1
+     nothing to commit, working tree clean
+     #+END_SRC
+
+* Op.103の８分割後の後処理
+
+Brahms-section-Op.103.tex に当初一括記述していたが、
+８分割時、安全のため元のイメージを残しておいたが、
+
+一通りの作業終了に伴い、保持していたものを削除する。
+
+** 削除作業 ... EDIT\Brahms で
+
+
+  削除作業は、 *Brahms-section-Op.103.tex* の  *\endinput* 以降の行を
+  使い慣れたエディタで削除してください。
+
+  私は 以下のような perl one liner で削除
+
+  #+BEGIN_SRC bash
+  perl -Mutf8 -CSD -i -npe 'exit if /endinput/' Brahms-section-Op.103.tex
+  #+END_SRC
+** 差分確認 ... EDIT\Brahms で
+
+  - コマンド
+    #+BEGIN_SRC bash
+    git diff
+    #+END_SRC
+  - 表示例
+    #+BEGIN_SRC
+    diff --git a/Brahms-section-Op.103.tex b/Brahms-section-Op.103.tex
+    index 68a7ac1..d77f7c3 100644
+    --- a/Brahms-section-Op.103.tex
+    +++ b/Brahms-section-Op.103.tex
+    @@ -17,172 +17,3 @@
+     \input{Brahms/Brahms-subsection-Op.103-6.tex}
+     \input{Brahms/Brahms-subsection-Op.103-7.tex}
+     \input{Brahms/Brahms-subsection-Op.103-8.tex}
+    -\endinput
+    -\begin{myTBLR}[]
+    -{ He, Zigeuner, greife in die Saiten ein! } &
+    -{ さあ、ジプシーよ、弦をかき鳴らせ！ }
+    ...
+    ... 以下、削除されたことを示す「-」行が続く
+    ...
+    -{ Nur allein von dem süßen Liebchen mein. } &
+    -{ いとしいきみのことばかり夢みているのだ。 }
+    -\\
+    -\end{myTBLR}
+    #+END_SRC
+
+** 状態確認 ... EDIT\Brahms で
+
+  - コマンド
+    #+BEGIN_SRC bash
+    git status
+    #+END_SRC
+  - 表示例
+    #+BEGIN_SRC
+    On branch phase-1
+    Changes not staged for commit:
+      (use "git add <file>..." to update what will be committed)
+      (use "git restore <file>..." to discard changes in working directory)
+            modified:   Brahms-section-Op.103.tex
+
+    no changes added to commit (use "git add" and/or "git commit -a")
+    #+END_SRC
+** llmk のビルド作業は割愛 ... EDIT で
+** コミット ... EDIT\Brahms で
+
+- 適宜 git status / git diff でダブルチェック
+
+- コマンド
+  #+BEGIN_SRC bash
+  git commit -m 'Op.103 ８分割時に安全のために温存していた部分を除去' Brahms-section-Op.103.tex
+  #+END_SRC
+
+- 出力例
+
+  #+BEGIN_SRC
+  [phase-1 0207737] Op.103 ８分割時に安全のために温存していた部分を除去
+  1 file changed, 169 deletions(-)
+  #+END_SRC
+
+- ステータス確認
+  - コマンド
+    #+BEGIN_SRC bash
+    git status
+    #+END_SRC
+
+  - 出力例
+    #+BEGIN_SRC bash
+    On branch phase-1
+    nothing to commit, working tree clean
+    #+END_SRC
+
+* llmk 1.2 対処策で漏れ
+
+hyper-link で処理する際の llmk 1.2 への対応処理。
+
+** 以下のパッチイメージを EDIT ディレクトリ *2023-03-17-llmk-1.2.patch* として作成してください
+
+#+BEGIN_SRC diff
+diff --git a/Brahms-hyper-link.tex b/Brahms-hyper-link.tex
+index d351308..987be1a 100644
+--- a/Brahms-hyper-link.tex
++++ b/Brahms-hyper-link.tex
+@@ -1,4 +1,15 @@
+-%#! cluttex --engine=platex --max-iterations=4 --makeindex='mendex -c -g -l -r -s sty/myjpbase.ist'
++%#! cluttex
++% +++
++% sequence = ["cluttex"]
++% [programs.cluttex]
++% command = "cluttex"
++% opts = [
++%     "--engine=platex",
++%     "--max-iterations=3",
++%     "--makeindex='mendex -c -g -l -r -s ../sty/myjpbase.ist'",
++%     "--output-directory=out"
++% ]
++% +++
+ \documentclass[a4paper,10pt,landscape,dvipdfmx]{jlreq}
+ \usepackage[T1]{fontenc}
+ \usepackage{txfonts}
+@@ -18,8 +29,8 @@
+ %% 作品索引のため hyper-link bookmark 機能を利用するとたくさんの警告メッセージ
+ %% が表示される。原稿のチェック時は、以下の sty/myMacrosHyperLink の取
+ %% り込みを行わないようコメントアウトすること
+-{sty/myMacrosHyperLink} % mmakeidx hyper link 周りのカスタマイズ
+-%%\usepackage{bookmark}
++\usepackage{sty/myMacrosHyperLink} % mmakeidx hyper link 周りのカスタマイズ
++\usepackage{bookmark}
+
+ \title{\uppercase{Johannes Brahms} \footnote{ブラームス (Johannes Brahms, 1833-1897) ドイツ}
+   \\ Lieder
+@@ -83,6 +94,7 @@
+ \input{Brahms/Brahms-section-29.tex}
+ \input{Brahms/Brahms-section-30.tex}
+ \input{Brahms/Brahms-section-31.tex}
++\input{Brahms/Brahms-section-Op.103.tex}
+ \input{Brahms/Brahms-section-32.tex}
+ \input{Brahms/Brahms-section-33.tex}
+ \input{Brahms/Brahms-section-34.tex}
+#+END_SRC
+
+** パッチ適用 ... EDIT\Brahms で
+
+  - コマンド
+    #+BEGIN_SRC bash
+    git apply ..\EDIT\2023-03-17-llmk-1.2.patch
+    #+END_SRC
+
+  - 表示される内容は割愛
+
+** 差分確認 ... EDIT\Brahms で
+
+  - コマンド
+    #+BEGIN_SRC bash
+    git diff
+    #+END_SRC
+  - 表示されるないは ..\EDIT\2023-03-17-llmk-1.2.patch と同じ内容です
+
+** 状態確認 ... EDIT\Brahms で
+
+  - コマンド
+    #+BEGIN_SRC bash
+    git status
+    #+END_SRC
+  - 表示例
+    #+BEGIN_SRC
+    On branch phase-1
+    Changes not staged for commit:
+      (use "git add <file>..." to update what will be committed)
+      (use "git restore <file>..." to discard changes in working directory)
+            modified:   Brahms-hyper-link.tex
+
+    no changes added to commit (use "git add" and/or "git commit -a")
+    #+END_SRC
+** llmk のビルド ... EDIT で
+
+phase-1 での最後のビルドになるようなので、実施してください。
+また 345 ページを目視で操作は、ボケ防止より、だるい作業なので
+以前紹介した diff-pdf を scoop でインストーリして、それを利用してみてください。
+
+** コミット ... EDIT\Brahms で
+
+- 適宜 git status / git diff でダブルチェック
+
+- コマンド
+  #+BEGIN_SRC bash
+  git commit -m 'llmk 1.2 対処策で漏れ' Brahms-hyper-link.tex
+  #+END_SRC
+
+- 出力例
+
+  #+BEGIN_SRC
+  [phase-1 9df40c2] llmk 1.2 対処策で漏れ
+   1 file changed, 15 insertions(+), 3 deletions(-)
+  #+END_SRC
+
+- ステータス確認
+  #+BEGIN_SRC bash
+  git status
+  #+END_SRC
+
+  #+BEGIN_SRC
+  On branch phase-1
+  nothing to commit, working tree clean
+  #+END_SRC
+
+* merge & 次の段階での修正準備
+
+色々確認しながら行います。
+
+** phase-1 を master にマージ ... EDIT\Brahms で ...
+
+*** 現在のブランチを確認し master へ移動
+
+- 現在利用可能なブランチの確認
+  - コマンド
+    #+BEGIN_SRC bash
+    git branch -a
+    #+END_SRC
+  - 表示例
+    #+BEGIN_SRC
+      master
+    * phase-1
+    #+END_SRC
+
+- master へ移動
+
+  現在のブランチは、「*」のphase-1 なので master へ移動
+  - コマンド
+    #+BEGIN_SRC bash
+    git checkout master
+    #+END_SRC
+  - 表示例
+    #+BEGIN_SRC
+    Switched to branch 'master'
+    #+END_SRC
+
+*** phase-1 の修正を master へマージ
+
+  - コマンド
+    #+BEGIN_SRC bash
+    git merge phase-1
+    #+END_SRC
+  - 表示例
+    #+BEGIN_SRC
+    Updating f14fe35..9df40c2
+    Fast-forward
+     .gitignore                     |   14 +-
+     Brahms-hyper-link.tex          |  220 +++++++++--------
+     ... たくさんの更新されたファイルが表示される
+     ... 追加や削除されたファイルリストなども表示される
+     create mode 100644 Brahms-section-Op.103.tex
+     create mode 100644 Brahms-subsection-Op.103-1.tex
+     ...
+     create mode 100644 Brahms-subsection-Op.103-8.tex
+     create mode 100644 Brahms-subsection-Op.14-8.tex
+     delete mode 100644 SET115.htm.tex
+     delete mode 100644 SET2219.htm.tex
+     delete mode 100644 SET5620.htm.tex
+    #+END_SRC
+
+  - ダブルチェックで clean を確認
+    - コマンド
+      #+BEGIN_SRC bash
+      git  status
+      #+END_SRC
+    - 表示例は省略
+
+*** 次の段階での修正準備
+
+今後、他の作家での作業等で修正作業が発生した時、phase-1 をマージした状
+態にいつでも戻れるように妙案がないので phase-2 というブランチを作成し
+ます。
+
+また、大賀さんと和田でそれぞれ作業を行っていたので厳密な意味でのリポジ
+トリ内容が異なるため、大賀さんのものをマスターとしたいので、
+EDIT\Brahms を zip で固めてメールで送ってください。
+
+- 新しいブランチを作成
+  - コマンド
+    #+BEGIN_SRC bash
+    git checkout -b phase-2
+    #+END_SRC
+  - 表示例
+    #+BEGIN_SRC
+    Switched to a new branch 'phase-2'
+    #+END_SRC
+- EDIT\Brahms を zip アーカイブし和田へメール
+
+- phase-1 の処置
+   普通は削除しますが、当面保持しておきましょう。

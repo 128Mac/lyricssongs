@@ -1,0 +1,886 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2023-03-17 金 17:42 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>2023-03-17 作業依頼</title>
+<meta name="author" content="和田勇" />
+<meta name="generator" content="Org Mode" />
+<style>
+  #content { max-width: 60em; margin: auto; }
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #e6e6e6;
+    border-radius: 3px;
+    background-color: #f2f2f2;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: auto;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    top: -8px;
+    right: 12px;
+    padding: 3px;
+    color: #555;
+    background-color: #f2f2f299;
+  }
+  pre.src:hover:before { display: inline; margin-top: 14px;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-authinfo::before { content: 'Authinfo'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { }
+</style>
+<link rel="stylesheet" type="text/css" href="http://www.pirilampo.org/styles/bigblow/css/htmlize.css"/>
+<link rel="stylesheet" type="text/css" href="http://www.pirilampo.org/styles/bigblow/css/bigblow.css"/>
+<link rel="stylesheet" type="text/css" href="http://www.pirilampo.org/styles/bigblow/css/hideshow.css"/>
+<script type="text/javascript" src="http://www.pirilampo.org/styles/bigblow/js/jquery-1.11.0.min.js"></script>
+<script type="text/javascript" src="http://www.pirilampo.org/styles/bigblow/js/jquery-ui-1.10.2.min.js"></script>
+<script type="text/javascript" src="http://www.pirilampo.org/styles/bigblow/js/jquery.localscroll-min.js"></script>
+<script type="text/javascript" src="http://www.pirilampo.org/styles/bigblow/js/jquery.scrollTo-1.4.3.1-min.js"></script>
+<script type="text/javascript" src="http://www.pirilampo.org/styles/bigblow/js/jquery.zclip.min.js"></script>
+<script type="text/javascript" src="http://www.pirilampo.org/styles/bigblow/js/bigblow.js"></script>
+<script type="text/javascript" src="http://www.pirilampo.org/styles/bigblow/js/hideshow.js"></script>
+<script type="text/javascript" src="http://www.pirilampo.org/styles/lib/js/jquery.stickytableheaders.min.js"></script>
+<script>
+  window.MathJax = {
+    tex: {
+      ams: {
+        multlineWidth: '85%'
+      },
+      tags: 'ams',
+      tagSide: 'right',
+      tagIndent: '.8em'
+    },
+    chtml: {
+      scale: 1.0,
+      displayAlign: 'center',
+      displayIndent: '0em'
+    },
+    svg: {
+      scale: 1.0,
+      displayAlign: 'center',
+      displayIndent: '0em'
+    },
+    output: {
+      font: 'mathjax-modern',
+      displayOverflow: 'overflow'
+    }
+  };
+</script>
+
+<script
+  id="MathJax-script"
+  async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+</script>
+</head>
+<body>
+<div id="content" class="content">
+<h1 class="title">2023-03-17 作業依頼</h1>
+<div id="table-of-contents" role="doc-toc">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents" role="doc-toc">
+<ul>
+<li><a href="#orgec1ce15">1. 内容が重複部分削除 （すでに終了）</a></li>
+<li><a href="#orgdefc037">2. Op.103の８分割後の後処理</a>
+<ul>
+<li><a href="#org4e3877f">2.1. 削除作業 &#x2026; EDIT\Brahms で</a></li>
+<li><a href="#orgfc85fe5">2.2. 差分確認 &#x2026; EDIT\Brahms で</a></li>
+<li><a href="#org4710e33">2.3. 状態確認 &#x2026; EDIT\Brahms で</a></li>
+<li><a href="#org39f7a86">2.4. llmk のビルド作業は割愛 &#x2026; EDIT で</a></li>
+<li><a href="#org18acb51">2.5. コミット &#x2026; EDIT\Brahms で</a></li>
+</ul>
+</li>
+<li><a href="#orgc9bca38">3. llmk 1.2 対処策で漏れ</a>
+<ul>
+<li><a href="#orga92e8b7">3.1. 以下のパッチイメージを EDIT ディレクトリ <b>2023-03-17-llmk-1.2.patch</b> として作成してください</a></li>
+<li><a href="#org0ccff8e">3.2. パッチ適用 &#x2026; EDIT\Brahms で</a></li>
+<li><a href="#org586cddb">3.3. 差分確認 &#x2026; EDIT\Brahms で</a></li>
+<li><a href="#org8c26649">3.4. 状態確認 &#x2026; EDIT\Brahms で</a></li>
+<li><a href="#org112049f">3.5. llmk のビルド &#x2026; EDIT で</a></li>
+<li><a href="#org52e45b7">3.6. コミット &#x2026; EDIT\Brahms で</a></li>
+</ul>
+</li>
+<li><a href="#org8e689f0">4. merge &amp; 次の段階での修正準備</a>
+<ul>
+<li><a href="#orgd35c455">4.1. phase-1 を master にマージ &#x2026; EDIT\Brahms で &#x2026;</a>
+<ul>
+<li><a href="#org4a4075b">4.1.1. 現在のブランチを確認し master へ移動</a></li>
+<li><a href="#org6f638a8">4.1.2. phase-1 の修正を master へマージ</a></li>
+<li><a href="#org8916692">4.1.3. 次の段階での修正準備</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+
+<div id="outline-container-orgec1ce15" class="outline-2">
+<h2 id="orgec1ce15"><span class="section-number-2">1.</span> 内容が重複部分削除 （すでに終了）</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+git 管理下のファイルは、単純にファイル削除して、現状容認でも良いのですが
+通常は、以下のような方法で行います。
+</p>
+
+
+<ol class="org-ol">
+<li><p>
+Brahms のリポジトリへ移動
+</p>
+
+<p>
+大賀さんはデスクトップに git clone した lyricssongs ディレクトリで
+PowerShell 起動のショートカットを設置していたと思いますので、以下の
+ような感じですので適宜調整してください。
+</p>
+
+<ul class="org-ul">
+<li><p>
+コマンド
+</p>
+
+<div class="org-src-container">
+<pre class="src src-bash"><span style="color: #DCDCCC; font-weight: bold;">cd</span> EDIT\Brahms
+</pre>
+</div></li>
+</ul></li>
+
+<li>ブランチは phase-1 であることを確認（ git checkout phase-1　で調整）
+
+<ul class="org-ul">
+<li><p>
+コマンド
+</p>
+
+<div class="org-src-container">
+<pre class="src src-bash">git status
+</pre>
+</div></li>
+
+<li><p>
+出力例
+</p>
+
+<pre class="example">
+On branch phase-1
+nothing to commit, working tree clean
+</pre></li>
+</ul></li>
+
+<li>対象ファイルを git 的に削除
+
+<ul class="org-ul">
+<li><p>
+コマンド
+</p>
+
+<div class="org-src-container">
+<pre class="src src-bash">git rm SET115.htm.tex SET2219.htm.tex SET5620.htm.tex
+</pre>
+</div></li>
+
+<li><p>
+出力例
+</p>
+
+<pre class="example">
+rm 'SET115.htm.tex'
+rm 'SET2219.htm.tex'
+rm 'SET5620.htm.tex'
+</pre></li>
+
+<li><p>
+git status で確認すると以下のように表示されます
+</p>
+
+<pre class="example">
+On branch phase-1
+Changes to be committed:
+  (use "git restore --staged &lt;file&gt;..." to unstage)
+        deleted:    SET115.htm.tex
+        deleted:    SET2219.htm.tex
+        deleted:    SET5620.htm.tex
+</pre></li>
+</ul></li>
+
+<li>タイプセットできるか確認
+<ul class="org-ul">
+<li><p>
+コマンド
+</p>
+<div class="org-src-container">
+<pre class="src src-bash">llmk Brahms
+</pre>
+</div></li>
+
+<li>出力状況は省略</li>
+</ul></li>
+
+<li>コミット
+
+<ul class="org-ul">
+<li><p>
+コマンド
+</p>
+<div class="org-src-container">
+<pre class="src src-bash">git commit -m <span style="color: #CC9393;">'&#20869;&#23481;&#12398;&#37325;&#35079;&#12375;&#12383;&#12501;&#12449;&#12452;&#12523;&#12398;&#21066;&#38500;'</span> SET115.htm.tex SET2219.htm.tex SET5620.htm.tex
+</pre>
+</div></li>
+
+<li><p>
+出力例
+</p>
+<pre class="example">
+[phase-1 cdab620] 内容の重複したファイルの削除
+ 3 files changed, 1637 deletions(-)
+ delete mode 100644 SET115.htm.tex
+ delete mode 100644 SET2219.htm.tex
+ delete mode 100644 SET5620.htm.tex
+</pre></li>
+
+<li><p>
+念の為、git status で clean になっていることを確認
+</p>
+<pre class="example">
+On branch phase-1
+nothing to commit, working tree clean
+</pre></li>
+</ul></li>
+</ol>
+</div>
+</div>
+
+<div id="outline-container-orgdefc037" class="outline-2">
+<h2 id="orgdefc037"><span class="section-number-2">2.</span> Op.103の８分割後の後処理</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+Brahms-section-Op.103.tex に当初一括記述していたが、
+８分割時、安全のため元のイメージを残しておいたが、
+</p>
+
+<p>
+一通りの作業終了に伴い、保持していたものを削除する。
+</p>
+</div>
+
+<div id="outline-container-org4e3877f" class="outline-3">
+<h3 id="org4e3877f"><span class="section-number-3">2.1.</span> 削除作業 &#x2026; EDIT\Brahms で</h3>
+<div class="outline-text-3" id="text-2-1">
+<p>
+削除作業は、 <b>Brahms-section-Op.103.tex</b> の  <b>\endinput</b> 以降の行を
+使い慣れたエディタで削除してください。
+</p>
+
+<p>
+私は 以下のような perl one liner で削除
+</p>
+
+<div class="org-src-container">
+<pre class="src src-bash">perl -Mutf8 -CSD -i -npe <span style="color: #CC9393;">'exit if /endinput/'</span> Brahms-section-Op.103.tex
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-orgfc85fe5" class="outline-3">
+<h3 id="orgfc85fe5"><span class="section-number-3">2.2.</span> 差分確認 &#x2026; EDIT\Brahms で</h3>
+<div class="outline-text-3" id="text-2-2">
+<ul class="org-ul">
+<li><p>
+コマンド
+</p>
+<div class="org-src-container">
+<pre class="src src-bash">git diff
+</pre>
+</div></li>
+<li><p>
+表示例
+</p>
+<pre class="example">
+diff --git a/Brahms-section-Op.103.tex b/Brahms-section-Op.103.tex
+index 68a7ac1..d77f7c3 100644
+--- a/Brahms-section-Op.103.tex
++++ b/Brahms-section-Op.103.tex
+@@ -17,172 +17,3 @@
+ \input{Brahms/Brahms-subsection-Op.103-6.tex}
+ \input{Brahms/Brahms-subsection-Op.103-7.tex}
+ \input{Brahms/Brahms-subsection-Op.103-8.tex}
+-\endinput
+-\begin{myTBLR}[]
+-{ He, Zigeuner, greife in die Saiten ein! } &amp;
+-{ さあ、ジプシーよ、弦をかき鳴らせ！ }
+...
+... 以下、削除されたことを示す「-」行が続く
+...
+-{ Nur allein von dem süßen Liebchen mein. } &amp;
+-{ いとしいきみのことばかり夢みているのだ。 }
+-\\
+-\end{myTBLR}
+</pre></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org4710e33" class="outline-3">
+<h3 id="org4710e33"><span class="section-number-3">2.3.</span> 状態確認 &#x2026; EDIT\Brahms で</h3>
+<div class="outline-text-3" id="text-2-3">
+<ul class="org-ul">
+<li><p>
+コマンド
+</p>
+<div class="org-src-container">
+<pre class="src src-bash">git status
+</pre>
+</div></li>
+<li><p>
+表示例
+</p>
+<pre class="example">
+On branch phase-1
+Changes not staged for commit:
+  (use "git add &lt;file&gt;..." to update what will be committed)
+  (use "git restore &lt;file&gt;..." to discard changes in working directory)
+        modified:   Brahms-section-Op.103.tex
+
+no changes added to commit (use "git add" and/or "git commit -a")
+</pre></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org39f7a86" class="outline-3">
+<h3 id="org39f7a86"><span class="section-number-3">2.4.</span> llmk のビルド作業は割愛 &#x2026; EDIT で</h3>
+</div>
+<div id="outline-container-org18acb51" class="outline-3">
+<h3 id="org18acb51"><span class="section-number-3">2.5.</span> コミット &#x2026; EDIT\Brahms で</h3>
+<div class="outline-text-3" id="text-2-5">
+<ul class="org-ul">
+<li>適宜 git status / git diff でダブルチェック</li>
+
+<li><p>
+コマンド
+</p>
+<div class="org-src-container">
+<pre class="src src-bash">git commit -m <span style="color: #CC9393;">'Op.103 &#65304;&#20998;&#21106;&#26178;&#12395;&#23433;&#20840;&#12398;&#12383;&#12417;&#12395;&#28201;&#23384;&#12375;&#12390;&#12356;&#12383;&#37096;&#20998;&#12434;&#38500;&#21435;'</span> Brahms-section-Op.103.tex
+</pre>
+</div></li>
+
+<li><p>
+出力例
+</p>
+
+<pre class="example">
+[phase-1 0207737] Op.103 ８分割時に安全のために温存していた部分を除去
+1 file changed, 169 deletions(-)
+</pre></li>
+
+<li>ステータス確認
+<ul class="org-ul">
+<li><p>
+コマンド
+</p>
+<div class="org-src-container">
+<pre class="src src-bash">git status
+</pre>
+</div></li>
+
+<li><p>
+出力例
+</p>
+<div class="org-src-container">
+<pre class="src src-bash">On branch phase-1
+nothing to commit, working tree clean
+</pre>
+</div></li>
+</ul></li>
+</ul>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgc9bca38" class="outline-2">
+<h2 id="orgc9bca38"><span class="section-number-2">3.</span> llmk 1.2 対処策で漏れ</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+hyper-link で処理する際の llmk 1.2 への対応処理。
+</p>
+</div>
+
+<div id="outline-container-orga92e8b7" class="outline-3">
+<h3 id="orga92e8b7"><span class="section-number-3">3.1.</span> 以下のパッチイメージを EDIT ディレクトリ <b>2023-03-17-llmk-1.2.patch</b> として作成してください</h3>
+<div class="outline-text-3" id="text-3-1">
+<div class="org-src-container">
+<pre class="src src-diff"><span style="background-color: #5F5F5F;">diff --git a/Brahms-hyper-link.tex b/Brahms-hyper-link.tex</span>
+<span style="background-color: #5F5F5F;">index d351308..987be1a 100644</span>
+<span style="background-color: #5F5F5F;">--- </span><span style="color: #DCDCCC; background-color: #5F5F5F; font-weight: bold;">a/Brahms-hyper-link.tex</span>
+<span style="background-color: #5F5F5F;">+++ </span><span style="color: #DCDCCC; background-color: #5F5F5F; font-weight: bold;">b/Brahms-hyper-link.tex</span>
+<span style="background-color: #5F5F5F;">@@ -1,4 +1,15 @@</span>
+<span style="color: #aa2222; background-color: #553333;">-</span><span style="color: #AC7373; background-color: #553333;">%#! cluttex --engine=platex --max-iterations=</span><span style="color: #CC9393; background-color: #883333;">4</span><span style="color: #AC7373; background-color: #553333;"> --makeindex='mendex -c -g -l -r -s sty/myjpbase.ist'</span>
+<span style="color: #22aa22; background-color: #335533;">+</span><span style="color: #7F9F7F; background-color: #335533;">%#! cluttex</span>
+<span style="color: #22aa22; background-color: #335533;">+</span><span style="color: #BFEBBF; background-color: #338833;">% +++</span><span style="color: #BFEBBF; background-color: #338833;">
+</span><span style="color: #BFEBBF; background-color: #338833;">+</span><span style="color: #BFEBBF; background-color: #338833;">% sequence = ["cluttex"]</span><span style="color: #BFEBBF; background-color: #338833;">
+</span><span style="color: #BFEBBF; background-color: #338833;">+</span><span style="color: #BFEBBF; background-color: #338833;">% [programs.cluttex]</span><span style="color: #BFEBBF; background-color: #338833;">
+</span><span style="color: #BFEBBF; background-color: #338833;">+</span><span style="color: #BFEBBF; background-color: #338833;">% command = "cluttex"</span><span style="color: #BFEBBF; background-color: #338833;">
+</span><span style="color: #BFEBBF; background-color: #338833;">+</span><span style="color: #BFEBBF; background-color: #338833;">% opts = [</span><span style="color: #BFEBBF; background-color: #338833;">
+</span><span style="color: #BFEBBF; background-color: #338833;">+</span><span style="color: #BFEBBF; background-color: #338833;">%     "-</span><span style="color: #7F9F7F; background-color: #335533;">-engine=platex</span><span style="color: #BFEBBF; background-color: #338833;">",</span><span style="color: #BFEBBF; background-color: #338833;">
+</span><span style="color: #BFEBBF; background-color: #338833;">+</span><span style="color: #BFEBBF; background-color: #338833;">%</span><span style="color: #7F9F7F; background-color: #335533;">     </span><span style="color: #BFEBBF; background-color: #338833;">"</span><span style="color: #7F9F7F; background-color: #335533;">--max-iterations=</span><span style="color: #BFEBBF; background-color: #338833;">3",</span>
+<span style="color: #22aa22; background-color: #335533;">+</span><span style="color: #BFEBBF; background-color: #338833;">%     "-</span><span style="color: #7F9F7F; background-color: #335533;">-makeindex='mendex -c -g -l -r -s </span><span style="color: #BFEBBF; background-color: #338833;">../</span><span style="color: #7F9F7F; background-color: #335533;">sty/myjpbase.ist'</span><span style="color: #BFEBBF; background-color: #338833;">",</span><span style="color: #BFEBBF; background-color: #338833;">
+</span><span style="color: #BFEBBF; background-color: #338833;">+</span><span style="color: #BFEBBF; background-color: #338833;">%     "--output-directory=out"</span><span style="color: #BFEBBF; background-color: #338833;">
+</span><span style="color: #BFEBBF; background-color: #338833;">+</span><span style="color: #BFEBBF; background-color: #338833;">% ]</span><span style="color: #BFEBBF; background-color: #338833;">
+</span><span style="color: #BFEBBF; background-color: #338833;">+</span><span style="color: #BFEBBF; background-color: #338833;">% +++</span>
+ \documentclass[a4paper,10pt,landscape,dvipdfmx]{jlreq}
+ \usepackage[T1]{fontenc}
+ \usepackage{txfonts}
+<span style="background-color: #5F5F5F;">@@ -18,8 +29,8 @@</span>
+ %% &#20316;&#21697;&#32034;&#24341;&#12398;&#12383;&#12417; hyper-link bookmark &#27231;&#33021;&#12434;&#21033;&#29992;&#12377;&#12427;&#12392;&#12383;&#12367;&#12373;&#12435;&#12398;&#35686;&#21578;&#12513;&#12483;&#12475;&#12540;&#12472;
+ %% &#12364;&#34920;&#31034;&#12373;&#12428;&#12427;&#12290;&#21407;&#31295;&#12398;&#12481;&#12455;&#12483;&#12463;&#26178;&#12399;&#12289;&#20197;&#19979;&#12398; sty/myMacrosHyperLink &#12398;&#21462;
+ %% &#12426;&#36796;&#12415;&#12434;&#34892;&#12431;&#12394;&#12356;&#12424;&#12358;&#12467;&#12513;&#12531;&#12488;&#12450;&#12454;&#12488;&#12377;&#12427;&#12371;&#12392;
+<span style="color: #aa2222; background-color: #553333;">-</span><span style="color: #AC7373; background-color: #553333;">{sty/myMacrosHyperLink} % mmakeidx hyper link &#21608;&#12426;&#12398;&#12459;&#12473;&#12479;&#12510;&#12452;&#12474;</span>
+<span style="color: #aa2222; background-color: #553333;">-</span><span style="color: #CC9393; background-color: #883333;">%%</span><span style="color: #AC7373; background-color: #553333;">\usepackage{bookmark}</span>
+<span style="color: #22aa22; background-color: #335533;">+</span><span style="color: #BFEBBF; background-color: #338833;">\usepackage</span><span style="color: #7F9F7F; background-color: #335533;">{sty/myMacrosHyperLink} % mmakeidx hyper link &#21608;&#12426;&#12398;&#12459;&#12473;&#12479;&#12510;&#12452;&#12474;</span>
+<span style="color: #22aa22; background-color: #335533;">+</span><span style="color: #7F9F7F; background-color: #335533;">\usepackage{bookmark}</span>
+
+ \title{\uppercase{Johannes Brahms} \footnote{&#12502;&#12521;&#12540;&#12512;&#12473; (Johannes Brahms, 1833-1897) &#12489;&#12452;&#12484;}
+   \\ Lieder
+<span style="background-color: #5F5F5F;">@@ -83,6 +94,7 @@</span>
+ \input{Brahms/Brahms-section-29.tex}
+ \input{Brahms/Brahms-section-30.tex}
+ \input{Brahms/Brahms-section-31.tex}
+<span style="color: #22aa22; background-color: #335533;">+</span><span style="color: #7F9F7F; background-color: #335533;">\input{Brahms/Brahms-section-Op.103.tex}</span>
+ \input{Brahms/Brahms-section-32.tex}
+ \input{Brahms/Brahms-section-33.tex}
+ \input{Brahms/Brahms-section-34.tex}
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org0ccff8e" class="outline-3">
+<h3 id="org0ccff8e"><span class="section-number-3">3.2.</span> パッチ適用 &#x2026; EDIT\Brahms で</h3>
+<div class="outline-text-3" id="text-3-2">
+<ul class="org-ul">
+<li><p>
+コマンド
+</p>
+<div class="org-src-container">
+<pre class="src src-bash">git apply ..\EDIT\2023-03-17-llmk-1.2.patch
+</pre>
+</div></li>
+
+<li>表示される内容は割愛</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org586cddb" class="outline-3">
+<h3 id="org586cddb"><span class="section-number-3">3.3.</span> 差分確認 &#x2026; EDIT\Brahms で</h3>
+<div class="outline-text-3" id="text-3-3">
+<ul class="org-ul">
+<li><p>
+コマンド
+</p>
+<div class="org-src-container">
+<pre class="src src-bash">git diff
+</pre>
+</div></li>
+<li>表示されるないは ..\EDIT\2023-03-17-llmk-1.2.patch と同じ内容です</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org8c26649" class="outline-3">
+<h3 id="org8c26649"><span class="section-number-3">3.4.</span> 状態確認 &#x2026; EDIT\Brahms で</h3>
+<div class="outline-text-3" id="text-3-4">
+<ul class="org-ul">
+<li><p>
+コマンド
+</p>
+<div class="org-src-container">
+<pre class="src src-bash">git status
+</pre>
+</div></li>
+<li><p>
+表示例
+</p>
+<pre class="example">
+On branch phase-1
+Changes not staged for commit:
+  (use "git add &lt;file&gt;..." to update what will be committed)
+  (use "git restore &lt;file&gt;..." to discard changes in working directory)
+        modified:   Brahms-hyper-link.tex
+
+no changes added to commit (use "git add" and/or "git commit -a")
+</pre></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org112049f" class="outline-3">
+<h3 id="org112049f"><span class="section-number-3">3.5.</span> llmk のビルド &#x2026; EDIT で</h3>
+<div class="outline-text-3" id="text-3-5">
+<p>
+phase-1 での最後のビルドになるようなので、実施してください。
+また 345 ページを目視で操作は、ボケ防止より、だるい作業なので
+以前紹介した diff-pdf を scoop でインストーリして、それを利用してみてください。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org52e45b7" class="outline-3">
+<h3 id="org52e45b7"><span class="section-number-3">3.6.</span> コミット &#x2026; EDIT\Brahms で</h3>
+<div class="outline-text-3" id="text-3-6">
+<ul class="org-ul">
+<li>適宜 git status / git diff でダブルチェック</li>
+
+<li><p>
+コマンド
+</p>
+<div class="org-src-container">
+<pre class="src src-bash">git commit -m <span style="color: #CC9393;">'llmk 1.2 &#23550;&#20966;&#31574;&#12391;&#28431;&#12428;'</span> Brahms-hyper-link.tex
+</pre>
+</div></li>
+
+<li><p>
+出力例
+</p>
+
+<pre class="example">
+[phase-1 9df40c2] llmk 1.2 対処策で漏れ
+ 1 file changed, 15 insertions(+), 3 deletions(-)
+</pre></li>
+
+<li><p>
+ステータス確認
+</p>
+<div class="org-src-container">
+<pre class="src src-bash">git status
+</pre>
+</div>
+
+<pre class="example">
+On branch phase-1
+nothing to commit, working tree clean
+</pre></li>
+</ul>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org8e689f0" class="outline-2">
+<h2 id="org8e689f0"><span class="section-number-2">4.</span> merge &amp; 次の段階での修正準備</h2>
+<div class="outline-text-2" id="text-4">
+<p>
+色々確認しながら行います。
+</p>
+</div>
+
+<div id="outline-container-orgd35c455" class="outline-3">
+<h3 id="orgd35c455"><span class="section-number-3">4.1.</span> phase-1 を master にマージ &#x2026; EDIT\Brahms で &#x2026;</h3>
+<div class="outline-text-3" id="text-4-1">
+</div>
+<div id="outline-container-org4a4075b" class="outline-4">
+<h4 id="org4a4075b"><span class="section-number-4">4.1.1.</span> 現在のブランチを確認し master へ移動</h4>
+<div class="outline-text-4" id="text-4-1-1">
+<ul class="org-ul">
+<li>現在利用可能なブランチの確認
+<ul class="org-ul">
+<li><p>
+コマンド
+</p>
+<div class="org-src-container">
+<pre class="src src-bash">git branch -a
+</pre>
+</div></li>
+<li><p>
+表示例
+</p>
+<pre class="example">
+  master
+* phase-1
+</pre></li>
+</ul></li>
+
+<li><p>
+master へ移動
+</p>
+
+<p>
+現在のブランチは、「*」のphase-1 なので master へ移動
+</p>
+<ul class="org-ul">
+<li><p>
+コマンド
+</p>
+<div class="org-src-container">
+<pre class="src src-bash">git checkout master
+</pre>
+</div></li>
+<li><p>
+表示例
+</p>
+<pre class="example">
+Switched to branch 'master'
+</pre></li>
+</ul></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org6f638a8" class="outline-4">
+<h4 id="org6f638a8"><span class="section-number-4">4.1.2.</span> phase-1 の修正を master へマージ</h4>
+<div class="outline-text-4" id="text-4-1-2">
+<ul class="org-ul">
+<li><p>
+コマンド
+</p>
+<div class="org-src-container">
+<pre class="src src-bash">git merge phase-1
+</pre>
+</div></li>
+<li><p>
+表示例
+</p>
+<pre class="example">
+Updating f14fe35..9df40c2
+Fast-forward
+ .gitignore                     |   14 +-
+ Brahms-hyper-link.tex          |  220 +++++++++--------
+ ... たくさんの更新されたファイルが表示される
+ ... 追加や削除されたファイルリストなども表示される
+ create mode 100644 Brahms-section-Op.103.tex
+ create mode 100644 Brahms-subsection-Op.103-1.tex
+ ...
+ create mode 100644 Brahms-subsection-Op.103-8.tex
+ create mode 100644 Brahms-subsection-Op.14-8.tex
+ delete mode 100644 SET115.htm.tex
+ delete mode 100644 SET2219.htm.tex
+ delete mode 100644 SET5620.htm.tex
+</pre></li>
+
+<li>ダブルチェックで clean を確認
+<ul class="org-ul">
+<li><p>
+コマンド
+</p>
+<div class="org-src-container">
+<pre class="src src-bash">git  status
+</pre>
+</div></li>
+<li>表示例は省略</li>
+</ul></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org8916692" class="outline-4">
+<h4 id="org8916692"><span class="section-number-4">4.1.3.</span> 次の段階での修正準備</h4>
+<div class="outline-text-4" id="text-4-1-3">
+<p>
+今後、他の作家での作業等で修正作業が発生した時、phase-1 をマージした状
+態にいつでも戻れるように妙案がないので phase-2 というブランチを作成し
+ます。
+</p>
+
+<p>
+また、大賀さんと和田でそれぞれ作業を行っていたので厳密な意味でのリポジ
+トリ内容が異なるため、大賀さんのものをマスターとしたいので、
+EDIT\Brahms を zip で固めてメールで送ってください。
+</p>
+
+<ul class="org-ul">
+<li>新しいブランチを作成
+<ul class="org-ul">
+<li><p>
+コマンド
+</p>
+<div class="org-src-container">
+<pre class="src src-bash">git checkout -b phase-2
+</pre>
+</div></li>
+<li><p>
+表示例
+</p>
+<pre class="example">
+Switched to a new branch 'phase-2'
+</pre></li>
+</ul></li>
+<li>EDIT\Brahms を zip アーカイブし和田へメール</li>
+
+<li>phase-1 の処置
+普通は削除しますが、当面保持しておきましょう。</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="author">Author: 和田勇</p>
+<p class="date">Created: 2023-03-17 金 17:42</p>
+<p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>

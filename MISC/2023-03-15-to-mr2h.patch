@@ -1,0 +1,428 @@
+diff --git a/Brahms-section-03.tex b/Brahms-section-03.tex
+index c213455..a4f3eac 100644
+--- a/Brahms-section-03.tex
++++ b/Brahms-section-03.tex
+@@ -53,6 +53,11 @@
+ & セレナーデ
+ & \pageref{myindex:subsection:S4010} \\%
+ \cline[dashed]{2-3}
++%8 %----%----%----%----%
++%& Ständchen (Op.14-8)
++%& あこがれ
++%& \pageref{myindex:subsection:Op.14-8} \\%
++%\cline[dashed]{2-3}
+ \end{longtblr}
+ 
+ \input{Brahms/S3986.htm.tex}
+@@ -62,3 +67,4 @@
+ \input{Brahms/S4003.htm.tex}
+ \input{Brahms/S3984.htm.tex}
+ \input{Brahms/S4010.htm.tex}
++\input{Brahms/Brahms-subsection-Op.14-8.tex}
+diff --git a/Brahms-section-Op.103.tex b/Brahms-section-Op.103.tex
+index c3eb28d..68a7ac1 100644
+--- a/Brahms-section-Op.103.tex
++++ b/Brahms-section-Op.103.tex
+@@ -7,17 +7,17 @@
+ {(1887)}% その他情報（原）
+ {}% その他情報（訳）
+ 
+-\SUBSECTION%
+-{Zigeunerlieder}% タイトル（原）
+-{Z-Zigeunerlieder}% よみ情報（原）
+-{ジプシーの歌}% タイトル（訳）
+-{し-じぷしーのうた}% よみ情報（訳）
+-{Op.103}% 整理番号
+-{詩： フーゴー・コンラート(Hugo Conrat, 1845-1906) - Nach dem Ungarischen -  ハンガリア民謡から }% 詞情報
+-{ 曲：コンラート(Hugo Conrato, 1845-1906) }% 曲情報
+-
+ \label{myindex:subsection:OP.103}
+ 
++\input{Brahms/Brahms-subsection-Op.103-1.tex}
++\input{Brahms/Brahms-subsection-Op.103-2.tex}
++\input{Brahms/Brahms-subsection-Op.103-3.tex}
++\input{Brahms/Brahms-subsection-Op.103-4.tex}
++\input{Brahms/Brahms-subsection-Op.103-5.tex}
++\input{Brahms/Brahms-subsection-Op.103-6.tex}
++\input{Brahms/Brahms-subsection-Op.103-7.tex}
++\input{Brahms/Brahms-subsection-Op.103-8.tex}
++\endinput
+ \begin{myTBLR}[]
+ { He, Zigeuner, greife in die Saiten ein! } &
+ { さあ、ジプシーよ、弦をかき鳴らせ！ }
+diff --git a/Brahms-subsection-Op.103-1.tex b/Brahms-subsection-Op.103-1.tex
+new file mode 100644
+index 0000000..e51bd21
+--- /dev/null
++++ b/Brahms-subsection-Op.103-1.tex
+@@ -0,0 +1,25 @@
++\SUBSECTION%
++{Zigeunerlieder 1}% タイトル（原）
++{Z-Zigeunerlieder 1}% よみ情報（原）
++{ジプシーの歌 1}% タイトル（訳）
++{し-じぷしーのうた 1}% よみ情報（訳）
++{Op.103-1}% 整理番号
++{詩： フーゴー・コンラート(Hugo Conrat, 1845-1906) - Nach dem Ungarischen -  ハンガリア民謡から}% 詞情報
++{曲：コンラート(Hugo Conrato, 1845-1906)}% 曲情報
++
++\label{myindex:subsection:OP.103-1}
++
++\begin{myTBLR}[]
++{ He, Zigeuner, greife in die Saiten ein! } &
++{ さあ、ジプシーよ、弦をかき鳴らせ！ }
++\\
++{ Spiel das Lied vom ungetreuen Mägdelein! } &
++{ 不実な娘の歌を奏でよ！ }
++\\
++{ Laß die Saiten weinen, klagen, traurig bange, } &
++{ 弦をもの悲しく泣かせ、かつうったえさせよ、 }
++\\
++{ Bis die heiße Träne netzet diese Wange! } &
++{ 熱い涙がこの頬を濡らすまで！ }
++\\
++\end{myTBLR}
+diff --git a/Brahms-subsection-Op.103-2.tex b/Brahms-subsection-Op.103-2.tex
+new file mode 100644
+index 0000000..cff2146
+--- /dev/null
++++ b/Brahms-subsection-Op.103-2.tex
+@@ -0,0 +1,25 @@
++\SUBSECTION%
++{Zigeunerlieder 2}% タイトル（原）
++{Z-Zigeunerlieder 2}% よみ情報（原）
++{ジプシーの歌 2}% タイトル（訳）
++{し-じぷしーのうた 2}% よみ情報（訳）
++{Op.103-2}% 整理番号
++{詩： フーゴー・コンラート(Hugo Conrat, 1845-1906) - Nach dem Ungarischen -  ハンガリア民謡から}% 詞情報
++{曲：コンラート(Hugo Conrato, 1845-1906)}% 曲情報
++
++\label{myindex:subsection:OP.103-2}
++
++\begin{myTBLR}[]
++{ Hochgetürmte Rimaflut, wie bist du so trüb, } &
++{ 高く波立つリマの流れよ、どうしてそんなに悲しげなのか、 }
++\\
++{ An dem Ufer klag ich laut nach dir, mein Lieb! } &
++{ 岸辺でぼくはきみに向って声高くうったえる、愛する河よ！ }
++\\
++{ Wellen fliehen, Wellen strömen, rauschen an dem Strand heran zu mir, } &
++{ 波は去り、波は移り、ざわめきながら岸辺のぼくの方に向かう、 }
++\\
++{ An dem Rimaufer laßt mich ewig weinen nach ihr! } &
++{ リマ河の岸辺でいつまでもあのひとを求めるぼくの泣くに任せよ！ }
++\\
++\end{myTBLR}
+diff --git a/Brahms-subsection-Op.103-3.tex b/Brahms-subsection-Op.103-3.tex
+new file mode 100644
+index 0000000..1a6241b
+--- /dev/null
++++ b/Brahms-subsection-Op.103-3.tex
+@@ -0,0 +1,39 @@
++\SUBSECTION%
++{Zigeunerlieder 3}% タイトル（原）
++{Z-Zigeunerlieder 3}% よみ情報（原）
++{ジプシーの歌 3}% タイトル（訳）
++{し-じぷしーのうた 3}% よみ情報（訳）
++{Op.103-3}% 整理番号
++{詩： フーゴー・コンラート(Hugo Conrat, 1845-1906) - Nach dem Ungarischen -  ハンガリア民謡から}% 詞情報
++{曲：コンラート(Hugo Conrato, 1845-1906)}% 曲情報
++
++\label{myindex:subsection:OP.103-3}
++
++
++\begin{myTBLR}[]
++{ Wißt ihr, wann mein Kindchen am allerschönsten ist? } &
++{ おまえたちは知っているか、いつぼくのいとしいひとが最も美しいかを？ }
++\\
++{ Wenn ihr süßes Mündchen scherzt und lacht küßt. } &
++{ それは娘の愛らしい口許が戯れて笑い、口づけをする時なのだ。 }
++\\
++{ Mägdelein, du bist mein, inniglich küß ich dich, } &
++{ 娘よ、きみはぼくのものだ、ぼくはきみに心から口づけするよ、 }
++\\
++{ Dich erschuf der liebe Himmel einzig nur für mich! } &
++{ 愛する神がきみをただぼくのためにのみお創りになったのだ！ }
++\\
++\\
++{ Wißt ihr, wann mein Liebster am besten mir gefällt? } &
++{ おまえたちは知っているの、　いつわたしのいとしい方がわたしの最も気に入るかを？ }
++\\
++{ Wenn in seinen Armen er mich umschungen hällt? } &
++{ それはあの方がわたしをその腕で抱きしめてくださるときよ。 }
++\\
++{ Schätzelein, du bist mein, inniglich küß ich dich, } &
++{ いとしい方、あなたはわたしのもの、わたしは心からあなたにキスするわ、 }
++\\
++{ Dich erschuf der lieb Himmel einzig nur für mich! } &
++{ 愛する神があなたをわたしのためにお創りになったのよ！ }
++\\
++\end{myTBLR}
+diff --git a/Brahms-subsection-Op.103-4.tex b/Brahms-subsection-Op.103-4.tex
+new file mode 100644
+index 0000000..f924b71
+--- /dev/null
++++ b/Brahms-subsection-Op.103-4.tex
+@@ -0,0 +1,38 @@
++\SUBSECTION%
++{Zigeunerlieder 4}% タイトル（原）
++{Z-Zigeunerlieder 4}% よみ情報（原）
++{ジプシーの歌 4}% タイトル（訳）
++{し-じぷしーのうた 4}% よみ情報（訳）
++{Op.103-4}% 整理番号
++{詩： フーゴー・コンラート(Hugo Conrat, 1845-1906) - Nach dem Ungarischen -  ハンガリア民謡から}% 詞情報
++{曲：コンラート(Hugo Conrato, 1845-1906)}% 曲情報
++
++\label{myindex:subsection:OP.103-4}
++
++\begin{myTBLR}[]
++{ Lieber Gott, du weißt, wie oft bereut ich hab, } &
++{ 愛する神さま、あなたはご存じね、わたしが幾度後悔したかを、 }
++\\
++{ Daß ich meinem Liebsten einst ein Kußchen gab, } &
++{ わたしがいとしい方にかつてキスを許したことについて。 }
++\\
++{ Herz gebot, daß ich ihn küssen muß, } &
++{ わたしがあの方にキスしなければならないと心が命じたの、 }
++\\
++{ Denk, solang ich leb, an diesen ersten Kuß. } &
++{ わたしが生きている限り、わたしはこの初めてのキスのことを思うわ。 }
++\\
++\\
++{ Lieber Gott, du weißt, wie oft in stiller Nacht } &
++{ 愛する神さま、あなたはご存じね、わたしが幾度静かな夜に }
++\\
++{ Ich in Lust und Leid an meinen Schatz gedacht. } &
++{ 悲喜こもごもにわたしのいとしい方を思ったことを。 }
++\\
++{ Lieb ist süß, wenn bitter auch die Reu, } &
++{ たとえ後悔はつらいとしても、愛情はこころよく、 }
++\\
++{ Armes Herz bleibt ihn ewig, ewig treu. } &
++{ この哀れな心はいつまでもあの方に誠実でしょうよ。 }
++\\
++\end{myTBLR}
+diff --git a/Brahms-subsection-Op.103-5.tex b/Brahms-subsection-Op.103-5.tex
+new file mode 100644
+index 0000000..62b49b6
+--- /dev/null
++++ b/Brahms-subsection-Op.103-5.tex
+@@ -0,0 +1,31 @@
++\SUBSECTION%
++{Zigeunerlieder 5}% タイトル（原）
++{Z-Zigeunerlieder 5}% よみ情報（原）
++{ジプシーの歌 5}% タイトル（訳）
++{し-じぷしーのうた 5}% よみ情報（訳）
++{Op.103-5}% 整理番号
++{詩： フーゴー・コンラート(Hugo Conrat, 1845-1906) - Nach dem Ungarischen -  ハンガリア民謡から}% 詞情報
++{曲：コンラート(Hugo Conrato, 1845-1906)}% 曲情報
++
++\label{myindex:subsection:OP.103-5}
++
++\begin{myTBLR}[]
++{ Brauner Bursche führt zum Tanze sein blauäugig schönes Kind, } &
++{ 日焼けした若者が青い眼の美しい娘を相手にして踊り、 }
++\\
++{ Schlägt die Sporen keck zusammen, Csardasmelodie beginnt, } &
++{ 拍車を大胆に打ち鳴らし、チャルダッシュのメロディが始まる。 }
++\\
++{ Küßt und herzt sein süßes Täubchen, } &
++{ 若者はその愛らしい小鳩にキスし、抱きしめ、 }
++\\
++{ Dreht sie, führt sie, jauchzt und springt; } &
++{ 娘を回し、リードし、歓声をあげて、とび跳ね、}
++\\
++{ Wirft drei blanke Silbergulden } &
++{ シンバルの上にピカピカの銀貨を投げると、 }
++\\
++{ Auf das Zimbal, daß es klingt. } &
++{ チャリンという響きが聞こえる。 }
++\\
++\end{myTBLR}
+diff --git a/Brahms-subsection-Op.103-6.tex b/Brahms-subsection-Op.103-6.tex
+new file mode 100644
+index 0000000..50e036a
+--- /dev/null
++++ b/Brahms-subsection-Op.103-6.tex
+@@ -0,0 +1,44 @@
++\SUBSECTION%
++{Zigeunerlieder 6}% タイトル（原）
++{Z-Zigeunerlieder 1}% よみ情報（原）
++{ジプシーの歌 6}% タイトル（訳）
++{し-じぷしーのうた 6}% よみ情報（訳）
++{Op.103-6}% 整理番号
++{詩： フーゴー・コンラート(Hugo Conrat, 1845-1906) - Nach dem Ungarischen -  ハンガリア民謡から}% 詞情報
++{曲：コンラート(Hugo Conrato, 1845-1906)}% 曲情報
++
++\label{myindex:subsection:OP.103-6}
++
++\begin{myTBLR}[]
++{ Röslein dreie in der Reihe blühn so rot, } &
++{ 一列に並んだ三つのバラが真っ赤に咲いていて、 }
++\\
++{ Daß der Bursch zum Mädel gehe, ist kein Verbot! } &
++{ 若者が娘のところへ行くことは禁じられていない！ }
++\\
++{ Lieber Gott, wenn das verboten wär, } &
++{ 神さま、もしもそれが禁じられているとすれば、 }
++\\
++{ Ständ die schöne weite Welt schon längst nicht mehr, } &
++{ この美しい広い世界はもうとっくになくなって、 }
++\\
++{ Ledig bleiben Sünde wär!} &
++{ 罪業だけが残ることになるだろうが。 }
++\\
++\\
++{ Schönstes Städtchen in Alföld ist Ketschkemet, } &
++{ アルフェルトの一番美しい町はケチュケメトだが、 }
++\\
++{ Dort gibt es gar viele Mädchen schmuch und nett! } &
++{ そこにはきれいで愛らしい娘たちが大勢いるよ！ }
++\\
++{ Freunde, sucht euch dort ein Bräutchen aus, } &
++{ 友らよ、そこで花嫁を探し求めて、 }
++\\
++{ Freit um ifre Hand und gründet euer Haus, } &
++{ 結婚を申しこんで、家庭をつくり、 }
++\\
++{ Freudenbecher leeret aus. } &
++{ さあ、歓びの杯を飲み干したまえ。 }
++\\
++\end{myTBLR}
+diff --git a/Brahms-subsection-Op.103-7.tex b/Brahms-subsection-Op.103-7.tex
+new file mode 100644
+index 0000000..347ead2
+--- /dev/null
++++ b/Brahms-subsection-Op.103-7.tex
+@@ -0,0 +1,31 @@
++\SUBSECTION%
++{Zigeunerlieder 7}% タイトル（原）
++{Z-Zigeunerlieder 7}% よみ情報（原）
++{ジプシーの歌 7}% タイトル（訳）
++{し-じぷしーのうた 7}% よみ情報（訳）
++{Op.103-7}% 整理番号
++{詩： フーゴー・コンラート(Hugo Conrat, 1845-1906) - Nach dem Ungarischen -  ハンガリア民謡から}% 詞情報
++{曲：コンラート(Hugo Conrato, 1845-1906)}% 曲情報
++
++\label{myindex:subsection:OP.103-7}
++
++\begin{myTBLR}[]
++{ Kommt dir manchmal in den Sinn, mein süßes Lieb, } &
++{ 幾度も想い起こすか、いとしいひとよ、 }
++\\
++{ Was du einst mit heilgem Eide mir gelobt? } &
++{ きみがかつて聖なる誓いによって約束したことを？ }
++\\
++{ Täusch mich nicht, verlaß mich nicht, } &
++{ ぼくを裏切ったり、捨てたりしないでほしい、 }
++\\
++{ Du weißt nicht, wie lieb ich dich hab, } &
++{ ぼくがきみをどんなに愛しているのか、わからないかね、 }
++\\
++{ Lieb du mich, wie ich dich, } &
++{ ぼくがきみを愛しているように、きみもぼくを愛してほしい、 }
++\\
++{ Dann strömt Gottes Huld auf dich herab! } &
++{ そうしたら、神の恩寵がきみに注がれるよ！ }
++\\
++\end{myTBLR}
+diff --git a/Brahms-subsection-Op.103-8.tex b/Brahms-subsection-Op.103-8.tex
+new file mode 100644
+index 0000000..5f2937a
+--- /dev/null
++++ b/Brahms-subsection-Op.103-8.tex
+@@ -0,0 +1,31 @@
++\SUBSECTION%
++{Zigeunerlieder 8}% タイトル（原）
++{Z-Zigeunerlieder 8}% よみ情報（原）
++{ジプシーの歌 8}% タイトル（訳）
++{し-じぷしーのうた 8}% よみ情報（訳）
++{Op.103-8}% 整理番号
++{詩： フーゴー・コンラート(Hugo Conrat, 1845-1906) - Nach dem Ungarischen -  ハンガリア民謡から}% 詞情報
++{曲：コンラート(Hugo Conrato, 1845-1906)}% 曲情報
++
++\label{myindex:subsection:OP.103-8}
++
++\begin{myTBLR}[]
++{ Rote Abendwolken ziehn am Firmament, } &
++{ 真っ赤な夕焼雲が空を漂ってゆく、 }
++\\
++{ Sehnsuchtsvoll nach dir, } &
++{ 憧れに満ちてきみの方へ向って。 }
++\\
++{ Mein Lieb, das Herze brennt, } &
++{ いとしいきみよ、心は燃えて、 }
++\\
++{ Himmel strahlt in glühnder Pracht, } &
++{ 夕空も燃えるように燦然と輝き、 }
++\\
++{ Und ich träum bei Tag und Nacht } &
++{ ぼくは昼も夜もただひたすらに }
++\\
++{ Nur allein von dem süßen Liebchen mein. } &
++{ いとしいきみのことばかり夢みているのだ。 }
++\\
++\end{myTBLR}
+diff --git a/Brahms-subsection-Op.14-8.tex b/Brahms-subsection-Op.14-8.tex
+new file mode 100644
+index 0000000..27862df
+--- /dev/null
++++ b/Brahms-subsection-Op.14-8.tex
+@@ -0,0 +1,37 @@
++\SUBSECTION
++{Sehmsucht}% タイトル（原）
++{S-Sehmsucht}% よみ情報（原）
++{あこがれ}% タイトル（訳）
++{あ-あこがれ}% よみ情報（訳）
++{Op.14-8}% 整理番号
++{詩： ドイツ語の民謡 (Volkslieder, -)}% 詞情報
++{曲： ブラームス (Johannes Brahms, 1833-1897) ドイツ　歌詞言語： ドイツ語}% 曲情報
++
++\label{myindex:subsection:Op.14-8}
++
++\begin{myTBLR}[]
++{ Mein Schatz ist nicht da, } &
++{ ぼくの恋人はここではなく、 }
++\\
++{ Ist weit überm See } &
++{ 湖の遙か彼方にいて、 }
++\\
++{ Und so oft ich dran denk, } &
++{ そのこと思うたびごとに、 }
++\\
++{ Tut mir's Herz so weh! } &
++{ ぼくの心は痛むのだ！ }
++\\
++{ Schön blau ist der See  } &
++{ 湖水は青々と美しいが、 }
++\\
++{ Und mein Herz tut mir weh, } &
++{ ぼくの胸は苦しいばかりだ。 }
++\\
++{ Und mein Herz wird nicht g'sund, } &
++{ 恋人が再び帰ってくるまで、 }
++\\
++{ Bis mein Schatz wieder kommt! } &
++{ この胸が晴れることはない。 }
++\\
++\end{myTBLR}
+diff --git a/Brahms.tex b/Brahms.tex
+index 8506348..2b868e8 100644
+--- a/Brahms.tex
++++ b/Brahms.tex
+@@ -1,4 +1,15 @@
+-%#! cluttex --engine=platex --max-iterations=4 --makeindex='mendex -c -g -l -r -s sty/myjpbase.ist'
++%#! cluttex
++% +++
++% sequence = ["cluttex"]
++% [programs.cluttex]
++% command = "cluttex"
++% opts = [
++%     "--engine=platex",
++%     "--max-iterations=3",
++%     "--makeindex='mendex -c -g -l -r -s ../sty/myjpbase.ist'",
++%     "--output-directory=out"
++% ]
++% +++
+ \documentclass[a4paper,10pt,landscape,dvipdfmx]{jlreq}
+ \usepackage[T1]{fontenc}
+ \usepackage{txfonts}

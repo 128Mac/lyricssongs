@@ -1,0 +1,395 @@
+diff --git a/Brahms-section-06.tex b/Brahms-section-06.tex
+index 7d6ed3d..1fc4526 100644
+--- a/Brahms-section-06.tex
++++ b/Brahms-section-06.tex
+@@ -12,11 +12,6 @@
+   rowhead = 1,
+ }
+  & \textbf{\large Liste der Lieder} & \textbf{\large 曲目一覧} & \\
+-\cline[2pt]{2-3}
+- %----%----%----%----%
+-& Die schöne Magelone (Op.33)
+-& 美しきマゲローネ
+-& \pageref{myindex:subsection:SET115} \\%
+ \cline[2pt]{2-3}
+ 1 %----%----%----%----%
+ & Keinen hat es noch gereut (Op.33-1)
+@@ -95,7 +90,6 @@
+ \cline[dashed]{2-3}
+ \end{longtblr}
+ 
+-\input{Brahms/SET115.htm.tex}
+ \input{Brahms/S115.htm.tex}
+ \input{Brahms/S116.htm.tex}
+ \input{Brahms/S5375.htm.tex}
+diff --git a/Brahms-section-16.tex b/Brahms-section-16.tex
+index f11d675..28aed66 100644
+--- a/Brahms-section-16.tex
++++ b/Brahms-section-16.tex
+@@ -12,11 +12,6 @@
+   rowhead = 1,
+ }
+  & \textbf{\large Liste der Lieder} & \textbf{\large 曲目一覧} & \\
+-\cline[2pt]{2-3}
+- %----%----%----%----%
+-& Fünf Ophelia-Lieder (WoO.22)
+-& ５つのオフィーリアの歌
+-& \pageref{myindex:subsection:SET5620} \\%
+ \cline[2pt]{2-3}
+ 1 %----%----%----%----%
+ & Wie erkenn' ich dein Treulieb (WoO.22)
+@@ -45,7 +40,6 @@
+ \cline[dashed]{2-3}
+ \end{longtblr}
+ 
+-\input{Brahms/SET5620.htm.tex}
+ \input{Brahms/S5620.htm.tex}
+ \input{Brahms/S5621.htm.tex}
+ \input{Brahms/S5622.htm.tex}
+diff --git a/Brahms-section-35.tex b/Brahms-section-35.tex
+index 7f582e1..e30c275 100644
+--- a/Brahms-section-35.tex
++++ b/Brahms-section-35.tex
+@@ -12,11 +12,6 @@
+   rowhead = 1,
+ }
+  & \textbf{\large Liste der Lieder} & \textbf{\large 曲目一覧} & \\
+-\cline[2pt]{2-3}
+- %----%----%----%----%
+-& Vier ernste Gesänge (Op.121)
+-& ４つの厳粛な歌
+-& \pageref{myindex:subsection:SET2219} \\%
+ \cline[2pt]{2-3}
+ 1 %----%----%----%----%
+ & Denn es gehet dem Menschen wie dem Vieh (Op.121-1)
+@@ -40,7 +35,6 @@
+ \cline[dashed]{2-3}
+ \end{longtblr}
+ 
+-\input{Brahms/SET2219.htm.tex}
+ \input{Brahms/S2219.htm.tex}
+ \input{Brahms/S2220.htm.tex}
+ \input{Brahms/S2221.htm.tex}
+diff --git a/S2209.htm.tex b/S2209.htm.tex
+index f135d38..4cba91f 100644
+--- a/S2209.htm.tex
++++ b/S2209.htm.tex
+@@ -45,7 +45,7 @@
+ { sie schaut den blonden Geliebten } &
+ { 彼女はブロンドの恋人を夢に見て }
+ \\
+-{ und lispelt: »Vergiß nicht mein!« } &
++{ und lispelt: {\glqq}Vergiß nicht mein!{\grqq} } &
+ { そしてささやくのだ：「あたしを忘れないでね」と }
+ \\
+ \end{myTBLR}
+diff --git a/S2218.htm.tex b/S2218.htm.tex
+index 4cf48f2..047ec53 100644
+--- a/S2218.htm.tex
++++ b/S2218.htm.tex
+@@ -32,7 +32,7 @@
+ { Mein Schatz ließ sacht ein Mannsbild raus: } &
+ { 俺の女はそっとひとりの男の影を送り出したんだ }
+ \\
+-{ »Laß morgen mich nicht harren; } &
++{ {\glqq}Laß morgen mich nicht harren; } &
+ { 「あしたはあたしを待たせないでね」だと }
+ \\
+ \\% 連間空行
+@@ -45,7 +45,7 @@
+ { Ans Fenster klopfe leise an, } &
+ { 窓をそっと叩いて頂戴 }
+ \\
+-{ Mein Schatz ist in der Ferne!« } &
++{ Mein Schatz ist in der Ferne!{\grqq} } &
+ { あたしの夫は遠くにいるから！ }
+ \\
+ \\% 連間空行
+diff --git a/S2254.htm.tex b/S2254.htm.tex
+index 15d1841..bb42983 100644
+--- a/S2254.htm.tex
++++ b/S2254.htm.tex
+@@ -32,7 +32,7 @@
+ { Denn schon durchbebt die Tiefen meiner Seele } &
+ { もう私の魂の深いところからかき乱されている }
+ \\
+-{ Dein schmelzend »Ach«. } &
++{ Dein schmelzend {\glqq}Ach.{\grqq} } &
+ { お前のとろけるような「ああ」の声に }
+ \\
+ \\% 連間空行
+diff --git a/S2894.htm.tex b/S2894.htm.tex
+index 0e17a7c..3abe40d 100644
+--- a/S2894.htm.tex
++++ b/S2894.htm.tex
+@@ -42,10 +42,10 @@
+ { sehne sich mein Herz nach ihr. } &
+ { ぼくの心は彼女を求めていると }
+ \\
+-{ »Keine Ferne kann es heilen, } &
++{ {\glqq}Keine Ferne kann es heilen, } &
+ { 「どんなに遠くに離れることでも癒せない }
+ \\
+-{ nur ein holder Blick von dir.« } &
++{ nur ein holder Blick von dir.{\grqq} } &
+ { 　ただ君の優しい眼差しだけだ」 }
+ \\
+ \\% 連間空行
+diff --git a/S3128.htm.tex b/S3128.htm.tex
+index af16309..47ca8d3 100644
+--- a/S3128.htm.tex
++++ b/S3128.htm.tex
+@@ -49,55 +49,55 @@
+ { 美しいひとの部屋へ忍びこめ }
+ \\
+ \\% 連間空行
+-{ {\glqq}Ist denn, liebliche Dolores{\grqq} , } &
+-{ 「いったい　愛するドローレスよ」 }
++{ Ist denn, liebliche Dolores , } &
++{ いったい　愛するドローレスよ }
+ \\
+ { Also singt in ihren Traum - } &
+ { こう彼女の夢の中で歌っておくれ }
+ \\
+-{ {\glqq}In der Muschel deines Ohres } &
+-{ 「お前の耳の貝殻の中には }
++{ In der Muschel deines Ohres } &
++{ お前の耳の貝殻の中には }
+ \\
+ { Für kein Perlenwörtchen Raum? } &
+-{ 　この真珠の言葉を入れる余地はないのかい？」って }
++{ この真珠の言葉を入れる余地はないのかい？ }
+ \\
+ \\% 連間空行
+ { O dem Freund nur eine Stunde, } &
+-{ 「おお　この友達にほんのひとときを }
++{ おお　この友達にほんのひとときを }
+ \\
+ { Wo dein Arm ihn heiß umschlingt, } &
+-{ 　きみの腕で彼を抱き }
++{ きみの腕で彼を抱き }
+ \\
+ { Und der Kuß von deinem Munde } &
+-{ 　きみの口からのキスが }
++{ きみの口からのキスが }
+ \\
+ { Feurig bis ans Herz ihm dringt! } &
+-{ 　炎となって彼の心臓まで貫くひとときを！ }
++{ 炎となって彼の心臓まで貫くひとときを！ }
+ \\
+ \\% 連間空行
+ { Hast du ihn so ganz vergessen? } &
+-{ 　きみはすっかり彼を忘れてしまったの？ }
++{ きみはすっかり彼を忘れてしまったの？ }
+ \\
+ { Einsam harrt er am Balkon, } &
+-{ 　ひとりぼっちで彼はバルコニーで待っているよ }
++{ ひとりぼっちで彼はバルコニーで待っているよ }
+ \\
+ { Überm Wipfel der Zypressen } &
+-{ 　糸杉の梢の上で }
++{ 糸杉の梢の上で }
+ \\
+ { Bleicht des Mondes Sichel schon. } &
+-{ 　三日月ももう色あせてきた }
++{ 三日月ももう色あせてきた }
+ \\
+ \\% 連間空行
+ { Wie das Wasser, niedertropfend, } &
+-{ 　噴水の水が　したたり落ちて }
++{ 噴水の水が　したたり落ちて }
+ \\
+ { Kreise neben Kreise zieht, } &
+-{ 　輪を次々と描いていくように }
++{ 輪を次々と描いていくように }
+ \\
+ { Also zittert, leise klopfend, } &
+-{ 　震えているんだ　そっと脈打ちながら }
++{ 震えているんだ　そっと脈打ちながら }
+ \\
+-{ Ihm das Herz bei diesem Lied.{\grqq} } &
+-{ 　彼の心も　この歌と共に」 }
++{ Ihm das Herz bei diesem Lied. } &
++{ 彼の心も　この歌と共に }
+ \\
+ \end{myTBLR}
+diff --git a/S3169.htm.tex b/S3169.htm.tex
+index 0e8f908..eb6eccd 100644
+--- a/S3169.htm.tex
++++ b/S3169.htm.tex
+@@ -23,7 +23,7 @@
+ { 白い服を着たひとりの乙女だ }
+ \\
+ \\% 連間空行
+-{ »Gott grüße euch, Herrn von Falkenstein! } &
++{ {\glqq}Gott grüße euch, Herrn von Falkenstein! } &
+ { 「ご機嫌うるわしゅう　ファルケンシュタイン殿 }
+ \\
+ { Seid ihr des Lands ein Herre, } &
+@@ -32,7 +32,7 @@
+ { Ei so gebt mir wieder den Gefangenen mein } &
+ { 　私に返してください　あの囚われびとを }
+ \\
+-{ Um aller Jungfrauen Ehre!« } &
++{ Um aller Jungfrauen Ehre!{\grqq} } &
+ { 　すべての乙女の名誉にかけて！」 }
+ \\
+ \\% 連間空行
+@@ -49,7 +49,7 @@
+ { 　しっかりと　ふたつの高い城壁に挟まれた」 }
+ \\
+ \\% 連間空行
+-{ »Steht zu Falkenstein ein tiefer Turm } &
++{ {\glqq}Steht zu Falkenstein ein tiefer Turm } &
+ { 「ファルケンシュタインの城には深い牢があって }
+ \\
+ { Wohl zwischen zwei hohen Mauren, } &
+@@ -58,20 +58,20 @@
+ { So will ich an die Mauren stehn, } &
+ { 　私は城壁の上に立ちましょう }
+ \\
+-{ Und will ihm helfen trauren.« } &
++{ Und will ihm helfen trauren.{\grqq} } &
+ { 　そしてあの人の悲しみを救うのです」 }
+ \\
+ \\% 連間空行
+ { Sie ging den Turm wohl um und wieder um: } &
+ { 乙女は牢へと向かい　周りを何度も巡った }
+ \\
+-{ »Feinslieb, bist du darinnen? } &
++{ {\glqq}Feinslieb, bist du darinnen? } &
+ { 「いとしいお方　あなたはそこなの？ }
+ \\
+ { Und wenn ich dich nicht sehen kann, } &
+ { 　あなたに会えないなら }
+ \\
+-{ So komm' ich von meinen Sinnen.« } &
++{ So komm' ich von meinen Sinnen.{\grqq} } &
+ { 　私の気は触れてしまうでしょう」 }
+ \\
+ \\% 連間空行
+@@ -81,7 +81,7 @@
+ { Den Turm wollt' sie aufschließen: } &
+ { 牢屋の鍵を開けようとした }
+ \\
+-{ »Und wenn die Nacht ein Jahr lang wär', } &
++{ {\glqq}Und wenn die Nacht ein Jahr lang wär', } &
+ { 「もしこの夜が一年間続いても }
+ \\
+ { Kein Stund' tät' mich verdrießen! } &
+@@ -97,7 +97,7 @@
+ { So tät' ich mit Dem von Falkenstein } &
+ { そしたら私はそれでファルケンシュタイン殿と }
+ \\
+-{ Um meinen Herzliebsten fechten!« } &
++{ Um meinen Herzliebsten fechten!{\grqq} } &
+ { 私の恋人のために決闘するのだけれど」 }
+ \\
+ \\% 連間空行
+@@ -114,7 +114,7 @@
+ { そいつと一緒にこの国を出て行け }
+ \\
+ \\% 連間空行
+-{ »Wohl aus dem Land da zieh' ich nicht, } &
++{ {\glqq}Wohl aus dem Land da zieh' ich nicht, } &
+ { 「この国から私は出て行きません }
+ \\
+ { Hab' niemand was gestohlen; } &
+@@ -123,7 +123,7 @@
+ { Und wenn ich was hab' liegen lahn, } &
+ { 　もし私が置き忘れたものがあれば }
+ \\
+-{ So darf ich's wieder holen.« } &
++{ So darf ich's wieder holen.{\grqq} } &
+ { 　私がそれを取り返してもいいでしょう」 }
+ \\
+ \end{myTBLR}
+diff --git a/S3984.htm.tex b/S3984.htm.tex
+index 7c48227..15f6f06 100644
+--- a/S3984.htm.tex
++++ b/S3984.htm.tex
+@@ -26,10 +26,10 @@
+ { 静かにそっと！ }
+ \\
+ \\% 連間空行
+-{ »Wer ist denn da? Wer klopfet an, } &
++{ {\glqq}Wer ist denn da? Wer klopfet an, } &
+ { 誰がそこにいるの？　誰が戸を叩くの }
+ \\
+-{ Der mich so leis aufwecken kann?« } &
++{ Der mich so leis aufwecken kann?{\grqq} } &
+ { 私をこんなにやさしく起こすことができるのは？ }
+ \\
+ { Das ist der Herzallerliebste dein, } &
+diff --git a/S4283.htm.tex b/S4283.htm.tex
+index e93b3fb..38ab5c5 100644
+--- a/S4283.htm.tex
++++ b/S4283.htm.tex
+@@ -16,13 +16,13 @@
+ { Und blickte voll Sehnsucht ins Weite. } &
+ { 憧れいっぱいに遠くを見つめてた }
+ \\
+-{ »Wo bleibst du, mein Liebster, Wo weilst du so lang? } &
++{ {\glqq}Wo bleibst du, mein Liebster, Wo weilst du so lang? } &
+ { どこにあなたはいるの、恋しいひと、どこに留まっているの　そんなに長く？ }
+ \\
+ { Nicht ruhen läßt mich des Herzens Drang. } &
+ { わたしを安らかにしてくれないの　この心の乱れは }
+ \\
+-{ Ach, kämst du, mein Liebster, doch heute!« } &
++{ Ach, kämst du, mein Liebster, doch heute!{\grqq} } &
+ { ああ、あなたが来てくれるなら、恋しいひと、今日にでも！ }
+ \\
+ \\% 連間空行
+@@ -32,7 +32,7 @@
+ { Am Saum des Himmels darnieder. } &
+ { 遠い空の果てに }
+ \\
+-{ »So trägt dich die Welle mir nimmer zurück? } &
++{ {\glqq}So trägt dich die Welle mir nimmer zurück? } &
+ { あなたを波はもう戻してはくれないのかしら }
+ \\
+ { Vergebens späht in die Ferne mein Blick. } &
+diff --git a/S4284.htm.tex b/S4284.htm.tex
+index 796fe17..a1073c4 100644
+--- a/S4284.htm.tex
++++ b/S4284.htm.tex
+@@ -58,7 +58,7 @@
+ { Da steht sie stille zu lauschen: } &
+ { 彼女は静かに立ち止まり　耳を澄ます }
+ \\
+-{ »Das war meines Liebsten Gruß!« } &
++{ {\glqq}Das war meines Liebsten Gruß!{\grqq} } &
+ { あれはあたしの恋人のあいさつだったわ！ }
+ \\
+ \\% 連間空行
+@@ -68,10 +68,10 @@
+ { Da flohen die Vöglein ins Tal. } &
+ { 鳥たちは谷間へと飛び去った }
+ \\
+-{ »Und wo ihr ihn trefft, ihr Gesellen, } &
++{ {\glqq}Und wo ihr ihn trefft, ihr Gesellen, } &
+ { 「お前たちはあの人に会ったなら　仲間たちよ }
+ \\
+-{ O, grüßt mir ihn tausendmal!« } &
++{ O, grüßt mir ihn tausendmal!{\grqq} } &
+ { おお　私からあの人に何千回の挨拶を送ってね」 }
+ \\
+ \end{myTBLR}
+diff --git a/S5623.htm.tex b/S5623.htm.tex
+index 8f2c25b..4f35bbf 100644
+--- a/S5623.htm.tex
++++ b/S5623.htm.tex
+@@ -19,10 +19,10 @@
+ { Und manche Trän' fiel in  Grabes Schoß -- } &
+ { そしてたくさんの涙が流れ落ちたの　お墓の奥底へと }
+ \\
+-{ Ihr müßt singen: «'Nunter, hinunter! } &
++{ Ihr müßt singen: {\glqq} 'Nunter, hinunter! } &
+ { あなたたちは歌わなくてはなりません　「倒れてしまった！」と }
+ \\
+-{ Und ruft ihr ihn 'nunter.» } &
++{ Und ruft ihr ihn 'nunter.{\grqq} } &
+ { そしてもしもあの方に呼びかけるのなら　「倒れてしまった！」と }
+ \\
+ { Denn traut lieb Fränzel ist all meine Lust. } &

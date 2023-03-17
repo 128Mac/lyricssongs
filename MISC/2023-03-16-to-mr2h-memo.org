@@ -1,0 +1,112 @@
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="http://www.pirilampo.org/styles/bigblow/css/htmlize.css"/>
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="http://www.pirilampo.org/styles/bigblow/css/bigblow.css"/>
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="http://www.pirilampo.org/styles/bigblow/css/hideshow.css"/>
+
+#+HTML_HEAD: <script type="text/javascript" src="http://www.pirilampo.org/styles/bigblow/js/jquery-1.11.0.min.js"></script>
+#+HTML_HEAD: <script type="text/javascript" src="http://www.pirilampo.org/styles/bigblow/js/jquery-ui-1.10.2.min.js"></script>
+
+#+HTML_HEAD: <script type="text/javascript" src="http://www.pirilampo.org/styles/bigblow/js/jquery.localscroll-min.js"></script>
+#+HTML_HEAD: <script type="text/javascript" src="http://www.pirilampo.org/styles/bigblow/js/jquery.scrollTo-1.4.3.1-min.js"></script>
+#+HTML_HEAD: <script type="text/javascript" src="http://www.pirilampo.org/styles/bigblow/js/jquery.zclip.min.js"></script>
+#+HTML_HEAD: <script type="text/javascript" src="http://www.pirilampo.org/styles/bigblow/js/bigblow.js"></script>
+#+HTML_HEAD: <script type="text/javascript" src="http://www.pirilampo.org/styles/bigblow/js/hideshow.js"></script>
+#+HTML_HEAD: <script type="text/javascript" src="http://www.pirilampo.org/styles/lib/js/jquery.stickytableheaders.min.js"></script>
+#+TITLE: 2023-03-15 作業報告＆作業依頼
+#+OPTIONS: email:nil
+* 作業状況
+
+- [X] 87da86b (HEAD -> 2023-03-15-wada) fix まとめページは、latex 版では利用しないこととした
+
+      fix まとめページは、latex 版では利用しないこととした
+
+- [X] 0a69223 fix 引用に利用されるカギ括弧の「つい」対策他
+
+    fix 引用に利用されるカギ括弧の「つい」対策他
+
+    調査変更をチェックしてると通常使われてる以外の引用方法があり
+    通常の方法に準拠させることとした
+
+    異なる引用方法と変換について
+    　　　「» ... «」を「{\glqq} ... {\grqq}」 に変更
+
+- [ ] llmk1.2 対応 for Brahms-hyper-link.tex
+
+* commit作業依頼
+
+大賀さん側のローカルリポジトリへの登録作業です。
+
+** ローカルリポジトリへ移動
+
+- デスクトップに lyricssongs のショートカットがあるかもしれないけど
+
+#+BEGIN_SRC bash
+cd  C:\Users\81905\lyricssongs\EDIT\Brahms
+#+END_SRC
+
+** パッチファイルの置き場所のファイルパス
+
+#+BEGIN_SRC bash
+cd  C:\Users\81905\lyricssongs\EDIT\2023-03-16-to-mr2h.patch
+#+END_SRC
+
+** git status で変更状況確認
+
+- git status の出力結果が以下のようになっているか確認
+  - 「ブランチは phase-1」
+  - 「nothing to commit, working tree clean」
+    - 修正されていたら modified 等のメッセージが表示されている
+
+  #+BEGIN_SRC
+  On branch phase-1
+  nothing to commit, working tree clean
+  #+END_SRC
+
+- ブランチが phase-1 以外の時
+
+  #+BEGIN_SRC bash
+    git checkout phase-1
+  #+END_SRC
+- clean でなかった時は、以下のコマンドで現状の状態、差分情報の結果を和田にメールして次の指示を待ってください
+
+**
+
+** git apply でパッチ適用
+
+- パッチ適用
+  #+BEGIN_SRC bash
+    git apply ..\2023-03-16-to-mr2h.patch
+  #+END_SRC
+
+- git status でどのようなファイルにパッチが当てられたか確認できます。
+- git diff でどのような修正が行われたか確認できます。
+
+** llmk でビルド
+- コマンド ... EDIT ディレクトリで
+  #+BEGIN_SRC bash
+    llmk Brahms/Brahms
+  #+END_SRC
+
+- 昨日作成した pdf を対比
+
+  #+BEGIN_SRC bash
+  mv Brahms.pdf Brahms-2023-03-15.pdf
+  #+END_SRC
+
+- チェック項目
+  - Brahms.pdf のページ数はこちらでは 345 ページと少なくなりました。
+  - 「fix まとめページは、latex 版では利用しないこととした」のチェック
+    - 以下の情報を目安にまとめ部分が組版されていないことを確認してください
+    | 整理番号 | 作品名              | 修正前    | 修正後    |
+    | Op.33  | 美しきマゲローネ      | 73ページ  | 73ページ  |
+    | WoO.22 | ５つのオフィーリアの歌 | 221ページ | 176ページ |
+    | Op.121 | 4つの厳粛な歌        | 357ページ | 328ページ |
+  - 「引用に利用されるカギ括弧の「つい」対策他」のチェック
+    - git diff の結果を参考にブラウザで文字列検索していくつかチェックしてください。
+
+** コミット
+
+今回の修正は二種類ありますが、面倒なので本当は推奨されないけど一括コミットしましょう
+
+  #+BEGIN_SRC bash
+    git commit -am '2023-03-15の和田の修正'
+  #+END_SRC

@@ -1,0 +1,123 @@
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="http://www.pirilampo.org/styles/bigblow/css/htmlize.css"/>
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="http://www.pirilampo.org/styles/bigblow/css/bigblow.css"/>
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="http://www.pirilampo.org/styles/bigblow/css/hideshow.css"/>
+
+#+HTML_HEAD: <script type="text/javascript" src="http://www.pirilampo.org/styles/bigblow/js/jquery-1.11.0.min.js"></script>
+#+HTML_HEAD: <script type="text/javascript" src="http://www.pirilampo.org/styles/bigblow/js/jquery-ui-1.10.2.min.js"></script>
+
+#+HTML_HEAD: <script type="text/javascript" src="http://www.pirilampo.org/styles/bigblow/js/jquery.localscroll-min.js"></script>
+#+HTML_HEAD: <script type="text/javascript" src="http://www.pirilampo.org/styles/bigblow/js/jquery.scrollTo-1.4.3.1-min.js"></script>
+#+HTML_HEAD: <script type="text/javascript" src="http://www.pirilampo.org/styles/bigblow/js/jquery.zclip.min.js"></script>
+#+HTML_HEAD: <script type="text/javascript" src="http://www.pirilampo.org/styles/bigblow/js/bigblow.js"></script>
+#+HTML_HEAD: <script type="text/javascript" src="http://www.pirilampo.org/styles/bigblow/js/hideshow.js"></script>
+#+HTML_HEAD: <script type="text/javascript" src="http://www.pirilampo.org/styles/lib/js/jquery.stickytableheaders.min.js"></script>
+
+#+TITLE: Op.103 登録
+#+Options: email:nil
+
+* 概要
+
+- ファイル名 ... Brahms-section-Op.103.tex
+
+  - Sxxxx は梅ヶ丘の Web 掲載用のものなので、S2560 はすでに別のもので使用されていることもあり、使用しないことにした。
+
+  - 八つに分割されていたがタイトル名が同じなので一つのファイル名にした
+- Brahms.html への組み込み
+  - 2023-03-05 での挿入状況を考慮した
+
+
+
+* パッチ適用
+
+メールに添付されたパッチの適用作業を行なってください。
+
+#+BEGIN_SRC
+git apply  ../../2023-03-14.patch
+#+END_SRC
+
+* ステータスチェック
+
+パッチ適用で変更されたファイルや追加情報を確かめてください
+
+** コマンド
+#+BEGIN_SRC
+git status
+#+END_SRC
+
+** 結果の例
+#+BEGIN_SRC
+On branch phase-1
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+	modified:   Brahms.tex
+
+Untracked files:  ←←追加されたので untracked （管理外）状態
+  (use "git add <file>..." to include in what will be committed)
+	Brahms-section-Op.103.tex
+
+no changes added to commit (use "git add" and/or "git commit -a")
+#+END_SRC
+
+
+* 追加したものを管理対象に登録
+
+** 管理対象に登録作業
+
+#+BEGIN_SRC
+ git add Brahms-section-Op.103.tex
+#+END_SRC
+
+* 差分確認
+
+理状態のもののみで前回との差分があるもの把握可能
+
+** コマンド
+
+#+BEGIN_SRC
+git diff
+#+END_SRC
+
+** 表示結果例
+
+#+BEGIN_SRC
+diff --git
+a/Brahms.tex b/Brahms.tex
+index 8330ad0..8506348 100644
+--- a/Brahms.tex
++++ b/Brahms.tex
+@@ -83,6 +83,7 @@
+ \input{Brahms/Brahms-section-29.tex}
+ \input{Brahms/Brahms-section-30.tex}
+ \input{Brahms/Brahms-section-31.tex}
++\input{Brahms/Brahms-section-Op.103.tex}
+ \input{Brahms/Brahms-section-32.tex}
+ \input{Brahms/Brahms-section-33.tex}
+ \input{Brahms/Brahms-section-34.tex}
+#+END_SRC
+
+* ビルド確認
+
+** 過去の中間ファイル削除
+#+BEGIN_SRC
+llmk -C Brahms/Brahms
+#+END_SRC
+
+** ビルド
+
+#+BEGIN_SRC
+llmk    Brahms/Brahms ...
+#+END_SRC
+
+** pdf を表示して Op,103 が収録されているか簡単なチェックを行う
+
+前回の PDF があれば diff-pd で比較してみる
+
+* コミット
+
+Op,103 の登録は、大きなイベントなので、
+ビルドが成功したら今回は禁を破って commit します
+
+#+BEGIN_SRC
+git commit -m 'add Op.103 追加' Brahms.tex Brahms-section-Op.103.tex
+#+END_SRC
