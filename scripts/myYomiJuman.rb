@@ -54,6 +54,7 @@ def myYomiJuman( text )
                   "JUMAN （一部）よみ変換できず、要手動編集",
                   "JUMAN よみ 変　換　前 #{text}",
                   "JUMAN よみ 暫定変換後 #{yomi}",
+                  "JUMAN #{text} => #{yomi}",
                 ].join( "\n" )
   end
 
