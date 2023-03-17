@@ -93,6 +93,8 @@ def main
           textfile = textfile.join( '/' ) if textfile.kind_of?( Array )
           textfile = textfile.to_s
 
+          next if textfile =~ /SET\d+/ # まとめページは対象外
+
           unless comporiginaltext[0] =~ /^\d+\w*$/
             # 先行文字が無い <a> や <p><a> を <dir> と同形式にすることで
             # 処理を単純化するための前処理
