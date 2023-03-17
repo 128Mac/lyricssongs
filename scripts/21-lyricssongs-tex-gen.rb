@@ -46,12 +46,13 @@ def main
          )
         composer_name = [
           mm[1].sub( /([^,]+),(.*)/, '\2 \1'),
-          mm[2] ]
+          mm[2]
+        ]
       else
-        composer_name =
-          [ sbi.songbookinfotitle ,
-            sbi.songbookinfotitle
-          ]
+        composer_name = [
+          sbi.songbookinfotitle ,
+          sbi.songbookinfotitle
+        ]
       end
 
       sectioncount = 0
