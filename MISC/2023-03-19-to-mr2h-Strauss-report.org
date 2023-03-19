@@ -1,0 +1,168 @@
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="http://www.pirilampo.org/styles/bigblow/css/htmlize.css"/>
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="http://www.pirilampo.org/styles/bigblow/css/bigblow.css"/>
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="http://www.pirilampo.org/styles/bigblow/css/hideshow.css"/>
+
+#+HTML_HEAD: <script type="text/javascript" src="http://www.pirilampo.org/styles/bigblow/js/jquery-1.11.0.min.js"></script>
+#+HTML_HEAD: <script type="text/javascript" src="http://www.pirilampo.org/styles/bigblow/js/jquery-ui-1.10.2.min.js"></script>
+
+#+HTML_HEAD: <script type="text/javascript" src="http://www.pirilampo.org/styles/bigblow/js/jquery.localscroll-min.js"></script>
+#+HTML_HEAD: <script type="text/javascript" src="http://www.pirilampo.org/styles/bigblow/js/jquery.scrollTo-1.4.3.1-min.js"></script>
+#+HTML_HEAD: <script type="text/javascript" src="http://www.pirilampo.org/styles/bigblow/js/jquery.zclip.min.js"></script>
+#+HTML_HEAD: <script type="text/javascript" src="http://www.pirilampo.org/styles/bigblow/js/bigblow.js"></script>
+#+HTML_HEAD: <script type="text/javascript" src="http://www.pirilampo.org/styles/bigblow/js/hideshow.js"></script>
+#+HTML_HEAD: <script type="text/javascript" src="http://www.pirilampo.org/styles/lib/js/jquery.stickytableheaders.min.js"></script>
+
+#+TITLE: いくつかの作品集を分離したい
+#+Options: email:nil
+
+
+** いくつかの作品集を分離したい
+
+*** 要望と対応策
+
+**** 要望
+- Op.22の4曲が、OP.21 Sehlichte Weisen のなかに包含されるなど、
+  いくつかの作品集が、合体しているので分離したい
+**** 対応策（原因）
+- まとめページの処置で *SET* で始まる SECTION に反映させる見出し部分全部を無視していたため
+  要望にあるような症状が発生していたので、改修作業を行いました。
+
+- 要望では７箇所でしたが、まとめページは９箇所あります
+  - １つは最後の「Vier Letzte Lieder (TrV 296, AV 150) 4つの最後の歌 」で、チェック漏れだと思います。
+  - もう１つは、 Op.67 TrV238 が二つあるためなのですが
+    - 整理番号が同じなの逆に合体させたいのでしょうか
+    - そうであれば、この件に関しては機械的に処置した後、手作業です
+
+- [参考] Strauss.htm から抜き出した情報
+
+  |   | 整理番号            | href（部分）          | 作品名                                                 |
+  | 1 | Op.22 TrV 153     | ../TEXT/SET2534.htm | Mädchenblumen　乙女の花                                 |
+  | 2 | Op.66 TrV 236     | ../TEXT/SET1657.htm | Krämerspiegel　商人の鑑                                 |
+  | 3 | *Op.67 TrV 238*   | ../TEXT/SET1957.htm | 3 Lieder der Ophelia　３つのオフィーリアの歌              |
+  | 4 | *Op.67 TrV 238*   | ../TEXT/SET1959.htm | 3 Lieder aus den Büchern des Unmuts des Rendsch Nameh |
+  |   |                   |                     | 不機嫌の書よりの３つの歌曲                                |
+  | 5 | Op.68 TrV 235     | ../TEXT/SET2145.htm | Sechs Lieder nach Gedichten von Clemens Brentano      |
+  |   |                   |                     | クレメンス・ブレンターノの詩による６つの歌曲                 |
+  | 6 | Op.71 TrV 240     | ../TEXT/SET4419.htm | Drei Hymnen von Friedrich Hölderlin                   |
+  |   |                   |                     | フリードリヒ・ヘルダーリンの3つの讃歌                       |
+  | 7 | Op.76 TrV 256     | ../TEXT/SET4461.htm | Die Tageszeiten　日々のうつろい                          |
+  | 8 | Op.77 TrV 257     | ../TEXT/SET4554.htm | Gesänge des Orients　オリエントの歌                      |
+  | 9 | *TrV 296, AV 150* | ../TEXT/SET386.htm  | Vier Letzte Lieder　４つの最後の歌                       |
+
+*** [85%][6/7] チェック
+
+*TODO* のところを重点的に検討してください。
+
+**** DONE 1 ）Op.22の「見出し」をつくりたい。
+  #+BEGIN_SRC
+    Mädchenblumen 乙女の花 (Op.22 TrV 153) (1886-88) 詞:ダーン
+        1 Kornblumen (Op.22-1 TrV 153) 矢車菊
+        2 Mohnblumen (Op.22-2 TrV 153) ポピー
+        3 Epheu (Op.22-3 TrV 153) 木づた
+        4 Wasserrose (Op.22-4 TrV 153) スイレン
+  #+END_SRC
+**** DONE 2 ）Op.66の「見出し」をつくりたい。
+  #+BEGIN_SRC
+    Krämerspiegel 商人の鑑 Op.66 TrV 236(1918)詞:ケル
+        1 Es war einmal ein Bock　昔　一匹の牡山羊が　(Op.66-1 TrV 236)
+        2 Einst kam der Bock als Bote　あるとき牡山羊が使者になり　(Op.66-2 TrV236)
+        3 Es liebte einst ein Hase　昔　ウサギが惚れ込んだ　(Op.66-3 TrV 236)
+        4 Drei Masken sah ich　三つの仮面を私は見た　(Op.66-4 TrV 236)
+        5 Hast du ein Tongedicht vollbracht　曲ができたなら　(Op.66-5 TrV 236)
+        6 O lieber Künstler sei ermahnt　おお芸術家たちよ気を付けよ　(Op.66-6 TrV 236)
+        7 Unser Feind ist，grosser Gott　神様よ　我らが敵は　(Op.66-7 TrV 236)
+        8 Von Händlern wird die Kunst bedroht　商人は芸術を食い荒らし　(Op.66-8 TrV 236)
+        9 Es war mal eine Wanze　昔一匹の毛虱が　(Op.66-9 TrV 236)
+        10 Die Künstler sind die Schöpfer　芸術家は創造者　(Op.66-10 TrV 236)
+        11 Die Händler und die Macher　商人とその元締めは　(Op.66-11 TrV 236)
+        12 O Schröpferschwarm　おお　銭取り虫の群れよ　(Op.66-12 TrV 236)
+  #+END_SRC
+**** TODO 3 ）Op.67の「見出し」をつくりたい。
+  #+BEGIN_SRC
+    3 Lieder der Ophelia ３つのオｆヒーリアの歌 Op.67 TrV238(1918):詞:ジムロ　
+        1 Wie erkenn' ich mein Treulieb　どうやって見分けるの　本当の恋人を　(Op.67-1 TrV238)
+        2 Guten Morgen，'s ist Sankt Valentinstag　おはよう、今日はバレンタインデーよ　(Op.67-2 TrV238)
+        3 Sie trugen ihn auf der Bahre bloss　あの人は死化粧もせずに棺に入れられた　(Op.67-3 TrV238)
+  #+END_SRC
+  #+BEGIN_SRC
+    3 Lieder aus den Büchrn des Unmuts des Rendsch Nameh 不機嫌の書よりの３つの歌曲 Op.67 TrV238(1918)詞:ゲーテ
+        1 Wer wird von der Welt verlangen　この世間に対して誰が期待するというのだ Op.67-4 TrV238
+        2 Hab' ich euch denn je geraten　私が今までお前たちに指図などしたことがあるか Op.67-5 TrV238
+        3 Wanderers Gemütsruhe　さすらい人の心のやすらぎ Op.67-6 TrV238
+  #+END_SRC
+**** DONE 4 ) Op.68の「見出し」をつくりたい。
+  #+BEGIN_SRC
+    Sechs Lieder nach Gedichten von Clemens Brentano クレメンス・ブレンターノの詩による６つの歌曲 Op.68 TrV 235(1918)詞:ブレンターノ
+        1 An die Nacht　夜　Op.68-1 TrV 235
+        2 Ich wollt ein Sträußlein binden　わたしは一本の花束を作りたかったの　Op.68-2 TrV 235
+        3 Säusle，liebe Myrte　こんにちは、愛らしいミルテよ　Op.68-3 TrV 235
+        4 Als mir dein Lied erklang　私にあなたの歌が響いたとき　Op.68-4 TrV 235
+        5 Amor　アモール　Op.68-5 TrV 235
+        6 Lied der Frauen　女たちの歌　Op.68-6 TrV 235
+  #+END_SRC
+**** DONE 5 ) OP.71の「見出し」をつくりたい。
+  #+BEGIN_SRC
+    Drei Hymnen von Friedrich Hölderlin フリードリヒ・ヘルダーリンの３つの賛歌 Op.71 TrV 240(1921)詞:ヘルダーリン
+        1 Hymne an die Liebe　愛に寄せる讃歌　Op.71-1 TrV 240
+        2 Rückkehr in die Heimat　帰郷　Op.71-2 TrV 240
+        3 Die Liebe　愛　Op.71-3 TrV 240
+  #+END_SRC
+**** DONE 6 ) Op.76の「見出し」をつくりたい。
+  #+BEGIN_SRC
+      Die Tageszeiten 日々のうつろい Op.76 TrV 256(1928)詞:アイヒェンドルフ
+        1 Der Morgen　朝　Op.76-1 TrV 256
+        2 Mittagsruh　真昼の憩い　Op.76-2 TrV 256
+        3 Der Abend　夕暮れ　Op.76-3 TrV 256
+        4 Die Nacht　夜　Op.76-4 TrV 256
+  #+END_SRC
+**** DONE 7 ) Op.77の「見出し」をつくりたい。
+  #+BEGIN_SRC
+    Gesänge des Orients オリエントの歌 Op.77 TrV 257(1928)詞:ベートゲ原詩:ハーフィズ
+        1 Ihre Augen　彼女の瞳 Op.77-1 TrV 257
+        2 Schwung　活気 Op.77-2 TrV 257
+        3 Liebesgeschenke　愛の贈り物 Op.77-3 TrV 257
+        4 Die Allmächtige　全能なる者 Op.77-4 TrV 257
+        5 Huldigung　誓い Op.77-5 TrV 257
+  #+END_SRC
+**** TODO 要望漏れ？最後の作品集です ... TrV 296, AV 150 ... Vier Letzte Lieder　４つの最後の歌
+
+*** 処置方法
+
+EDIT/Strauss 直下のファイルを手作業で対応するのは大変なので、
+和田の https://github.com/128Mac/lyricssongs から clone した
+lyricssongs のディレクトリで、再度、 Strauss 以下を再作成しましょう。
+
+1) 作業ディレクトリ
+
+   作業は lyricssongs ディレクトリで行なってください。
+
+2) git status で clean な状態であることを確認
+
+3) git fetch / pull
+
+   今回の修正は scripts/21-lyricssongs-tex-gen.rb ですので
+   それが以下のように pull できていることを確認してください
+
+   #+BEGIN_SRC
+   Updating ... 省略 ...
+   ...
+    scripts/21-lyricssongs-tex-gen.rb   ... 省略
+   ...
+   #+END_SRC
+
+   - 参考 ...最終変更の変更内容を確認したい時は git show を使ってください
+
+4) Strauss ディレクトリが存在したら削除
+
+5) Strauss 関連 .htm を .tex に変換し Strauss ディレクトリのリポジトリに登録
+
+   #+BEGIN_SRC bash
+   ruby scripts/21-lyricssongs-tex-gen.rb
+   ruby scripts/21-lyricssongs-tex-gen.rb
+   #+END_SRC
+
+6) 「llmk Strauss/Strauss」で pdf 作成
+7) 目次部分で最低限のチェック
+   - 対象となった作品集が分離されたか確認
+
+8) OK であれば EDIT/Strauss を削除して、Srauss を EDIT へ移動させチェックや修正を行なってください。
