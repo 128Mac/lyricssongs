@@ -10,7 +10,6 @@ $WAJI = [
   '０-９' ,
 ].join
 
-$COMPOSERTEMPLATE  = "sty/lieder-template.tex"
 $COMPOSERTEMPLATE2 = "sty/lieder-template2.tex"
 
 $YOMI_DB_CACHE_FILE= "yomi.dict"
