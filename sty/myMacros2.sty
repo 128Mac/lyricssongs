@@ -41,11 +41,11 @@
   {\mySecTitleTRAN}{\mySecYOMITRAN}%
   %
   \settowidth{\len}{\mySecREFERENCE}%
-  \ifdim \len > 0pt \def\tmpSecRef{ ~ \mbox{\small(\mySecREFERENCE)}}%
+  \ifdim \len > 0pt \def\tmpSecRef{\mbox{\texttt{\scriptsize\mySecREFERENCE}} ~ }%
   \else\def\tmpSecRef{}\fi%
   \addcontentsline{toc}{section}%
   {%
-    \parbox[b]{.465\textwidth}{\mySecTitleORIG\tmpSecRef ~ \dotfill\hspace{1em}}%
+    \parbox[b]{.465\textwidth}{\tmpSecRef\mySecTitleORIG ~ \dotfill\hspace{1em}}%
     ~ ~ %
     \parbox[b]{.465\textwidth}{\mySecTitleTRAN ~ \dotfill\hspace{1em}}%
   }%
@@ -107,11 +107,11 @@
   {\mySubSecTitleTRAN}{\mySubSecYOMITRAN}%
   %
   \settowidth{\len}{\mySubSecREFERENCE}%
-  \ifdim \len > 0pt \def\tmpSubSecRef{ ~ \mbox{\small(\mySubSecREFERENCE)}}%
+  \ifdim \len > 0pt \def\tmpSubSecRef{\mbox{\texttt{\scriptsize\mySubSecREFERENCE}} ~ }%
   \else\def\tmpSubSecRef{}\fi%
   \addcontentsline{toc}{subsection}%
   {%
-    \parbox[b]{.465\textwidth}{\mySubSecTitleORIG\tmpSubSecRef ~ \dotfill}%
+    \parbox[b]{.465\textwidth}{\tmpSubSecRef\mySubSecTitleORIG ~ \dotfill}%
     ~ ~ %
     \parbox[b]{.465\textwidth}{\mySubSecTitleTRAN ~ \dotfill}%
   }%
