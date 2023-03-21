@@ -1,32 +1,33 @@
 
 # Table of Contents
 
-1.  [lyricssongs](#orgec7c03d)
-    1.  [概要](#orgd9bd27f)
-    2.  [必要なもの](#org51bd43a)
-        1.  [git 環境](#org4d63cdf)
-        2.  [ruby 環境](#org0cffff7)
-        3.  [JUMAN](#org2e11e10)
-    3.  [利用方法](#org27aad61)
-    4.  [よみ](#org0629411)
-        1.  [概要](#org3b51f65)
-        2.  [yomi.dict の保守](#org22a0da9)
-    5.  [TODO](#org008fc1e)
+1.  [lyricssongs](#orgefcbdca)
+    1.  [概要](#orgd48b426)
+    2.  [必要なもの](#org19df4ee)
+        1.  [git 環境](#orgc7991a2)
+        2.  [ruby 環境](#org1ea8d13)
+        3.  [JUMAN](#org8095d85)
+    3.  [利用方法](#org0d74862)
+    4.  [よみ](#org7e35e37)
+        1.  [概要](#org8d57e11)
+        2.  [yomi.dict の保守](#org7c391a1)
+    5.  [TODO](#org97b46b2)
 
 
-<a id="orgec7c03d"></a>
+
+<a id="orgefcbdca"></a>
 
 # lyricssongs
 
 
-<a id="orgd9bd27f"></a>
+<a id="orgd48b426"></a>
 
 ## 概要
 
 [　梅丘歌曲会館 　詩と音楽　](http://www7b.biglobe.ne.jp/~lyricssongs/index.htm)の作曲家別の作品集を latex 化するための　ruby スクリプト
 
 
-<a id="org51bd43a"></a>
+<a id="org19df4ee"></a>
 
 ## 必要なもの
 
@@ -35,7 +36,7 @@
 -   JUMAN
 
 
-<a id="org4d63cdf"></a>
+<a id="orgc7991a2"></a>
 
 ### git 環境
 
@@ -48,7 +49,7 @@
         git config --global user.name "Your Name"
 
 
-<a id="org0cffff7"></a>
+<a id="org1ea8d13"></a>
 
 ### ruby 環境
 
@@ -58,7 +59,7 @@
         -   利用する gem パッケージは scripts/Gemfile 参照
 
 
-<a id="org2e11e10"></a>
+<a id="org8095d85"></a>
 
 ### JUMAN
 
@@ -88,7 +89,7 @@
         C:\Program Files\juman\unins000.exe
 
 
-<a id="org27aad61"></a>
+<a id="org0d74862"></a>
 
 ## 利用方法
 
@@ -110,16 +111,17 @@
         
             ruby scripts/21-lyricssongs-tex-gen.rb  COMP/Brahms.htm ...
         
-        -   廃止の予定情報
-            -   scripts/21-lyricssongs-tex-gen.rb は廃止の予定です
-            -   scripts/10-lyricssongs-tex-gen.rb は廃止の予定です
-        
         -   上記の処理で、 作曲家毎に各ディレクトリに LaTeX に必要なものが書き込まれます。
         -   Brams を例にとれば以下のようなものが作成されます。
             -   Brahms.tex
             -   Brahms-hyper-link.tex
-            -   Bramas-V-001.tex &#x2026;.
-            -   Sxxxx.tex &#x2026;  ( 今まで op に置いていたもの )
+            -   Brahms/Brahms-section-nn.tex
+            -   Sxxxx.tex
+        
+        -   廃止(削除ファイル）情報
+            -   scripts/20-lyricssongs-tex-gen.rb
+            -   scripts/10-lyricssongs-tex-gen.rb
+            -   sty/myMacros.sty
 
 -   latex などでビルド
     
@@ -129,12 +131,12 @@
 -   現在判明していること
 
 
-<a id="org0629411"></a>
+<a id="org7e35e37"></a>
 
 ## よみ
 
 
-<a id="org3b51f65"></a>
+<a id="org8d57e11"></a>
 
 ### 概要
 
@@ -148,6 +150,9 @@
 -   先頭の数文字程度が妥当なひらがなであれば良い
 -   先頭の文字が濁点や半濁点などであれば対応の文字を前置する （例「け-げー
     て@ゲーテ」）
+-   「第n番」のような作品は 0 を補充して桁合わせするつこと
+-   「第１」「第２」「第３」のような場合は「だい1」「だい2」「だい3」の
+    ようにするとあいうえお順的に並べることができる
 
 21-lyricssongs-tex-gen.rb は .htm ファイルから .tex ファイルを作成する
 際にこの索引情報を生成するが、「よみ」情報を以下のファイルからキャッシュ
@@ -157,7 +162,7 @@
 -   yomi.dict (ここに登録されたものが有効になる)
 
 
-<a id="org22a0da9"></a>
+<a id="org7c391a1"></a>
 
 ### yomi.dict の保守
 
@@ -187,7 +192,7 @@
         ruby scripts/myYomi.rb  'ヴェネツィアの歌I' '笑いと涙' 竪琴弾き'
 
 
-<a id="org008fc1e"></a>
+<a id="org97b46b2"></a>
 
 ## TODO
 

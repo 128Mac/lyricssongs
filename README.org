@@ -1,3 +1,5 @@
+#+OPTIONS: mail:nil
+
 * lyricssongs
 
 ** 概要
@@ -83,16 +85,17 @@
     ruby scripts/21-lyricssongs-tex-gen.rb  COMP/Brahms.htm ...
     #+END_SRC
 
-    - 廃止の予定情報
-      - scripts/21-lyricssongs-tex-gen.rb は廃止の予定です
-      - scripts/10-lyricssongs-tex-gen.rb は廃止の予定です
-
     - 上記の処理で、 作曲家毎に各ディレクトリに LaTeX に必要なものが書き込まれます。
     - Brams を例にとれば以下のようなものが作成されます。
       - Brahms.tex
       - Brahms-hyper-link.tex
-      - Bramas-V-001.tex ....
-      - Sxxxx.tex ...  ( 今まで op に置いていたもの )
+      - Brahms/Brahms-section-nn.tex
+      - Sxxxx.tex
+
+    - 廃止(削除ファイル）情報
+      - scripts/20-lyricssongs-tex-gen.rb
+      - scripts/10-lyricssongs-tex-gen.rb
+      - sty/myMacros.sty
 
 - latex などでビルド
 
@@ -116,6 +119,9 @@
 - 先頭の数文字程度が妥当なひらがなであれば良い
 - 先頭の文字が濁点や半濁点などであれば対応の文字を前置する （例「け-げー
   て@ゲーテ」）
+- 「第n番」のような作品は 0 を補充して桁合わせするつこと
+- 「第１」「第２」「第３」のような場合は「だい1」「だい2」「だい3」の
+  ようにするとあいうえお順的に並べることができる
 
 21-lyricssongs-tex-gen.rb は .htm ファイルから .tex ファイルを作成する
 際にこの索引情報を生成するが、「よみ」情報を以下のファイルからキャッシュ
