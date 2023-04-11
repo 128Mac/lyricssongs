@@ -41,7 +41,7 @@
   {\mySecTitleTRAN}{\mySecYOMITRAN}%
   %
   \settowidth{\len}{\mySecREFERENCE}%
-  \ifdim \len > 0pt \def\tmpSecRef{\mbox{\texttt{\mySecREFERENCE}} ~ }%
+  \ifdim \len > 0pt \def\tmpSecRef{\mbox{\scriptsize\texttt{\mySecREFERENCE}} ~ }%
   \else\def\tmpSecRef{}\fi%
   \addcontentsline{toc}{section}%
   {%
@@ -107,7 +107,7 @@
   {\mySubSecTitleTRAN}{\mySubSecYOMITRAN}%
   %
   \settowidth{\len}{\mySubSecREFERENCE}%
-  \ifdim \len > 0pt \def\tmpSubSecRef{\mbox{\texttt{\mySubSecREFERENCE}} ~ }%
+  \ifdim \len > 0pt \def\tmpSubSecRef{\mbox{\scriptsize\texttt{\mySubSecREFERENCE}} ~ }%
   \else\def\tmpSubSecRef{}\fi%
   \addcontentsline{toc}{subsection}%
   {%
