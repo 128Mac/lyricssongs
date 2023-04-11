@@ -18,19 +18,18 @@
   \def\mySecMiscTRAN{#7}%% その他情報（訳）
 %
   \newpage%
+  \thispagestyle{sectionpage}%
   %
   % (注意) 以下は SUBSECTION と同じデザインだが、
   % 将来それぞれのデザイン変更等に対応するため再定義
   %
-  \def\glueA{~ ~ \hfill}%
-  \settowidth{\len}{\mySecTitleORIG\mySecREFERENCE}%
-  \ifdim \len > .465\linewidth \def\glueA{\par\hfill}\fi%
-  %
   \phantomsection%
   \section*{%
-    \begin{tblr}{ | X @{ ~ ~ ~ ~ ~ ~ } X | }%
+    \begin{tblr}{%
+        colspec = {| X @{ ~ ~ ~ ~ ~ ~ } X |},%
+      }%
       \hline\hline[2pt]%
-      \mySecTitleORIG\glueA{\mbox{\small\mySecREFERENCE}} &%
+      \mySecTitleORIG\hfill{\mbox{\small\mySecREFERENCE}} &%
       \mySecTitleTRAN \\%
       \hfill {\small\mySecMiscORIG} & {\small\mySecMiscTRAN} \\%
       \hline[2pt]\hline%
@@ -69,19 +68,6 @@
   % (注意) 以下は SECTION と同じデザインだが、
   % 将来それぞれのデザイン変更等に対応するため再定義
   %
-  % 整理番号・原文・訳文側の関連項目のどちらか一方指定時 \par\hfill で改行・右寄せ
-  \def\glueA{\hfill}%
-  \settowidth{\len}{\mySubSecTitleORIG\mySubSecREFERENCE}%
-  \ifdim \len > .465\linewidth \def\glueA{\par\hfill}\fi%
-  %
-  % \def\glueB{\hfill}%
-  % \settowidth{\len}{\mySubSecLyricistORIG\mySubSecLyricistTRAN}%
-  % \ifdim \len > .465\linewidth \def\glueB{\par\hfill} \fi%
-  % %
-  % \def\gluec{\hfill}%
-  % \settowidth{\len}{\mySubSecComposerORIG\mySubSecComposerTRAN}%
-  % \ifdim \len > .465\linewidth \def\glueC{\par\hfill} \fi%
-  %
   ~ \par% このようにしないとヘッダールーラと表題部が重なってしまうので苦肉の策
   \phantomsection%
   \subsection*{%
@@ -93,7 +79,7 @@
         cell{3}{1} = {c=2}{l},%
       }%
       \hline[1.5pt]%
-      \mySubSecTitleORIG\glueA{ \small\mbox{\mySubSecREFERENCE} } &%
+      \mySubSecTitleORIG\hfill{ \small\mbox{\mySubSecREFERENCE} } &%
       \mySubSecTitleTRAN \\%
       \parbox[t]{.97\linewidth}{ \small\mySubSecLYRICIST } &\\%
       \parbox[t]{.97\linewidth}{ \small\mySubSecCOMPOSER } &\\%

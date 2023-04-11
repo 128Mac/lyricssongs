@@ -461,8 +461,12 @@ def proc_file_output_section( aSECTION, outfile )
       aOUTPUT.push( e[:toc] ) if e[:toc].to_s.size > 0
     end
 
-    aOUTPUT.push( '\end{longtblr}' )
-    aOUTPUT.push( '' ) if cntinput > 0
+    aOUTPUT.push(
+      [ '\end{longtblr}' ,
+        '\newpage'       ,
+        ''               ,
+      ].join( "\n" )
+    )
   end
 
   if cntinput > 0
