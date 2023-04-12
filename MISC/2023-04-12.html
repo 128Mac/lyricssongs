@@ -1,0 +1,515 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2023-04-12 水 18:37 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>タイトルとヘッダーが重なってしまう他修正</title>
+<meta name="author" content="和田勇" />
+<meta name="generator" content="Org Mode" />
+<style>
+  #content { max-width: 60em; margin: auto; }
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #e6e6e6;
+    border-radius: 3px;
+    background-color: #f2f2f2;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: auto;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    top: -8px;
+    right: 12px;
+    padding: 3px;
+    color: #555;
+    background-color: #f2f2f299;
+  }
+  pre.src:hover:before { display: inline; margin-top: 14px;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-authinfo::before { content: 'Authinfo'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { }
+</style>
+<link rel="stylesheet" type="text/css" href="http://www.pirilampo.org/styles/bigblow/css/htmlize.css"/>
+<link rel="stylesheet" type="text/css" href="http://www.pirilampo.org/styles/bigblow/css/bigblow.css"/>
+<link rel="stylesheet" type="text/css" href="http://www.pirilampo.org/styles/bigblow/css/hideshow.css"/>
+<script type="text/javascript" src="http://www.pirilampo.org/styles/bigblow/js/jquery-1.11.0.min.js"></script>
+<script type="text/javascript" src="http://www.pirilampo.org/styles/bigblow/js/jquery-ui-1.10.2.min.js"></script>
+<script type="text/javascript" src="http://www.pirilampo.org/styles/bigblow/js/jquery.localscroll-min.js"></script>
+<script type="text/javascript" src="http://www.pirilampo.org/styles/bigblow/js/jquery.scrollTo-1.4.3.1-min.js"></script>
+<script type="text/javascript" src="http://www.pirilampo.org/styles/bigblow/js/jquery.zclip.min.js"></script>
+<script type="text/javascript" src="http://www.pirilampo.org/styles/bigblow/js/bigblow.js"></script>
+<script type="text/javascript" src="http://www.pirilampo.org/styles/bigblow/js/hideshow.js"></script>
+<script type="text/javascript" src="http://www.pirilampo.org/styles/lib/js/jquery.stickytableheaders.min.js"></script>
+<script>
+  window.MathJax = {
+    tex: {
+      ams: {
+        multlineWidth: '85%'
+      },
+      tags: 'ams',
+      tagSide: 'right',
+      tagIndent: '.8em'
+    },
+    chtml: {
+      scale: 1.0,
+      displayAlign: 'center',
+      displayIndent: '0em'
+    },
+    svg: {
+      scale: 1.0,
+      displayAlign: 'center',
+      displayIndent: '0em'
+    },
+    output: {
+      font: 'mathjax-modern',
+      displayOverflow: 'overflow'
+    }
+  };
+</script>
+
+<script
+  id="MathJax-script"
+  async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+</script>
+</head>
+<body>
+<div id="content" class="content">
+<h1 class="title">タイトルとヘッダーが重なってしまう他修正</h1>
+<div id="table-of-contents" role="doc-toc">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents" role="doc-toc">
+<ul>
+<li><a href="#org42a98dc">1. 作曲家毎の変更・追加状況</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org42a98dc" class="outline-2">
+<h2 id="org42a98dc"><span class="section-number-2">1.</span> 作曲家毎の変更・追加状況</h2>
+<div class="outline-text-2" id="text-1">
+<ul class="org-ul">
+<li><p>
+提供していただいたステータス情報をまとめると &#x2026;
+</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left">Brahms</td>
+<td class="org-left">phase-2</td>
+<td class="org-left">Brahms.tex</td>
+<td class="org-left">Op.103 などの追加有り</td>
+</tr>
+
+<tr>
+<td class="org-left">Schubert</td>
+<td class="org-left">phase-1</td>
+<td class="org-left">Schubert.tex</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-left">Schumann</td>
+<td class="org-left">phase-2</td>
+<td class="org-left">Schumann.tex</td>
+<td class="org-left">S1162.htm.tex</td>
+</tr>
+
+<tr>
+<td class="org-left">Strauss</td>
+<td class="org-left">master</td>
+<td class="org-left">Strauss.tex</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-left">Wolf</td>
+<td class="org-left">phase-1</td>
+<td class="org-left">Wolf.tex</td>
+<td class="org-left">S500.htm.tex</td>
+</tr>
+</tbody>
+</table></li>
+
+<li>上記から以下の手順で今回の修正を取り込むことにする
+
+<ol class="org-ol">
+<li><p>
+lyricssongs/EDIT のバックアップ作成
+</p>
+<pre class="example">
+Copy-Item EDIT 2023-04-XX-EDIT -Force -Recurse
+</pre></li>
+<li><p>
+lyricssongs/EDIT 以下をとりあえず暫定コミット&amp;ブランチを phase-3 &amp; 微調整
+</p>
+
+<p>
+<b>警告メッセージ多数でるが無視して良い</b>
+</p>
+
+<pre class="example">
+Remove-Item EDIT/Brahms/Brahms.fls -Force
+Remove-Item EDIT/Brahms/Brahms.log -Force
+$repo = "Brahms", "Schubert", "Schumann", "Strauss", "Wolf"
+foreach ( $d in $repo ) {
+   if ( Test-Path EDIT/$d ) {
+       git -C EDIT/$d add .                                           --quiet
+       git -C EDIT/$d commit -am "auto commit"                        --quiet
+       git -C EDIT/$d branch -m master main                           --quiet
+       git -C EDIT/$d checkout main                                   --quiet
+       git -C EDIT/$d checkout -b phase-3                             --quiet
+       git -C EDIT/$d branch -D phase-1                               --quiet
+       git -C EDIT/$d branch -D phase-2                               --quiet
+       git -C EDIT/$d config --local core.autocrlf false              --quiet
+       git -C EDIT/$d config --local user.name  "anonymous anonymous" --quiet
+       git -C EDIT/$d config --local user.email "anonymous@anonymous" --quiet
+   }
+}
+</pre></li>
+<li><p>
+github から fetch &amp; pull
+</p>
+<pre class="example">
+# Windows とそれ以外の OS で共同作業をするため
+git config --local core.autocrlf false --quiet
+
+git fetch
+git pull
+</pre></li>
+<li><p>
+sty ファイルを EDIT にコピーし git 管理できるようにする
+</p>
+<pre class="example">
+Copy-Item sty EDIT  -Force -Recurse
+
+# 以下は EDIT/sty で変更有無を容易に把握するため
+git config --global init.defaultBranch main
+git -C EDIT/sty init .
+git -C EDIT/sty config --local core.autocrlf false --quiet
+git -C EDIT/sty config --local user.name  "anonymous anonymous"
+git -C EDIT/sty config --local user.email "anonymous@anonymous"
+git -C EDIT/sty add .
+git -C EDIT/sty commit -am .
+</pre></li>
+<li><p>
+lyricssongs の Brahms Schubert Schumann Strauss Wolf を削除
+</p>
+<pre class="example">
+Remove-Item Brahms   -Force -Recurse
+Remove-Item Schubert -Force -Recurse
+Remove-Item Schumann -Force -Recurse
+Remove-Item Straus   -Force -Recurse
+Remove-Item Wolf     -Force -Recurse
+</pre></li>
+<li><p>
+lyricssongs で Brahms Schubert Schumann Strauss Wolf を再作成
+</p>
+<div class="org-src-container">
+<pre class="src src-bash">ruby scripts/21-lyricssongs-tex-gen.rb COMP/*.htm
+</pre>
+</div></li>
+<li><p>
+出来上がった Brahms Schubert Schumann Strauss Wolf を EDIT に重ね書き
+</p>
+<pre class="example">
+$repo = "Brahms", "Schubert", "Schumann", "Strauss", "Wolf"
+foreach ( $d in $repo) {
+   if (Test-Path $d){
+      $ff = Get-ChildItem $d '*.tex' -File
+      foreach ($f in $ff) {
+         Copy-Item $f.FullName EDIT/$d/$f
+      }
+   }
+}
+</pre></li>
+<li>EDIT のバックアップから必要なものをコピー
+<ul class="org-ul">
+<li>[作業不要] Brahms-section-Op.103.tex</li>
+<li>[作業不要] Brahms-subsection-Op.103-1.tex</li>
+<li>[作業不要] Brahms-subsection-Op.103-2.tex</li>
+<li>[作業不要] Brahms-subsection-Op.103-3.tex</li>
+<li>[作業不要] Brahms-subsection-Op.103-4.tex</li>
+<li>[作業不要] Brahms-subsection-Op.103-5.tex</li>
+<li>[作業不要] Brahms-subsection-Op.103-6.tex</li>
+<li>[作業不要] Brahms-subsection-Op.103-7.tex</li>
+<li>[作業不要] Brahms-subsection-Op.103-8.tex</li>
+<li>[作業不要] Brahms-subsection-Op.14-8.tex</li>
+<li class="off"><code>[&#xa0;]</code> <p>
+Schumann/S1162.htm.tex
+</p>
+<pre class="example">
+git -C EDIT/Schumann checkout S1162.htm.tex
+</pre></li>
+<li class="off"><code>[&#xa0;]</code> <p>
+Wolf/S500.htm.tex
+</p>
+<pre class="example">
+git -C EDIT/Wolf checkout S500.htm.tex
+</pre></li>
+</ul></li>
+
+<li>EDIT/Brahms の以下のファイルを修正
+<ul class="org-ul">
+<li class="off"><code>[&#xa0;]</code> Brahms.tex
+<ul class="org-ul">
+<li><p>
+97 行目になるよう Brahms-section-Op.103.tex を挿入
+</p>
+<pre class="example">
+96-\input{Brahms/Brahms-section-31.tex}
+97:\input{Brahms/Brahms-section-Op.103.tex}
+98-\input{Brahms/Brahms-section-32.tex}
+</pre></li>
+</ul></li>
+<li class="off"><code>[&#xa0;]</code> Brahms-hyper-link.tex
+<ul class="org-ul">
+<li><p>
+97 行目になるよう Brahms-section-Op.103.tex を挿入
+</p>
+<pre class="example">
+96-\input{Brahms/Brahms-section-31.tex}
+97:\input{Brahms/Brahms-section-Op.103.tex}
+98-\input{Brahms/Brahms-section-32.tex}
+</pre></li>
+</ul></li>
+<li class="off"><code>[&#xa0;]</code> Brahms-section-03.tex
+<ul class="org-ul">
+<li><p>
+以下を一番最後に追加する
+</p>
+<pre class="example">
+\input{Brahms/Brahms-subsection-Op.14-8.tex}
+</pre></li>
+</ul></li>
+<li class="off"><code>[&#xa0;]</code> Brahms-section-Op.103.tex
+<ul class="org-ul">
+<li><p>
+9 行目になるよう \newpage を挿入
+</p>
+<pre class="example">
+1:\SECTION%
+2:{He Zigeuner}% タイトル（原）
+3:{H-He Zigeuner}% よみ情報（原）
+4:{さあ、ジプシーよ }% タイトル（訳）
+5:{さ-さあじふしーよ }% よみ情報（訳）
+6:{Op.103}% 整理番号
+7:{(1887)}% その他情報（原）
+8:{}% その他情報（訳）
+9:\bewpage
+</pre></li>
+<li><p>
+文字コード化対応
+</p>
+<pre class="example">
+nkf --overwrite -w -Lu .\EDIT\Brahms\Brahms-section-Op.103.tex
+</pre></li>
+</ul></li>
+</ul></li>
+<li>llmk でタイプセットできるか確認</li>
+<li><p>
+タイプセットが一通り問題なく終わったら、EDIT の Brahms Schubert
+Schumann Strauss で変更したものを登録
+</p>
+
+<p>
+以下は Brahms の例なので Schubert Schumann Strauss Wolf それぞれで同じ作業を行う。
+</p>
+<pre class="example">
+$repo = "Brahms", "Schubert", "Schumann", "Strauss", "Wolf"
+foreach ( $d in $repo ) {
+   if ( Test-Path EDIT/$d ) {
+       git -C EDIT/$d commit -am "auto commit(phase-3)" --quiet
+       git -C EDIT/$d checkout main                     --quiet
+       git -C EDIT/$d checkout -b phase-4               --quiet
+       git -C EDIT/$d branch -D phase-3                 --quiet
+   }
+}
+</pre></li>
+</ol></li>
+</ul>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="author">Author: 和田勇</p>
+<p class="date">Created: 2023-04-12 水 18:37</p>
+<p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>

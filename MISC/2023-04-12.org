@@ -1,0 +1,173 @@
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="http://www.pirilampo.org/styles/bigblow/css/htmlize.css"/>
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="http://www.pirilampo.org/styles/bigblow/css/bigblow.css"/>
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="http://www.pirilampo.org/styles/bigblow/css/hideshow.css"/>
+
+#+HTML_HEAD: <script type="text/javascript" src="http://www.pirilampo.org/styles/bigblow/js/jquery-1.11.0.min.js"></script>
+#+HTML_HEAD: <script type="text/javascript" src="http://www.pirilampo.org/styles/bigblow/js/jquery-ui-1.10.2.min.js"></script>
+
+#+HTML_HEAD: <script type="text/javascript" src="http://www.pirilampo.org/styles/bigblow/js/jquery.localscroll-min.js"></script>
+#+HTML_HEAD: <script type="text/javascript" src="http://www.pirilampo.org/styles/bigblow/js/jquery.scrollTo-1.4.3.1-min.js"></script>
+#+HTML_HEAD: <script type="text/javascript" src="http://www.pirilampo.org/styles/bigblow/js/jquery.zclip.min.js"></script>
+#+HTML_HEAD: <script type="text/javascript" src="http://www.pirilampo.org/styles/bigblow/js/bigblow.js"></script>
+#+HTML_HEAD: <script type="text/javascript" src="http://www.pirilampo.org/styles/bigblow/js/hideshow.js"></script>
+#+HTML_HEAD: <script type="text/javascript" src="http://www.pirilampo.org/styles/lib/js/jquery.stickytableheaders.min.js"></script>
+
+#+TITLE: タイトルとヘッダーが重なってしまう他修正
+#+Options: email:nil
+
+** 作曲家毎の変更・追加状況
+
+- 提供していただいたステータス情報をまとめると ...
+  | Brahms   | phase-2 | Brahms.tex   | Op.103 などの追加有り |
+  | Schubert | phase-1 | Schubert.tex |                       |
+  | Schumann | phase-2 | Schumann.tex | S1162.htm.tex         |
+  | Strauss  | master  | Strauss.tex  |                       |
+  | Wolf     | phase-1 | Wolf.tex     | S500.htm.tex          |
+
+- 上記から以下の手順で今回の修正を取り込むことにする
+
+  1. lyricssongs/EDIT のバックアップ作成
+     #+BEGIN_SRC
+     Copy-Item EDIT 2023-04-XX-EDIT -Force -Recurse
+     #+END_SRC
+  2. lyricssongs/EDIT 以下をとりあえず暫定コミット&ブランチを phase-3 & 微調整
+
+     *警告メッセージ多数でるが無視して良い*
+
+     #+BEGIN_SRC
+     Remove-Item EDIT/Brahms/Brahms.fls -Force
+     Remove-Item EDIT/Brahms/Brahms.log -Force
+     $repo = "Brahms", "Schubert", "Schumann", "Strauss", "Wolf"
+     foreach ( $d in $repo ) {
+        if ( Test-Path EDIT/$d ) {
+            git -C EDIT/$d add .                                           --quiet
+            git -C EDIT/$d commit -am "auto commit"                        --quiet
+            git -C EDIT/$d branch -m master main                           --quiet
+            git -C EDIT/$d checkout main                                   --quiet
+            git -C EDIT/$d checkout -b phase-3                             --quiet
+            git -C EDIT/$d branch -D phase-1                               --quiet
+            git -C EDIT/$d branch -D phase-2                               --quiet
+            git -C EDIT/$d config --local core.autocrlf false              --quiet
+            git -C EDIT/$d config --local user.name  "anonymous anonymous" --quiet
+            git -C EDIT/$d config --local user.email "anonymous@anonymous" --quiet
+        }
+     }
+     #+END_SRC
+  3. github から fetch & pull
+     #+BEGIN_SRC
+     # Windows とそれ以外の OS で共同作業をするため
+     git config --local core.autocrlf false --quiet
+
+     git fetch
+     git pull
+     #+END_SRC
+  4. sty ファイルを EDIT にコピーし git 管理できるようにする
+     #+BEGIN_SRC
+     Copy-Item sty EDIT  -Force -Recurse
+
+     # 以下は EDIT/sty で変更有無を容易に把握するため
+     git config --global init.defaultBranch main
+     git -C EDIT/sty init .
+     git -C EDIT/sty config --local core.autocrlf false --quiet
+     git -C EDIT/sty config --local user.name  "anonymous anonymous"
+     git -C EDIT/sty config --local user.email "anonymous@anonymous"
+     git -C EDIT/sty add .
+     git -C EDIT/sty commit -am .
+     #+END_SRC
+  5. lyricssongs の Brahms Schubert Schumann Strauss Wolf を削除
+     #+BEGIN_SRC
+     Remove-Item Brahms   -Force -Recurse
+     Remove-Item Schubert -Force -Recurse
+     Remove-Item Schumann -Force -Recurse
+     Remove-Item Straus   -Force -Recurse
+     Remove-Item Wolf     -Force -Recurse
+     #+END_SRC
+  6. lyricssongs で Brahms Schubert Schumann Strauss Wolf を再作成
+     #+BEGIN_SRC bash
+     ruby scripts/21-lyricssongs-tex-gen.rb COMP/*.htm
+     #+END_SRC
+  7. 出来上がった Brahms Schubert Schumann Strauss Wolf を EDIT に重ね書き
+     #+BEGIN_SRC
+     $repo = "Brahms", "Schubert", "Schumann", "Strauss", "Wolf"
+     foreach ( $d in $repo) {
+        if (Test-Path $d){
+           $ff = Get-ChildItem $d '*.tex' -File
+           foreach ($f in $ff) {
+              Copy-Item $f.FullName EDIT/$d/$f
+           }
+        }
+     }
+     #+END_SRC
+  8. EDIT のバックアップから必要なものをコピー
+     - [作業不要] Brahms-section-Op.103.tex
+     - [作業不要] Brahms-subsection-Op.103-1.tex
+     - [作業不要] Brahms-subsection-Op.103-2.tex
+     - [作業不要] Brahms-subsection-Op.103-3.tex
+     - [作業不要] Brahms-subsection-Op.103-4.tex
+     - [作業不要] Brahms-subsection-Op.103-5.tex
+     - [作業不要] Brahms-subsection-Op.103-6.tex
+     - [作業不要] Brahms-subsection-Op.103-7.tex
+     - [作業不要] Brahms-subsection-Op.103-8.tex
+     - [作業不要] Brahms-subsection-Op.14-8.tex
+     - [ ] Schumann/S1162.htm.tex
+       #+BEGIN_SRC
+       git -C EDIT/Schumann checkout S1162.htm.tex
+       #+END_SRC
+     - [ ] Wolf/S500.htm.tex
+       #+BEGIN_SRC
+       git -C EDIT/Wolf checkout S500.htm.tex
+       #+END_SRC
+
+  9. EDIT/Brahms の以下のファイルを修正
+     - [ ] Brahms.tex
+       - 97 行目になるよう Brahms-section-Op.103.tex を挿入
+         #+BEGIN_SRC
+         96-\input{Brahms/Brahms-section-31.tex}
+         97:\input{Brahms/Brahms-section-Op.103.tex}
+         98-\input{Brahms/Brahms-section-32.tex}
+         #+END_SRC
+     - [ ] Brahms-hyper-link.tex
+       - 97 行目になるよう Brahms-section-Op.103.tex を挿入
+         #+BEGIN_SRC
+         96-\input{Brahms/Brahms-section-31.tex}
+         97:\input{Brahms/Brahms-section-Op.103.tex}
+         98-\input{Brahms/Brahms-section-32.tex}
+         #+END_SRC
+     - [ ] Brahms-section-03.tex
+       - 以下を一番最後に追加する
+         #+BEGIN_SRC
+         \input{Brahms/Brahms-subsection-Op.14-8.tex}
+         #+END_SRC
+     - [ ] Brahms-section-Op.103.tex
+       - 9 行目になるよう \newpage を挿入
+         #+BEGIN_SRC
+         1:\SECTION%
+         2:{He Zigeuner}% タイトル（原）
+         3:{H-He Zigeuner}% よみ情報（原）
+         4:{さあ、ジプシーよ }% タイトル（訳）
+         5:{さ-さあじふしーよ }% よみ情報（訳）
+         6:{Op.103}% 整理番号
+         7:{(1887)}% その他情報（原）
+         8:{}% その他情報（訳）
+         9:\bewpage
+         #+END_SRC
+       - 文字コード化対応
+         #+BEGIN_SRC
+         nkf --overwrite -w -Lu .\EDIT\Brahms\Brahms-section-Op.103.tex
+         #+END_SRC
+  10. llmk でタイプセットできるか確認
+  11. タイプセットが一通り問題なく終わったら、EDIT の Brahms Schubert
+      Schumann Strauss で変更したものを登録
+
+     以下は Brahms の例なので Schubert Schumann Strauss Wolf それぞれで同じ作業を行う。
+     #+BEGIN_SRC
+     $repo = "Brahms", "Schubert", "Schumann", "Strauss", "Wolf"
+     foreach ( $d in $repo ) {
+        if ( Test-Path EDIT/$d ) {
+            git -C EDIT/$d commit -am "auto commit(phase-3)" --quiet
+            git -C EDIT/$d checkout main                     --quiet
+            git -C EDIT/$d checkout -b phase-4               --quiet
+            git -C EDIT/$d branch -D phase-3                 --quiet
+        }
+     }
+     #+END_SRC
