@@ -24,6 +24,9 @@ def myGit( gitdir, *add_gitignore_whiteist )
       f.puts [ gitignore, add_gitignore_whiteist ].flatten.join("\n")
     end
 
+    %x( git -C #{gitdir} config --local core.autocrlf false --quiet ) # checkout 時 LF のままにする
+    %x( git -C #{gitdir} config --local user.name  "anonymous anonymous"     --quiet )
+    %x( git -C #{gitdir} config --local user.email "anonymous@do.not.replay" --quiet )
   end
 
   gg = Git.open( gitdir )
