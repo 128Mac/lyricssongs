@@ -90,15 +90,15 @@
   {\mySubSecTitleORIG}{\mySubSecYOMIORIG}%
   {\mySubSecTitleTRAN}{\mySubSecYOMITRAN}%
   %
-  \settowidth{\len}{\mySubSecREFERENCE}%
-  \ifdim \len > 0pt \def\tmpSubSecRef{\mbox{\scriptsize\texttt{\mySubSecREFERENCE}} ~ }%
-  \else\def\tmpSubSecRef{}\fi%
-  \addcontentsline{toc}{subsection}%
-  {%
-    \parbox[b]{.465\textwidth}{\tmpSubSecRef\mySubSecTitleORIG ~ \dotfill}%
-    ~ ~ %
-    \parbox[b]{.465\textwidth}{\mySubSecTitleTRAN ~ \dotfill}%
-  }%
+  %% \settowidth{\len}{\mySubSecREFERENCE}%
+  %% \ifdim \len > 0pt \def\tmpSubSecRef{\mbox{\scriptsize\texttt{\mySubSecREFERENCE}} ~ }%
+  %% \else\def\tmpSubSecRef{}\fi%
+  %% \addcontentsline{toc}{subsection}%
+  %% {%
+  %%   \parbox[b]{.465\textwidth}{\tmpSubSecRef\mySubSecTitleORIG ~ \dotfill}%
+  %%   ~ ~ %
+  %%   \parbox[b]{.465\textwidth}{\mySubSecTitleTRAN ~ \dotfill}%
+  %% }%
 }
 % 次ページに跨る時のメッセージ制御
 \DefTblrTemplate{contfoot-text}{normal}{\footnotesize 次ページに続く}%%%{Continued on next page}
