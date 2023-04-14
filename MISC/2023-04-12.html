@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2023-04-12 水 18:37 -->
+<!-- 2023-04-14 金 09:27 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>タイトルとヘッダーが重なってしまう他修正</title>
@@ -244,13 +244,13 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#org42a98dc">1. 作曲家毎の変更・追加状況</a></li>
+<li><a href="#org35d5d16">1. 作曲家毎の変更・追加状況</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org42a98dc" class="outline-2">
-<h2 id="org42a98dc"><span class="section-number-2">1.</span> 作曲家毎の変更・追加状況</h2>
+<div id="outline-container-org35d5d16" class="outline-2">
+<h2 id="org35d5d16"><span class="section-number-2">1.</span> 作曲家毎の変更・追加状況</h2>
 <div class="outline-text-2" id="text-1">
 <ul class="org-ul">
 <li><p>
@@ -329,13 +329,13 @@ Remove-Item EDIT/Brahms/Brahms.log -Force
 $repo = "Brahms", "Schubert", "Schumann", "Strauss", "Wolf"
 foreach ( $d in $repo ) {
    if ( Test-Path EDIT/$d ) {
-       git -C EDIT/$d add .                                           --quiet
+       git -C EDIT/$d add .
        git -C EDIT/$d commit -am "auto commit"                        --quiet
        git -C EDIT/$d branch -m master main                           --quiet
        git -C EDIT/$d checkout main                                   --quiet
        git -C EDIT/$d checkout -b phase-3                             --quiet
-       git -C EDIT/$d branch -D phase-1                               --quiet
-       git -C EDIT/$d branch -D phase-2                               --quiet
+       git -C EDIT/$d branch   -D phase-1                             --quiet
+       git -C EDIT/$d branch   -D phase-2                             --quiet
        git -C EDIT/$d config --local core.autocrlf false              --quiet
        git -C EDIT/$d config --local user.name  "anonymous anonymous" --quiet
        git -C EDIT/$d config --local user.email "anonymous@anonymous" --quiet
@@ -369,12 +369,13 @@ git -C EDIT/sty commit -am .
 </pre></li>
 <li><p>
 lyricssongs の Brahms Schubert Schumann Strauss Wolf を削除
+<b>存在しない場合はエラーになるが無視して良い</b>
 </p>
 <pre class="example">
 Remove-Item Brahms   -Force -Recurse
 Remove-Item Schubert -Force -Recurse
 Remove-Item Schumann -Force -Recurse
-Remove-Item Straus   -Force -Recurse
+Remove-Item Strauss  -Force -Recurse
 Remove-Item Wolf     -Force -Recurse
 </pre></li>
 <li><p>
@@ -389,11 +390,11 @@ lyricssongs で Brahms Schubert Schumann Strauss Wolf を再作成
 </p>
 <pre class="example">
 $repo = "Brahms", "Schubert", "Schumann", "Strauss", "Wolf"
-foreach ( $d in $repo) {
-   if (Test-Path $d){
+foreach ( $d in $repo ) {
+   if ( Test-Path $d ) {
       $ff = Get-ChildItem $d '*.tex' -File
       foreach ($f in $ff) {
-         Copy-Item $f.FullName EDIT/$d/$f
+         Copy-Item $f.FullName EDIT/$d/
       }
    }
 }
@@ -471,7 +472,7 @@ git -C EDIT/Wolf checkout S500.htm.tex
 6:{Op.103}% 整理番号
 7:{(1887)}% その他情報（原）
 8:{}% その他情報（訳）
-9:\bewpage
+9:\newpage
 </pre></li>
 <li><p>
 文字コード化対応
@@ -495,9 +496,10 @@ $repo = "Brahms", "Schubert", "Schumann", "Strauss", "Wolf"
 foreach ( $d in $repo ) {
    if ( Test-Path EDIT/$d ) {
        git -C EDIT/$d commit -am "auto commit(phase-3)" --quiet
-       git -C EDIT/$d checkout main                     --quiet
+       git -C EDIT/$d checkout    main                  --quiet
+       git -C EDIT/$d merge       phase-3               --quiet
+       git -C EDIT/$d branch   -D phase-3               --quiet
        git -C EDIT/$d checkout -b phase-4               --quiet
-       git -C EDIT/$d branch -D phase-3                 --quiet
    }
 }
 </pre></li>
@@ -508,7 +510,7 @@ foreach ( $d in $repo ) {
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: 和田勇</p>
-<p class="date">Created: 2023-04-12 水 18:37</p>
+<p class="date">Created: 2023-04-14 金 09:27</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

@@ -40,13 +40,13 @@
      $repo = "Brahms", "Schubert", "Schumann", "Strauss", "Wolf"
      foreach ( $d in $repo ) {
         if ( Test-Path EDIT/$d ) {
-            git -C EDIT/$d add .                                           --quiet
+            git -C EDIT/$d add .
             git -C EDIT/$d commit -am "auto commit"                        --quiet
             git -C EDIT/$d branch -m master main                           --quiet
             git -C EDIT/$d checkout main                                   --quiet
             git -C EDIT/$d checkout -b phase-3                             --quiet
-            git -C EDIT/$d branch -D phase-1                               --quiet
-            git -C EDIT/$d branch -D phase-2                               --quiet
+            git -C EDIT/$d branch   -D phase-1                             --quiet
+            git -C EDIT/$d branch   -D phase-2                             --quiet
             git -C EDIT/$d config --local core.autocrlf false              --quiet
             git -C EDIT/$d config --local user.name  "anonymous anonymous" --quiet
             git -C EDIT/$d config --local user.email "anonymous@anonymous" --quiet
@@ -75,11 +75,12 @@
      git -C EDIT/sty commit -am .
      #+END_SRC
   5. lyricssongs の Brahms Schubert Schumann Strauss Wolf を削除
+     *存在しない場合はエラーになるが無視して良い*
      #+BEGIN_SRC
      Remove-Item Brahms   -Force -Recurse
      Remove-Item Schubert -Force -Recurse
      Remove-Item Schumann -Force -Recurse
-     Remove-Item Straus   -Force -Recurse
+     Remove-Item Strauss  -Force -Recurse
      Remove-Item Wolf     -Force -Recurse
      #+END_SRC
   6. lyricssongs で Brahms Schubert Schumann Strauss Wolf を再作成
@@ -89,11 +90,11 @@
   7. 出来上がった Brahms Schubert Schumann Strauss Wolf を EDIT に重ね書き
      #+BEGIN_SRC
      $repo = "Brahms", "Schubert", "Schumann", "Strauss", "Wolf"
-     foreach ( $d in $repo) {
-        if (Test-Path $d){
+     foreach ( $d in $repo ) {
+        if ( Test-Path $d ) {
            $ff = Get-ChildItem $d '*.tex' -File
            foreach ($f in $ff) {
-              Copy-Item $f.FullName EDIT/$d/$f
+              Copy-Item $f.FullName EDIT/$d/
            }
         }
      }
@@ -149,7 +150,7 @@
          6:{Op.103}% 整理番号
          7:{(1887)}% その他情報（原）
          8:{}% その他情報（訳）
-         9:\bewpage
+         9:\newpage
          #+END_SRC
        - 文字コード化対応
          #+BEGIN_SRC
@@ -165,9 +166,10 @@
      foreach ( $d in $repo ) {
         if ( Test-Path EDIT/$d ) {
             git -C EDIT/$d commit -am "auto commit(phase-3)" --quiet
-            git -C EDIT/$d checkout main                     --quiet
+            git -C EDIT/$d checkout    main                  --quiet
+            git -C EDIT/$d merge       phase-3               --quiet
+            git -C EDIT/$d branch   -D phase-3               --quiet
             git -C EDIT/$d checkout -b phase-4               --quiet
-            git -C EDIT/$d branch -D phase-3                 --quiet
         }
      }
      #+END_SRC
